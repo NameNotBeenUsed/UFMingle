@@ -1,12 +1,12 @@
 # UFMingle
 On-campus dating application
 
-##Team Member
+## Team Member
 Yiming Sun
 Yujian Yuan
 Rulan Jiang
 Mingjun Yu
 
-##Stacks
+## Stacks
 Frontend: Angular 2+
 Backend: gin
