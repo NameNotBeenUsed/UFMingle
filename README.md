@@ -8,5 +8,5 @@ On-campus dating application
 * Mingjun Yu
 
 ## Stacks
-Frontend: Angular 2+
-Backend: gin
+* Frontend: Angular 2+
+* Backend: gin
