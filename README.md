@@ -2,7 +2,7 @@
 On-campus dating application
 
 ## Team Member
-* Yiming Sun
+* Heming Sun
 * Yujian Yuan
 * Rulan Jiang
 * Mingjun Yu
