@@ -6,7 +6,7 @@ On-campus dating application
 | ---------- | :-----------:  | :-----------: |
 | Heming Sun  | 第一列     | 第二列     |
 | Yujian Yuan | 25195225  | yuanuf     |
-| Rulan Jiang | 第一列     | 第二列     |
+| Rulan Jiang | 80984324     | JiangRulan     |
 | Mingjun Yu  | 第一列     | NameNotBeenUsed|
 
 ## Tech Stacks
