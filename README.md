@@ -4,7 +4,7 @@ On-campus dating application
 ## Team Members
 | Name      | UFID     | Github ID     |
 | ---------- | :-----------:  | :-----------: |
-| Heming Sun  | 第一列     | 第二列     |
+| Heming Sun  | 69162072     | mingHeap     |
 | Yujian Yuan | 25195225  | yuanuf     |
 | Rulan Jiang | 80984324     | JiangRulan     |
 | Mingjun Yu  | 第一列     | NameNotBeenUsed|
