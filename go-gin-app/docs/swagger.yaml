@@ -1,0 +1,120 @@
+definitions:
+  main.article:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: An on-campus dating application
+  title: UFMingle
+  version: "1.0"
+paths:
+  /:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Return an array of structure article
+          schema:
+            items:
+              $ref: '#/definitions/main.article'
+            type: array
+      summary: Show forum home page and all articles
+  /article/create:
+    get:
+      responses: {}
+      summary: Show article creation page
+    post:
+      parameters:
+      - description: The title of the article
+        in: header
+        name: title
+        required: true
+        type: string
+      - description: The content of the article
+        in: header
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create an article successfully
+          schema:
+            type: int
+        "400":
+          description: Failed to create an article
+          schema:
+            type: int
+      summary: Create an article
+  /article/view/:article_id:
+    get:
+      parameters:
+      - description: The index of the article
+        in: path
+        name: article_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Return the struct article
+          schema:
+            $ref: '#/definitions/main.article'
+        "404":
+          description: Not found or invalid article_id
+          schema:
+            type: int
+      summary: Open the article page
+  /u/login:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: Show the login page
+    post:
+      parameters:
+      - description: Username
+        in: header
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: header
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Log in successfully
+          schema:
+            type: int
+        "400":
+          description: Failed to log in
+          schema:
+            type: int
+      summary: Perform function login
+  /u/logout:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: Logout
+  /u/register:
+    get:
+      responses: {}
+      summary: Show the registration page
+    post:
+      responses: {}
+      summary: Register a new user
+swagger: "2.0"
