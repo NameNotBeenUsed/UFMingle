@@ -15,4 +15,6 @@ An on-campus dating application
 * Document: Swagger
 
 ## Sprint 1 Showcase
+* Backend v1.0
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/backend_v1.0/Showcase/backend_v1.gif)
+* Frontend
