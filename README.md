@@ -1,5 +1,5 @@
 # UFMingle
-On-campus dating application
+An on-campus dating application
 
 ## Team Members
 | Name      | UFID     | Github ID     |
