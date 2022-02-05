@@ -27,6 +27,10 @@ Backend v1.1
 
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/sprint1/Showcase/backEnd_showcase.gif)
 
+```HTML
+<video src="https://github.com/NameNotBeenUsed/UFMingle/blob/sprint1/Showcase/backend_commandLine.mp4" controls="controls" width="500" height="300"></video>
+```
+
 Frontend
 
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/sprint1/Showcase/frontend_demo.gif)
