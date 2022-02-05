@@ -71,8 +71,8 @@ func createArticle(c *gin.Context) {
 	// Obtain the POSTed title and content values
 	title := c.PostForm("title")
 	content := c.PostForm("content")
-
-	if a, err := createNewArticle(title, content); err == nil {
+	author := c.PostForm("author")
+	if a, err := createNewArticle(title, content, author); err == nil {
 		// If the article is created successfully, show success message
 		render(c, gin.H{
 			"title":   "Submission Successful",
