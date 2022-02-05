@@ -10,6 +10,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Show the login page
+// @Produce json
+// @Router /u/login [get]
 func showLoginPage(c *gin.Context) {
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
@@ -17,6 +20,13 @@ func showLoginPage(c *gin.Context) {
 	}, "login.html")
 }
 
+// @Summary Perform function login
+// @Produce json
+// @Param username header string true "Username"
+// @Param password header string true "Password"
+// @Success 200 {int} int "Log in successfully"
+// @Failure 400 {int} int "Failed to log in"
+// @Router /u/login [post]
 func performLogin(c *gin.Context) {
 	// Obtain the POSTed username and password values
 	username := c.PostForm("username")
@@ -51,6 +61,9 @@ func generateSessionToken() string {
 	return strconv.FormatInt(rand.Int63(), 16)
 }
 
+// @Summary Logout
+// @Produce json
+// @Router /u/logout [get]
 func logout(c *gin.Context) {
 
 	var sameSiteCookie http.SameSite
@@ -63,12 +76,16 @@ func logout(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
+// @Summary Show the registration page
+// @Router /u/register [get]
 func showRegistrationPage(c *gin.Context) {
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
 		"title": "Register"}, "register.html")
 }
 
+// @Summary Register a new user
+// @Router /u/register [post]
 func register(c *gin.Context) {
 	// Obtain the POSTed username and password values
 	username := c.PostForm("username")

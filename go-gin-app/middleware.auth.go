@@ -18,7 +18,12 @@ func ensureLoggedIn() gin.HandlerFunc {
 		loggedIn := loggedInInterface.(bool)
 		if !loggedIn {
 			//if token, err := c.Cookie("token"); err != nil || token == "" {
+
 			c.AbortWithStatus(http.StatusUnauthorized)
+			articles := getAllArticles()
+			render(c, gin.H{
+				"title":   "Home Page",
+				"payload": articles}, "index_alert.html")
 		}
 	}
 }

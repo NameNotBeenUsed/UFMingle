@@ -2,6 +2,12 @@
 
 package main
 
+import (
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	_ "go-gin-app/docs"
+)
+
 func initializeRoutes() {
 
 	// Use the setUserStatus middleware for every route to set a flag
@@ -10,6 +16,7 @@ func initializeRoutes() {
 
 	// Handle the index route
 	router.GET("/", showIndexPage)
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Group user related routes together
 	userRoutes := router.Group("/u")
@@ -41,7 +48,7 @@ func initializeRoutes() {
 	articleRoutes := router.Group("/article")
 	{
 		// Handle GET requests at /article/view/some_article_id
-		articleRoutes.GET("/view/:article_id", getArticle)
+		articleRoutes.GET("/view/:article_id", ensureLoggedIn(), getArticle)
 
 		// Handle the GET requests at /article/create
 		// Show the article creation page

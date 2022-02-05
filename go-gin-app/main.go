@@ -10,6 +10,10 @@ import (
 
 var router *gin.Engine
 
+// @title UFMingle
+// @version 1.0
+// @description An on-campus dating application
+// @termOfService https://github.com/NameNotBeenUsed/UFMingle/tree/backend_v1.0
 func main() {
 	// Set Gin to production mode
 	gin.SetMode(gin.ReleaseMode)

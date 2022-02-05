@@ -1,13 +1,12 @@
 <!--index.html-->
 
 <!--Embed the header.html template at this location-->
-
 {{template "header.html" .}}
-
-	<!--Loop over the 'payload' variable, which is the list of articles-->
-	{{range .payload }}
-		<!--Create the link for the article based on its ID-->
-		<pre>
+<pre>You need go log in to see the content!</pre>
+<!--Loop over the 'payload' variable, which is the list of articles-->
+{{range .payload }}
+<!--Create the link for the article based on its ID-->
+<pre>
 
         <a href="/article/view/{{.ID}}">
 			<!--Display the title of the article-->
@@ -16,8 +15,8 @@
 <font size="4"><strong>&nbsp &nbsp &nbsp &nbsp poster: {{.Author}}</strong></font>
 
 		</pre>
-		<!--Display the content of the article-->
-		{{end}}
+<!--Display the content of the article-->
+{{end}}
 
 <!--Embed the footer.html template at this location-->
 {{template "footer.html" .}}
