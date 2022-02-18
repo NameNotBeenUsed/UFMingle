@@ -1,0 +1,81 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add monent
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/apple/Library/Android/sdk/tools:/Users/apple/Library/Android/sdk/platform-tools:/usr/local/mysql/bin:/Users/apple/Desktop/apache-maven-3.6.1/bin:/Users/apple/Library/Android/sdk/tools:/Users/apple/Library/Android/sdk/platform-tools:/usr/local/mysql/bin:/Users/apple/Desktop/apache-maven-3.6.1/bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  12.13.1
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "zzedu-student",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "@testing-library/jest-dom": "^4.2.4",
+      "@testing-library/react": "^9.3.2",
+      "@testing-library/user-event": "^7.1.2",
+      "antd": "^3.26.16",
+      "axios": "^0.20.0",
+      "better-scroll": "^2.0.2",
+      "history": "^5.0.0",
+      "lodash-es": "^4.17.15",
+      "moment": "^2.29.1",
+      "node-sass": "^4.14.1",
+      "pdfjs-dist": "^2.4.456",
+      "qs": "^6.9.4",
+      "rc-tween-one": "^2.7.3",
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "react-loadable": "^5.5.0",
+      "react-redux": "^7.2.0",
+      "react-router-dom": "^5.2.0",
+      "react-scripts": "3.4.1",
+      "redux": "^4.0.5",
+      "source-map-explorer": "^2.4.2",
+      "video.js": "^7.8.4"
+    },
+    "scripts": {
+      "analyze": "source-map-explorer build/static/js/2.30eb41b2.chunk.js",
+      "start": "react-app-rewired start",
+      "build": "react-app-rewired build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    },
+    "devDependencies": {
+      "babel-plugin-import": "^1.13.0",
+      "customize-cra": "^0.9.1",
+      "react-app-rewired": "^2.1.6"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: EACCES: permission denied, unlink '/Users/apple/Desktop/zzedu-student/node_modules/@ant-design/colors'
