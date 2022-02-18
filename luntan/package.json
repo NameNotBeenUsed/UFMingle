@@ -1,0 +1,61 @@
+{
+  "name": "zzedu-student",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "antd": "^3.26.16",
+    "axios": "^0.20.0",
+    "core-js": "^3.8.0",
+    "lodash-es": "^4.17.15",
+    "md5": "^2.3.0",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
+    "pdfjs-dist": "^2.4.456",
+    "polyfill-array-includes": "^2.0.0",
+    "qs": "^6.9.4",
+    "rc-tween-one": "^2.7.3",
+    "react": "^16.13.1",
+    "react-app-polyfill": "^2.0.0",
+    "react-dom": "^16.13.1",
+    "react-loadable": "^5.5.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "source-map-explorer": "^2.4.2",
+    "video.js": "^7.8.4"
+  },
+  "scripts": {
+    "analyze": "source-map-explorer build/static/js/2.30eb41b2.chunk.js",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "ie > 9"
+    ],
+    "development": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "ie > 9"
+    ]
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
+    "customize-cra": "^0.9.1",
+    "raw-loader": "^4.0.2",
+    "react-app-rewired": "^2.1.6"
+  }
+}
