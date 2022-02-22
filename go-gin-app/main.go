@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,10 +12,25 @@ import (
 var router *gin.Engine
 
 // @title UFMingle
-// @version 1.0
+// @version 2.0
 // @description An on-campus dating application
 // @termOfService https://github.com/NameNotBeenUsed/UFMingle/tree/backend_v1.0
 func main() {
+	connDBErr := ConnectDB()
+	if connDBErr != nil {
+		fmt.Println(connDBErr.Error())
+	}
+
+	createArticleTableErr := createArticleTable()
+	if createArticleTableErr != nil {
+		fmt.Println(createArticleTableErr.Error())
+	}
+
+	createUserTableErr := createUserTable()
+	if createUserTableErr != nil {
+		fmt.Println(createUserTableErr.Error())
+	}
+
 	// Set Gin to production mode
 	gin.SetMode(gin.ReleaseMode)
 
