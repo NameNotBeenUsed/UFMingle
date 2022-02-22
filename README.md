@@ -7,7 +7,7 @@ It is a forum only for people who have a gatorlink account. The topic of this fo
 | Heming Sun  | 69162072     | mingHeap     |
 | Yujian Yuan | 25195225  | yuanuf     |
 | Rulan Jiang | 80984324     | JiangRulan     |
-| Mingjun Yu  | 第一列     | NameNotBeenUsed|
+| Mingjun Yu  | 61707843    | NameNotBeenUsed|
 
 ## Tech Stacks
 * Frontend: React
