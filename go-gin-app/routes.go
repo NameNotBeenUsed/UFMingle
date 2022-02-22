@@ -24,7 +24,7 @@ func initializeRoutes() {
 		// Handle the GET requests at /u/login
 		// Show the login page
 		// Ensure that the user is not logged in by using the middleware
-		userRoutes.GET("/login", ensureNotLoggedIn(), showLoginPage)
+		//userRoutes.GET("/login", ensureNotLoggedIn(), showLoginPage)
 
 		// Handle POST requests at /u/login
 		// Ensure that the user is not logged in by using the middleware
@@ -37,7 +37,7 @@ func initializeRoutes() {
 		// Handle the GET requests at /u/register
 		// Show the registration page
 		// Ensure that the user is not logged in by using the middleware
-		userRoutes.GET("/register", ensureNotLoggedIn(), showRegistrationPage)
+		//userRoutes.GET("/register", ensureNotLoggedIn(), showRegistrationPage)
 
 		// Handle POST requests at /u/register
 		// Ensure that the user is not logged in by using the middleware
@@ -53,10 +53,11 @@ func initializeRoutes() {
 		// Handle the GET requests at /article/create
 		// Show the article creation page
 		// Ensure that the user is logged in by using the middleware
-		articleRoutes.GET("/create", ensureLoggedIn(), showArticleCreationPage)
+		// articleRoutes.GET("/create", ensureLoggedIn(), showArticleCreationPage)
 
 		// Handle POST requests at /article/create
 		// Ensure that the user is logged in by using the middleware
 		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
+		//articleRoutes.POST("/create", ensureLoggedIn())
 	}
 }
