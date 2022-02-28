@@ -1,0 +1,47 @@
+@import '../../common/common.scss';
+
+.headBox {
+    // height: 35px;
+    padding: 20px 0;
+    background: #c42f33;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+
+    .headCenter {
+        max-width: 960px;
+        margin: auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .headLeft {
+            display: flex;
+            align-items: center;
+
+            .logo {
+                width: 30px;
+                margin-right: 10px;
+            }
+
+            .navItem {
+                margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+
+        .headRight {
+            display: flex;
+            align-items: center;
+            .avatar{
+                margin: 0 20px;
+            }
+        }
+    }
+}
+
+.login{
+    cursor: pointer;
+    margin-right: 20px;
+}
