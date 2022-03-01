@@ -25,6 +25,29 @@ type user struct {
 //	user{Username: "user3", Password: "pass3"},
 //}
 
+// Get all the records in the table users
+func getAllUsers() ([]user, error) {
+	rows, err := DB.Query("SELECT username, password FROM users")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var userList []user
+
+	for rows.Next() {
+		var u user
+		if err := rows.Scan(&u.Username, &u.Password); err != nil {
+			return nil, err
+		}
+		userList = append(userList, u)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return userList, nil
+}
+
 // Check if the username and password combination is valid
 func isUserValid(u user) (bool, error) {
 	//for _, u := range userList {
@@ -33,12 +56,13 @@ func isUserValid(u user) (bool, error) {
 	//	}
 	//}
 	//return false
-	stmt, err := DB.Prepare("SELECT * FROM users WHERE username = ? AND password = ?")
+	stmt, err := DB.Prepare("SELECT username, password FROM users WHERE username = ? AND password = ?")
 
 	if err != nil {
 		return false, err
 	}
 	//fmt.Println(u.Username, u.Password)
+	defer stmt.Close()
 
 	var temp user
 	sqlErr := stmt.QueryRow(u.Username, u.Password).Scan(&temp.Username, &temp.Password)
@@ -55,38 +79,43 @@ func isUserValid(u user) (bool, error) {
 
 // Register a new user with the given username and password
 // NOTE: For this demo, we
-func registerNewUser(newUser user) (bool, error) {
+func registerNewUser(newUser user) (int64, error) {
 	if strings.TrimSpace(newUser.Password) == "" {
-		return false, errors.New("The password can't be empty")
+		return 0, errors.New("The password can't be empty")
 	}
 
 	flag, err := isUsernameAvailable(newUser.Username)
 	if flag == false && err == nil {
-		return false, errors.New("The username isn't available")
+		return 0, errors.New("The username isn't available")
 	}
 
 	tx, err := DB.Begin()
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 
 	stmt, err := tx.Prepare("INSERT INTO users (username, password) VALUES (?, ?)")
 
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(newUser.Username, newUser.Password)
+	result, err := stmt.Exec(newUser.Username, newUser.Password)
 
 	if err != nil {
-		return false, err
+		return 0, err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
 	}
 
 	tx.Commit()
 
-	return true, nil
+	return num, nil
 }
 
 // Check if the supplied username is available
@@ -102,7 +131,10 @@ func isUsernameAvailable(username string) (bool, error) {
 		return false, err
 	}
 
-	sqlErr := stmt.QueryRow(username).Scan()
+	defer stmt.Close()
+
+	var tempName string
+	sqlErr := stmt.QueryRow(username).Scan(&tempName)
 
 	if sqlErr != nil {
 		if sqlErr == sql.ErrNoRows {
@@ -112,4 +144,35 @@ func isUsernameAvailable(username string) (bool, error) {
 	}
 
 	return false, nil
+}
+
+func deleteUser(username string) (int64, error) {
+	tx, err := DB.Begin()
+
+	if err != nil {
+		return 0, err
+	}
+
+	stmt, err := DB.Prepare("DELETE from users where username = ?")
+
+	if err != nil {
+		return 0, err
+	}
+
+	defer stmt.Close()
+
+	result, err := stmt.Exec(username)
+
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	tx.Commit()
+
+	return num, nil
 }

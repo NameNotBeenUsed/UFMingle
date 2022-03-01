@@ -64,6 +64,7 @@ func render(c *gin.Context, data gin.H, templateName string) {
 		c.XML(http.StatusOK, data["payload"])
 	default:
 		// Respond with HTML
+		//fmt.Println(templateName, data)
 		c.HTML(http.StatusOK, templateName, data)
 	}
 }

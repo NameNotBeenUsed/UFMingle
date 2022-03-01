@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -9,14 +10,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var tmpUserList []user
-var tmpArticleList []article
+//var tmpUserList []user
+//var tmpArticleList []article
 
 // This function is used to do setup before executing the test functions
 func TestMain(m *testing.M) {
 	//Set Gin to Test Mode
 	gin.SetMode(gin.TestMode)
 
+	connDBErr := ConnectDB()
+	if connDBErr != nil {
+		fmt.Println(connDBErr.Error())
+	}
 	// Run the other tests
 	os.Exit(m.Run())
 }
@@ -40,6 +45,7 @@ func testHTTPResponse(t *testing.T, r *gin.Engine, req *http.Request, f func(w *
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)
 
+	// f(w) == false, fail
 	if !f(w) {
 		t.Fail()
 	}
@@ -59,13 +65,13 @@ func testMiddlewareRequest(t *testing.T, r *gin.Engine, expectedHTTPCode int) {
 
 // This function is used to store the main lists into the temporary one
 // for testing
-func saveLists() {
-	tmpUserList = userList
-	tmpArticleList = articleList
-}
+//func saveLists() {
+//	tmpUserList, _ = getAllUsers()
+//	tmpArticleList, _ = getAllArticles()
+//}
 
 // This function is used to restore the main lists from the temporary one
-func restoreLists() {
-	userList = tmpUserList
-	articleList = tmpArticleList
-}
+//func restoreLists() {
+//	userList = tmpUserList
+//	articleList = tmpArticleList
+//}

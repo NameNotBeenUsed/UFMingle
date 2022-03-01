@@ -19,12 +19,16 @@ func ensureLoggedIn() gin.HandlerFunc {
 		if !loggedIn {
 			//if token, err := c.Cookie("token"); err != nil || token == "" {
 
-			//c.AbortWithStatus(http.StatusUnauthorized)
-			//articles := getAllArticles()
+			c.AbortWithStatus(http.StatusUnauthorized)
+			//articles, err := getAllArticles()
+			//if err != nil {
+			//	log.Fatal(err)
+			//}
+			//c.Redirect(http.StatusUnauthorized, "/")
 			//render(c, gin.H{
 			//	"title":   "Home Page",
 			//	"payload": articles}, "index_alert.html")
-			c.JSON(http.StatusUnauthorized, gin.H{"message": "User is not logged in."})
+			//c.JSON(http.StatusUnauthorized, gin.H{"message": "User is not logged in."})
 		}
 	}
 }
@@ -38,9 +42,10 @@ func ensureNotLoggedIn() gin.HandlerFunc {
 		loggedInInterface, _ := c.Get("is_logged_in")
 		loggedIn := loggedInInterface.(bool)
 		if loggedIn {
-			// if token, err := c.Cookie("token"); err == nil || token != "" {
-			//c.AbortWithStatus(http.StatusUnauthorized)
-			c.JSON(http.StatusUnauthorized, gin.H{"message": "User is already logged in."})
+			//if token, err := c.Cookie("token"); err == nil || token != "" {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			//c.JSON(http.StatusUnauthorized, `"message": "User is already logged in."`)
+			//}
 		}
 	}
 }

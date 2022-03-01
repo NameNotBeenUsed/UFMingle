@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"strconv"
 	"strings"
 	"testing"
@@ -81,7 +80,7 @@ func TestLoginAuthenticated(t *testing.T) {
 	// Create a request to send to the above route
 	loginPayload := getLoginPOSTPayload()
 	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(loginPayload))
-	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
+	req.Header = http.Header{"Cookie": w.Result().Header["Set-Cookie"]}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(loginPayload)))
 
@@ -271,6 +270,11 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	if err != nil || strings.Index(string(p), "<title>Successful registration &amp; Login</title>") < 0 {
 		t.Fail()
 	}
+
+	num, err := deleteUser("u1")
+	if num == 0 || err != nil {
+		t.Fail()
+	}
 }
 
 // Test that a POST request to register returns a an error when
@@ -301,17 +305,28 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 }
 
 func getLoginPOSTPayload() string {
-	params := url.Values{}
-	params.Add("username", "user1")
-	params.Add("password", "pass1")
-
-	return params.Encode()
+	//params := url.Values{}
+	//params.Add("username", "user1")
+	//params.Add("password", "pass1")
+	//
+	//return params.Encode()
+	testUser := `{
+		"username": "user1",
+		"password": "pass1"
+	}`
+	return testUser
 }
 
 func getRegistrationPOSTPayload() string {
-	params := url.Values{}
-	params.Add("username", "u1")
-	params.Add("password", "p1")
+	//params := url.Values{}
+	//params.Add("username", "u1")
+	//params.Add("password", "p1")
+	//
+	//return params.Encode()
 
-	return params.Encode()
+	testUser := `{
+		"username": "u1",
+		"password": "p1"
+	}`
+	return testUser
 }
