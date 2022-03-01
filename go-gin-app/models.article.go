@@ -39,6 +39,8 @@ type article struct {
 func getAllArticles() ([]article, error) {
 	//return articleList
 	rows, err := DB.Query("SELECT id, author, title, content from articles")
+	//fmt.Println("getAllArticles")
+	//fmt.Println(err)
 	if err != nil {
 		return nil, err
 	}
@@ -107,6 +109,8 @@ func getArticleByID(id int) (article, error) {
 		return article{}, err
 	}
 
+	defer stmt.Close()
+
 	articleResult := article{}
 
 	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Content, &articleResult.Content)
@@ -121,7 +125,7 @@ func getArticleByID(id int) (article, error) {
 }
 
 // Create a new article with the title and content provided
-func createNewArticle(newArticle article) (bool, error) {
+func createNewArticle(newArticle article) (int64, error) {
 	//// Set the ID of a new article to one more than the number of articles
 	//a := article{ID: len(articleList) + 1, Author: author, Title: title, Content: content}
 	//
@@ -131,49 +135,80 @@ func createNewArticle(newArticle article) (bool, error) {
 	//return &a, nil
 	tx, err := DB.Begin()
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 
 	stmt, err := tx.Prepare("INSERT INTO articles (author, title, content) VALUES (?, ?, ?)")
-
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 
 	defer stmt.Close()
 
-	_, execErr := stmt.Exec(newArticle.Author, newArticle.Title, newArticle.Content)
+	result, execErr := stmt.Exec(newArticle.Author, newArticle.Title, newArticle.Content)
 	if execErr != nil {
-		return false, execErr
+		return 0, execErr
 	}
-
+	num, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
 	tx.Commit()
 
-	return true, nil
+	return num, nil
 }
 
-func deleteArticle(id int) (bool, error) {
+func deleteArticleById(id int) (int64, error) {
 	tx, err := DB.Begin()
-
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 
 	stmt, err := DB.Prepare("DELETE from articles where id = ?")
-
 	if err != nil {
-		return false, err
+		return 0, err
 	}
-
 	defer stmt.Close()
 
-	_, err = stmt.Exec(id)
+	result, err := stmt.Exec(id)
 
 	if err != nil {
-		return false, err
+		return 0, err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
 	}
 
 	tx.Commit()
 
-	return true, nil
+	return num, nil
+}
+
+func deleteArticleByTitle(title string) (int64, error) {
+	tx, err := DB.Begin()
+	if err != nil {
+		return 0, err
+	}
+
+	stmt, err := DB.Prepare("DELETE FROM articles WHERE title = ?")
+	if err != nil {
+		return 0, err
+	}
+	defer stmt.Close()
+
+	result, err := stmt.Exec(title)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	tx.Commit()
+
+	return num, err
 }

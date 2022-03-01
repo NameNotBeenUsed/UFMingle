@@ -46,6 +46,7 @@ func TestEnsureNotLoggedInAuthenticated(t *testing.T) {
 		// Use the setLoggedIn middleware to set the is_logged_in flag to true
 		// Since we are logged in, this handler should not be executed.
 		// If it is, then the ensureNotLoggedIn middleware isn't working as expected
+		//fmt.Println("TestEnsureNotLoggedInAuthenticated fail")
 		t.Fail()
 	})
 

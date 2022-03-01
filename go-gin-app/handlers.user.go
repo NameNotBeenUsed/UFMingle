@@ -15,12 +15,12 @@ import (
 // @Summary Show the login page
 // @Produce json
 // @Router /u/login [get]
-//func showLoginPage(c *gin.Context) {
-//	// Call the render function with the name of the template to render
-//	render(c, gin.H{
-//		"title": "Login",
-//	}, "login.html")
-//}
+func showLoginPage(c *gin.Context) {
+	// Call the render function with the name of the template to render
+	render(c, gin.H{
+		"title": "Login",
+	}, "login.html")
+}
 
 // @Summary Perform function login
 // @Produce json
@@ -35,13 +35,15 @@ func performLogin(c *gin.Context) {
 	//password := c.PostForm("password")
 	var u user
 	if err := c.BindJSON(&u); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		//c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
 	validationErr := validate.Struct(u)
 	if validationErr != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr})
+		//c.JSON(http.StatusBadRequest, gin.H{"error": validationErr})
+		c.AbortWithError(http.StatusBadRequest, validationErr)
 		fmt.Println(validationErr)
 		return
 	}
@@ -57,19 +59,18 @@ func performLogin(c *gin.Context) {
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
-		//render(c, gin.H{
-		//	"title": "Successful Login"}, "login-successful.html")
-		c.JSON(http.StatusOK, gin.H{"message": "Log in Successfully"})
+		render(c, gin.H{
+			"title": "Successful Login"}, "login-successful.html")
+		//c.JSON(http.StatusOK, gin.H{"message": "Log in Successfully"})
 
 	} else {
 		// If the username/password combination is invalid,
 		// show the error message on the login page
-		//c.HTML(http.StatusBadRequest, "login.html", gin.H{
-		//	"ErrorTitle":   "Login Failed",
-		//	"ErrorMessage": "Invalid credentials provided"})
-		//fmt.Println(valid)
-		//fmt.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "It's not a valid user"})
+		c.HTML(http.StatusBadRequest, "login.html", gin.H{
+			"ErrorTitle":   "Login Failed",
+			"ErrorMessage": "Invalid credentials provided"})
+
+		//c.JSON(http.StatusBadRequest, gin.H{"error": "It's not a valid user"})
 	}
 }
 
@@ -99,16 +100,17 @@ func logout(c *gin.Context) {
 // 前端的活
 // @Summary Show the registration page
 // @Router /u/register [get]
-//func showRegistrationPage(c *gin.Context) {
-//	// Call the render function with the name of the template to render
-//	render(c, gin.H{
-//		"title": "Register"}, "register.html")
-//}
+func showRegistrationPage(c *gin.Context) {
+	// Call the render function with the name of the template to render
+	render(c, gin.H{
+		"title": "Register"}, "register.html")
+}
 
 // @Summary Register a new user
 // @Param username header string true "Username"
 // @Param password header string true "Password"
-// @Success 200 {string} string "Register successfully"
+// @Success 200 {int} int "Register successfully, return the number of rows been affected"
+// @Failure 400 {error} error "ErrorMessage"
 // @Router /u/register [post]
 func register(c *gin.Context) {
 	// Obtain the POSTed username and password values
@@ -130,24 +132,25 @@ func register(c *gin.Context) {
 		return
 	}
 
-	if _, err := registerNewUser(newUser); err == nil {
+	if num, err := registerNewUser(newUser); err == nil {
 		// If the user is created, set the token in a cookie and log the user in
 		token := generateSessionToken()
 		c.SetSameSite(sameSiteCookie)
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
-		//render(c, gin.H{
-		//	"title": "Successful registration & Login"}, "login-successful.html")
-		c.JSON(http.StatusOK, gin.H{"message": "Register successfully"})
+		render(c, gin.H{
+			"title":   "Successful registration & Login",
+			"payload": num}, "login-successful.html")
+		//c.JSON(http.StatusOK, gin.H{"message": "Register successfully"})
 
 	} else {
 		// If the username/password combination is invalid,
 		// show the error message on the login page
-		//c.HTML(http.StatusBadRequest, "register.html", gin.H{
-		//	"ErrorTitle":   "Registration Failed",
-		//	"ErrorMessage": err.Error()})
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.HTML(http.StatusBadRequest, "register.html", gin.H{
+			"ErrorTitle":   "Registration Failed",
+			"ErrorMessage": err.Error()})
+		//c.JSON(http.StatusBadRequest, err.Error())
 
 	}
 }
