@@ -34,3 +34,6 @@ Backend Command Line Demo
 Frontend
 
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/sprint1/Showcase/frontend_demo.gif)
+
+## Sprint 2
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/Sprint2/Showcase/backend_test.png)
