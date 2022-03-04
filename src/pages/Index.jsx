@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { Pagination, Tag, Table, Divider, Input, Select, Avatar, Badge, Icon, Breadcrumb, Button } from 'antd';
 
 
@@ -8,6 +8,7 @@ import banner from '../img/banner.png';
 import sty from './index.module.scss';
 
 import Nav from '../components/nav'
+import axios from "axios";
 
 
 
@@ -223,7 +224,7 @@ function Index() {
           </div>
 
           <div className={sty.tableBox}>
-            <Table pagination={false} columns={columns} dataSource={data} />
+            <Table pagination={false} columns={columns} dataSource={articles} />
             <div className={sty.paginationBox}>
               <Pagination size="small" total={50} showSizeChanger showQuickJumper />
             </div>
