@@ -24,7 +24,7 @@ function Reply() {
         <div className={sty.contentBox}>
           <div className={sty.breadcrumbBox}>
               <Breadcrumb>
-                <Breadcrumb.Item>个人中心</Breadcrumb.Item>
+                <Breadcrumb.Item>personal center</Breadcrumb.Item>
               </Breadcrumb>
           </div>
           <div className={sty.meBox}>
@@ -57,28 +57,28 @@ function Reply() {
                 <Avatar size={150} src={<Image src="https://joeschmoe.io/api/v1/random" style={{ width: '150px '}} />} />
                 <div className={sty.meright}>
                   <div className={sty.top}>
-                    <span className={sty.name}>hhha</span><span className={sty.samll}>注册用户</span> <Tag color="magenta">收到的赞</Tag><Tag className={sty.tag} color="#ff0000">0</Tag> <Tag color="#ff0000">私信</Tag>
+                    <span className={sty.name}>hhha</span><span className={sty.samll}>registered user</span> <Tag color="magenta">likes received</Tag><Tag className={sty.tag} color="#ff0000">0</Tag> <Tag color="#ff0000">message</Tag>
                   </div>
                   <div className={sty.bottom}>
-                    <p><span>性别 男</span> <span>发帖数 0</span> </p>
-                    <p><span>注册时间 00：00：00</span> <span>最后登录时间 00：00：00</span> </p>
+                    <p><span>gender male</span> <span>past_post_num 0</span> </p>
+                    <p><span>register time 00：00：00</span> <span>last time login 00：00：00</span> </p>
                   </div>
                 </div>
               </div>
-              <h3 className={sty.m40}>发表主题</h3>
+              <h3 className={sty.m40}>past post</h3>
               <div className={sty.repo}>
-                <p><span className={sty.blue}>还会复发</span>2020-29-20 10:10:10</p>
-                <p>哈哈奥豪斯大飒飒的还是第三方</p>
+                <p><span className={sty.blue}>hello</span>2020-29-20 10:10:10</p>
+                <p>hello, world</p>
                 <Divider></Divider>
               </div>
               <div className={sty.repo}>
-                <p><span className={sty.blue}>还会复发</span>2020-29-20 10:10:10</p>
-                <p>哈哈奥豪斯大飒飒的还是第三方</p>
+                <p><span className={sty.blue}>hello</span>2020-29-20 10:10:10</p>
+                <p>hello, world</p>
                 <Divider></Divider>
               </div>
               <div className={sty.repo}>
-                <p><span className={sty.blue}>还会复发</span>2020-29-20 10:10:10</p>
-                <p>哈哈奥豪斯大飒飒的还是第三方</p>
+                <p><span className={sty.blue}>hello</span>2020-29-20 10:10:10</p>
+                <p>hello, world!</p>
                 <Divider></Divider>
               </div>
             </Card>

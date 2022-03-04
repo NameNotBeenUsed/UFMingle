@@ -38,9 +38,9 @@ function Edit() {
         <div className={sty.contentBox}>
         <div className={sty.breadcrumbBox}>
               <Breadcrumb>
-                <Breadcrumb.Item>首页</Breadcrumb.Item>
-                <Breadcrumb.Item>缘分天空</Breadcrumb.Item>
-                <Breadcrumb.Item>发表主题</Breadcrumb.Item>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>UFmingle</Breadcrumb.Item>
+                <Breadcrumb.Item>POST</Breadcrumb.Item>
               </Breadcrumb>
         </div>
         <Form
@@ -49,30 +49,30 @@ function Edit() {
             layout="horizontal"
             onFinish={onFinish}
             >
-            <Form.Item label="主题标题" name="title">
+            <Form.Item label="title" name="title">
                 <Input />
             </Form.Item>
-            <Form.Item label="发帖类型" name='type'>
+            <Form.Item label="article type" name='type'>
                 <Radio.Group>
-                    <Radio value={'normal'}>普通</Radio>
-                    <Radio value={'academic'}>学术消息</Radio>
+                    <Radio value={'normal'}>normal</Radio>
+                    <Radio value={'academic'}>love story sharing</Radio>
                 </Radio.Group>
             </Form.Item>
-            <Form.Item label="高级选项" name='choice'>
-                <Switch>接收消息提醒</Switch>
+            <Form.Item label="advance" name='choice'>
+                <Switch>receive message alert</Switch>
             </Form.Item>
-            <Form.Item label="主题内容" name='content'>
+            <Form.Item label="content" name='content'>
             <ReactWEditor
-                defaultValue={'<h1>标题</h1>'}
+                defaultValue={'<h1>title</h1>'}
                 linkImgCallback={(src,alt,href) => {
                     // 插入网络图片的回调事件
-                    console.log('图片 src ', src)
-                    console.log('图片文字说明',alt)
-                    console.log('跳转链接',href)
+                    console.log('image src ', src)
+                    console.log('word illustration for image',alt)
+                    console.log('link',href)
                 }}
                 onlineVideoCallback={(video) => {
                     // 插入网络视频的回调事件
-                    console.log('插入视频内容', video)
+                    console.log('insert video', video)
                 }}
                 />
             </Form.Item>

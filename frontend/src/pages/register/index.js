@@ -5,7 +5,7 @@ import sty from './index.module.scss';
 
 import Nav from '../../components/nav'
 
-import lo from '../../img/lo.jpg';
+import lo from '../../img/login.png';
 // import { http } from '../../utils/http'
 import axios from "axios"
 
@@ -13,7 +13,7 @@ import axios from "axios"
 const FormRight = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
-    axios.post('/api/u/register', {
+    axios.post('/u/register', {
       ...values
     })
       .then((data) => {
@@ -108,7 +108,7 @@ const FormRight = () => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          注册账号
+          register account
         </Button>
       </Form.Item>
     </Form>

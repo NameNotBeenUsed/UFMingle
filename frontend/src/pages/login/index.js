@@ -13,7 +13,7 @@ import axios from "axios"
 const FormRight = () => {
     const onFinish = (values) => {
       console.log('Success:', values);
-      axios.post('/api/u/login', {
+      axios.post('/u/login', {
         ...values
       })
       .then((data)=>{
@@ -45,9 +45,9 @@ const FormRight = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-          <h2>登录论坛</h2>
+          <h2>login to the forum</h2>
         <Form.Item
-          label="用户名"
+          label="username"
           name="username"
           rules={[
             {
@@ -60,7 +60,7 @@ const FormRight = () => {
         </Form.Item>
   
         <Form.Item
-          label="密码"
+          label="password"
           name="password"
           rules={[
             {
@@ -79,7 +79,7 @@ const FormRight = () => {
           }}
         >
           <Button type="primary" htmlType="submit">
-            登录账号
+            login account
           </Button>
         </Form.Item>
       </Form>

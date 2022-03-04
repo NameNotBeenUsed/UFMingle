@@ -49,12 +49,12 @@ export default function Nav() {
         </div>
         <div>
           <InputGroup compact>
-            <Select style={{ width: '100px' }} defaultValue="版内">
-              <Option value="版内">版内</Option>
-              <Option value="版内">版内</Option>
+            <Select style={{ width: '100px' }} defaultValue="InsideUfmingle">
+              <Option value="InsideUfmingle">InsideUfmingle</Option>
+
             </Select>
 
-            <Search style={{ width: 400 }} placeholder="请输入搜索内容" />
+            <Search style={{ width: 400 }} placeholder="Please insert what you wanna search" />
           </InputGroup>
         </div>
 
@@ -71,10 +71,10 @@ export default function Nav() {
       </div>
       : <div className={sty.headRight}>
         <div className={sty.login} onClick={() => tologin('/login')}>
-          登录
+          Login
         </div>
         <div className={sty.login} onClick={() => tologin('/register')}>
-          注册
+          Register
         </div>
       </div>
       }

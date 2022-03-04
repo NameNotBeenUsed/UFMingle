@@ -31,7 +31,7 @@ function Reply() {
                 </div>
                 <div className={sty.divider}></div>
                 <div className={sty.titleright}>
-                  <p>缘分天空</p>
+                  <p>UFmingle</p>
                   <p>13/13456</p>
                 </div>
               </div>
@@ -57,11 +57,11 @@ function Reply() {
               <div className={sty.contentLeft}>
                 <div className={sty.avatarLeft}>
                   <h3>hhhhh</h3>
-                  <p>帖数 0</p>
-                  <p>粉丝 0</p>
-                  <p>威望 0</p>
-                  <p>风评 0</p>
-                  <p>最后登录 0</p>
+                  <p>articles 0</p>
+                  <p>flowers 0</p>
+                  <p>reputation 0</p>
+                  <p>mingle coin 0</p>
+                  <p>last time log in 0</p>
                 </div>
                 <div className={sty.avatarRight}>
                   <Badge count={<ManOutlined  style={{ color: '#fff' }} />}>
@@ -69,10 +69,10 @@ function Reply() {
                   </Badge>
                   <div>
                     <Button size='small' shape="round">
-                      关注
+                      Subscribe
                     </Button>
                     <Button size='small' shape="round">
-                      私信
+                      Message
                     </Button>
                   </div>
                   
@@ -162,12 +162,12 @@ function Reply() {
             <div className={sty.contentCard}>
               <div className={sty.contentLeft}>
                 <div className={sty.avatarLeft}>
-                  <h3>hhhhh</h3>
-                  <p>帖数 0</p>
-                  <p>粉丝 0</p>
-                  <p>威望 0</p>
-                  <p>风评 0</p>
-                  <p>最后登录 0</p>
+                  <h3>Ivy</h3>
+                  <p>posts 0</p>
+                  <p>followers 0</p>
+                  <p>reputation 0</p>
+                  <p>mingle coin 0</p>
+                  <p>last time login 0</p>
                 </div>
                 <div className={sty.avatarRight}>
                   <Badge count={<ManOutlined  style={{ color: '#fff' }} />}>
@@ -175,10 +175,10 @@ function Reply() {
                   </Badge>
                   <div>
                     <Button size='small' shape="round">
-                      关注
+                      subscribe
                     </Button>
                     <Button size='small' shape="round">
-                      私信
+                      message
                     </Button>
                   </div>
                   
@@ -213,23 +213,23 @@ function Reply() {
           <div className={sty.replyBox}>
             <div className={sty.breadcrumbBox}>
               <Breadcrumb>
-                <Breadcrumb.Item>首页</Breadcrumb.Item>
-                <Breadcrumb.Item>版面列表</Breadcrumb.Item>
-                <Breadcrumb.Item>缘分天空</Breadcrumb.Item>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>block list</Breadcrumb.Item>
+                <Breadcrumb.Item>UFmingle</Breadcrumb.Item>
               </Breadcrumb>
             </div>
             <ReactWEditor
             className={sty.editor}
-            defaultValue={'<h1>标题</h1>'}
+            defaultValue={'<h1>title</h1>'}
             linkImgCallback={(src,alt,href) => {
               // 插入网络图片的回调事件
-              console.log('图片 src ', src)
-              console.log('图片文字说明',alt)
-              console.log('跳转链接',href)
+              console.log('image src ', src)
+              console.log('image description',alt)
+              console.log('href',href)
             }}
             onlineVideoCallback={(video) => {
               // 插入网络视频的回调事件
-              console.log('插入视频内容', video)
+              console.log('post video content', video)
             }}
             onChange={(html) => {
               console.log('onChange html:', html)
@@ -242,7 +242,7 @@ function Reply() {
             }}
           />
           <Button type="primary" shape="round" danger>
-            回复
+            reply
           </Button>
           </div>
           

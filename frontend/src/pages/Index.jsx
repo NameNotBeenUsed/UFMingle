@@ -18,17 +18,17 @@ const columns = [
     title: (
       <div className={sty.titleBox}>
         <div className={sty.titleItem}>
-          全部
+          all
         </div>
         <div className={sty.titleItem}>
-          精华
+          highly discussed
         </div>
         <div className={sty.titleItem}>
-          保存
+          save
         </div>
         <Select style={{ width: '100px' }} defaultValue="全部">
-          <Option value="全部">全部</Option>
-          <Option value="全部">全部</Option>
+          <Option value="all">全部</Option>
+          <Option value="all">全部</Option>
         </Select>
       </div>
     ),
@@ -50,12 +50,12 @@ const columns = [
     },
   },
   {
-    title: '作者',
+    title: 'author',
     dataIndex: 'author',
     key: 'author',
   },
   {
-    title: '点击',
+    title: 'click',
     key: 'clickNum',
     dataIndex: 'clickNum',
     render: tags => (
@@ -65,7 +65,7 @@ const columns = [
     ),
   },
   {
-    title: '回复',
+    title: 'reply',
     key: 'replyNum',
     dataIndex: 'replyNum',
     render: tags => (
@@ -75,7 +75,7 @@ const columns = [
     ),
   },
   {
-    title: '最后回复',
+    title: 'last reply time',
     dataIndex: 'time',
     key: 'time',
   },
@@ -158,9 +158,9 @@ function Index() {
         <div className={sty.contentCenter}>
           <div className={sty.breadcrumbBox}>
             <Breadcrumb>
-              <Breadcrumb.Item>首页</Breadcrumb.Item>
-              <Breadcrumb.Item>版面列表</Breadcrumb.Item>
-              <Breadcrumb.Item>缘分天空</Breadcrumb.Item>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>block list</Breadcrumb.Item>
+              <Breadcrumb.Item>UFmingle</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           {/*  */}
@@ -168,14 +168,14 @@ function Index() {
             <div className={sty.mainHeadLeft}>
               <img className={sty.mainHeadImg} src={yf} alt="" srcset="" />
               <div className={sty.mainHeadTit}>
-                缘分天空
+                UFmingle
               </div>
               <div className={sty.mainHeadDesc}>
                 <div>
-                  版面简介：缘分天空，我们相遇......
+                  Forum description：Gators meet lover here...
                 </div>
                 <div>
-                  版主：世界树 呆呆象
+                  administrator：MingJun RL
                 </div>
               </div>
             </div>
@@ -192,7 +192,7 @@ function Index() {
                   <div className={sty.mainHeadRightItem2}>34772</div>
                 </div>
               </div>
-              <Button>取关</Button>
+              <Button>unsubscribe</Button>
             </div>
           </div>
 
@@ -205,11 +205,9 @@ function Index() {
             <div style={{
               marginRight: 15
             }} className={sty.btn}>
-              <a href="/edit">发主题</a>
+              <a href="/edit">POST</a>
             </div>
-            <div className={sty.btn}>
-              发投票
-            </div>
+
           </div>
 
           <div className={sty.tableBox}>
