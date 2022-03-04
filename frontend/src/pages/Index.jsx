@@ -27,8 +27,8 @@ const columns = [
           save
         </div>
         <Select style={{ width: '100px' }} defaultValue="全部">
-          <Option value="all">全部</Option>
-          <Option value="all">全部</Option>
+          <Option value="all">all</Option>
+          <Option value="all">all</Option>
         </Select>
       </div>
     ),
