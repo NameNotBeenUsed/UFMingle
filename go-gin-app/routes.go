@@ -3,6 +3,8 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	_ "go-gin-app/docs"
@@ -13,6 +15,8 @@ func initializeRoutes() {
 	// Use the setUserStatus middleware for every route to set a flag
 	// indicating whether the request was from an authenticated user or not
 	router.Use(setUserStatus())
+	router.Use(gin.Logger())
+	router.Use(cors.Default())
 
 	// Handle the index route
 	router.GET("/", showIndexPage)
