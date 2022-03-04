@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { Pagination, Tag, Table, Divider, Input, Select, Avatar, Badge, Icon, Breadcrumb, Button } from 'antd';
 
 
@@ -8,7 +8,7 @@ import banner from '../img/banner.png';
 import sty from './index.module.scss';
 
 import Nav from '../components/nav'
-import axios from "axios";
+import axios from "axios"
 
 
 
@@ -17,36 +17,36 @@ const { Option } = Select;
 const columns = [
   {
     title: (
-      <div className={sty.titleBox}>
-        <div className={sty.titleItem}>
-          all
+        <div className={sty.titleBox}>
+          <div className={sty.titleItem}>
+            all
+          </div>
+          <div className={sty.titleItem}>
+            highly discussed
+          </div>
+          <div className={sty.titleItem}>
+            save
+          </div>
+          <Select style={{ width: '100px' }} defaultValue="全部">
+            <Option value="all">全部</Option>
+            <Option value="all">全部</Option>
+          </Select>
         </div>
-        <div className={sty.titleItem}>
-          highly discussed
-        </div>
-        <div className={sty.titleItem}>
-          save
-        </div>
-        <Select style={{ width: '100px' }} defaultValue="全部">
-          <Option value="all">全部</Option>
-          <Option value="all">全部</Option>
-        </Select>
-      </div>
     ),
     dataIndex: 'title',
     key: 'title',
     width: 400,
     render: text => {
       return (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <img src={hot} alt="" srcset="" />
-          <div>
-            {text}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <img src={hot} alt="" srcset="" />
+            <div>
+              {text}
+            </div>
           </div>
-        </div>
       );
     },
   },
@@ -60,9 +60,9 @@ const columns = [
     key: 'clickNum',
     dataIndex: 'clickNum',
     render: tags => (
-      <Tag color='blue'>
-        18万
-      </Tag>
+        <Tag color='blue'>
+          180k
+        </Tag>
     ),
   },
   {
@@ -70,9 +70,9 @@ const columns = [
     key: 'replyNum',
     dataIndex: 'replyNum',
     render: tags => (
-      <Tag color='cyan'>
-        18万
-      </Tag>
+        <Tag color='cyan'>
+          180k
+        </Tag>
     ),
   },
   {
@@ -149,92 +149,92 @@ function Index() {
 
   //   })
   // }, [])
-  
+
   const [articles, setArticles] = useState([])
   const [refreshData, setRefreshData] = useState(false)
 
   useEffect(() => {
-      getAllArticles();
+    getAllArticles();
   }, [])
 
   if(refreshData){
-      setRefreshData(false);
-      getAllArticles();
+    setRefreshData(false);
+    getAllArticles();
   }
 
   return (
-    <div className={sty.box}>
-      <Nav></Nav>
+      <div className={sty.box}>
+        <Nav></Nav>
 
-      {/* 中间区域 */}
-      <div className={sty.contentBox}>
-        <div className={sty.contentCenter}>
-          <div className={sty.breadcrumbBox}>
-            <Breadcrumb>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>block list</Breadcrumb.Item>
-              <Breadcrumb.Item>UFmingle</Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
-          {/*  */}
-          <div className={sty.mainHeadBox}>
-            <div className={sty.mainHeadLeft}>
-              <img className={sty.mainHeadImg} src={yf} alt="" srcset="" />
-              <div className={sty.mainHeadTit}>
-                缘分天空
-              </div>
-              <div className={sty.mainHeadDesc}>
-                <div>
-                  Forum description：Gators meet lover here...
-                </div>
-                <div>
-                  administrator：MingJun RL
-                </div>
-              </div>
+        {/* 中间区域 */}
+        <div className={sty.contentBox}>
+          <div className={sty.contentCenter}>
+            <div className={sty.breadcrumbBox}>
+              <Breadcrumb>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>block list</Breadcrumb.Item>
+                <Breadcrumb.Item>UFmingle</Breadcrumb.Item>
+              </Breadcrumb>
             </div>
-            <div className={sty.mainHeadRight}>
-              <div className={sty.mainHeadRightItemBox}>
-                <div style={{
-                  marginBottom: 10
-                }} className={sty.mainHeadRightItem}>
-                  <div className={sty.mainHeadRightItem1}>今日贴数</div>
-                  <div className={sty.mainHeadRightItem2}>14</div>
+            {/*  */}
+            <div className={sty.mainHeadBox}>
+              <div className={sty.mainHeadLeft}>
+                <img className={sty.mainHeadImg} src={yf} alt="" srcset="" />
+                <div className={sty.mainHeadTit}>
+                  UFmingle
                 </div>
-                <div className={sty.mainHeadRightItem}>
-                  <div className={sty.mainHeadRightItem1}>总主题数</div>
-                  <div className={sty.mainHeadRightItem2}>34772</div>
+                <div className={sty.mainHeadDesc}>
+                  <div>
+                    Forum description：Gators meet lover here...
+                  </div>
+                  <div>
+                    administrator：MingJun RL
+                  </div>
                 </div>
               </div>
-              <Button>unsubscribe</Button>
+              <div className={sty.mainHeadRight}>
+                <div className={sty.mainHeadRightItemBox}>
+                  <div style={{
+                    marginBottom: 10
+                  }} className={sty.mainHeadRightItem}>
+                    <div className={sty.mainHeadRightItem1}>Today's post</div>
+                    <div className={sty.mainHeadRightItem2}>14</div>
+                  </div>
+                  <div className={sty.mainHeadRightItem}>
+                    <div className={sty.mainHeadRightItem1}>Total post</div>
+                    <div className={sty.mainHeadRightItem2}>34772</div>
+                  </div>
+                </div>
+                <Button>unsubscribe</Button>
+              </div>
             </div>
-          </div>
 
 
-          <div className={sty.bannerBox}>
-            <img className={sty.banner} src={banner} alt="" srcset="" />
-          </div>
-
-          <div className={sty.btnBox}>
-            <div style={{
-              marginRight: 15
-            }} className={sty.btn}>
-              <a href="/edit">POST</a>
+            <div className={sty.bannerBox}>
+              <img className={sty.banner} src={banner} alt="" srcset="" />
             </div>
 
-          </div>
+            <div className={sty.btnBox}>
+              <div style={{
+                marginRight: 15
+              }} className={sty.btn}>
+                <a href="/edit">POST</a>
+              </div>
 
-          <div className={sty.tableBox}>
-            <Table pagination={false} columns={columns} dataSource={articles} />
-            <div className={sty.paginationBox}>
-              <Pagination size="small" total={50} showSizeChanger showQuickJumper />
             </div>
+
+            <div className={sty.tableBox}>
+              <Table pagination={false} columns={columns} dataSource={articles} />
+              <div className={sty.paginationBox}>
+                <Pagination size="small" total={50} showSizeChanger showQuickJumper />
+              </div>
+            </div>
+
           </div>
 
         </div>
 
-      </div>
-
-    </div >
+      </div >
   );
 
   function getAllArticles() {

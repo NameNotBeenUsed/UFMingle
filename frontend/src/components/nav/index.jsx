@@ -35,17 +35,17 @@ export default function Nav() {
       <div className={sty.headLeft}>
         <img className={sty.logo} src={logo} alt="" srcset="" />
         <div className={sty.logoName}>
-          CC98论坛
+          UFmingle
         </div>
         <Divider type="vertical" />
         <div className={sty.navItem} onClick={()=> tologin('/')}>
-          版面列表
+          block list
         </div>
         <div className={sty.navItem}>
-          新帖
+          new article
         </div>
         <div className={sty.navItem}>
-          关注
+          follow
         </div>
         <div>
           <InputGroup compact>
