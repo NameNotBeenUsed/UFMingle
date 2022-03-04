@@ -45,7 +45,7 @@ const FormRight = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <h2>注册账号</h2>
+      <h2>Account Registration</h2>
       <Form.Item
         label="Username"
         name="username"

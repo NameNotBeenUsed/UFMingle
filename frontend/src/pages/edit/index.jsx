@@ -55,7 +55,7 @@ function Edit() {
             <Form.Item label="article type" name='type'>
                 <Radio.Group>
                     <Radio value={'normal'}>normal</Radio>
-                    <Radio value={'academic'}>love story sharing</Radio>
+                    <Radio value={'academic'}>Love Story sharing</Radio>
                 </Radio.Group>
             </Form.Item>
             <Form.Item label="advance" name='choice'>
