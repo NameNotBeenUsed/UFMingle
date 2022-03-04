@@ -1,5 +1,5 @@
 # UFMingle
-It is a forum only for people who have a gatorlink account. The topic of this forum is about finding true love who has UF background. So this is a love seeking forum only for gators. Users start a new post by writing an article to introduce themselves. You are also welcomed to post your confusion about relationship or your love story in this forum.
+It is a dating forum only for UF students. The topic of this forum is about finding true love who has UF background.  Users start a new post by writing an article to introduce themselves. You are also welcomed to post your confusion about relationship or your love story in this forum.
 
 ## Team Members
 | Name      | UFID     | Github ID     |

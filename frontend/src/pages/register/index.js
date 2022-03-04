@@ -13,7 +13,7 @@ import axios from "axios"
 const FormRight = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
-    axios.post('/u/register', {
+    axios.post('/api/u/register', {
       ...values
     })
       .then((data) => {
