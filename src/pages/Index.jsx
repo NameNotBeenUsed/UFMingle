@@ -81,7 +81,7 @@ const columns = [
   },
 ];
 
-const data = [
+/* const data = [
   {
     key: '1',
     title: '[征友] 93年博士 下定决心虎年脱单',
@@ -138,7 +138,7 @@ const data = [
     clickNum: 1000,
     time: '卷卷毛/22-01-24 18:59'
   }
-];
+]; */
 
 function Index() {
   // useEffect(() => {
@@ -148,6 +148,18 @@ function Index() {
 
   //   })
   // }, [])
+  
+  const [articles, setArticles] = useState([])
+  const [refreshData, setRefreshData] = useState(false)
+
+  useEffect(() => {
+      getAllArticles();
+  }, [])
+
+  if(refreshData){
+      setRefreshData(false);
+      getAllArticles();
+  }
 
   return (
     <div className={sty.box}>
@@ -223,6 +235,21 @@ function Index() {
 
     </div >
   );
+
+  function getAllArticles() {
+    var url = "http://localhost:8080/"
+    axios.get(url, {
+      headers:{
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if(response.status === 200){
+        console.log(response.data)
+        setArticles(response.data)
+      }
+    })
+  }
+
 }
 
 export default Index;
