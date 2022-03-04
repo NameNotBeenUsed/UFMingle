@@ -39,3 +39,6 @@ Frontend
 ## Sprint 2
 Backend Unit Test
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/Sprint2/Showcase/backend_test.png)
+
+Frontend Test
+![image](https://github.com/mingHeap/UFMingle/blob/Sprint2/Showcase/frontend_test.jpeg)
