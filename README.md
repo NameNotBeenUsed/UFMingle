@@ -10,5 +10,5 @@ It is a forum only for people who have a gatorlink account. The topic of this fo
 | Mingjun Yu  | 第一列     | NameNotBeenUsed|
 
 ## Tech Stacks
-* Frontend: Angular 2+
+* Frontend: React
 * Backend: gin
