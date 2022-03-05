@@ -1,0 +1,183 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "An on-campus dating application",
+        "title": "UFMingle",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show forum home page and all articles",
+                "responses": {
+                    "200": {
+                        "description": "Return an array of structure article",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.article"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/article/create": {
+            "get": {
+                "summary": "Show article creation page",
+                "responses": {}
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create an article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The title of the article",
+                        "name": "title",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "The content of the article",
+                        "name": "content",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create an article successfully",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create an article",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/view/:article_id": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Open the article page",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The index of the article",
+                        "name": "article_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the struct article",
+                        "schema": {
+                            "$ref": "#/definitions/main.article"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found or invalid article_id",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/u/login": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show the login page",
+                "responses": {}
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Perform function login",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Username",
+                        "name": "username",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Password",
+                        "name": "password",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Log in successfully",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to log in",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/u/logout": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Logout",
+                "responses": {}
+            }
+        },
+        "/u/register": {
+            "get": {
+                "summary": "Show the registration page",
+                "responses": {}
+            },
+            "post": {
+                "summary": "Register a new user",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "main.article": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
