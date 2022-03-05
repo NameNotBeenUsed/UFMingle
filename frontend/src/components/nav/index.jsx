@@ -5,7 +5,7 @@ import {
   useNavigate,
 } from 'react-router-dom'
 import { Divider, Select, Input, Avatar, Badge, Icon } from 'antd';
-
+import axios from 'axios'
 
 const { Search } = Input;
 const InputGroup = Input.Group;
@@ -15,6 +15,7 @@ const { Option } = Select;
 
 export default function Nav() {
   const history = useNavigate()
+ 
   const [islogin, setislogin] = useState(false)
   const tologin = (value) => {
     history(value)
@@ -29,7 +30,11 @@ export default function Nav() {
         setislogin(false)
       }
     },[])
-
+const logoutHandle=()=>{
+  localStorage.removeItem('lt_token')
+  setislogin(false);
+  window.location.href='/login'
+}
   return <div className={sty.headBox}>
     <div className={sty.headCenter}>
       <div className={sty.headLeft}>
@@ -68,6 +73,7 @@ export default function Nav() {
         <div className={sty.username}>
           IVYJANG
         </div>
+        <a onClick={()=>logoutHandle()}>logout</a>
       </div>
       : <div className={sty.headRight}>
         <div className={sty.login} onClick={() => tologin('/login')}>

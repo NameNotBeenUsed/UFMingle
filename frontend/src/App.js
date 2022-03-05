@@ -52,10 +52,6 @@ const Register = Loadable({
   loader: () => import("./pages/register/index"),
   loading: Loading,
 });
-const Article = Loadable({
-  loader: () => import("./pages/article/index"),
-  loading: Loading,
-});
 function ToIndex() {
   return <Navigate to="/home" />;
 }
@@ -77,7 +73,6 @@ class App extends Component {
               <Route path='/me' element={<Me />} />
               <Route path='/reply' element={<Reply />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/article' element={<Article />} />
             </Routes>
           </div>
         </Router>
