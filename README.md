@@ -14,7 +14,7 @@ It is a dating forum only for UF students. The topic of this forum is about find
 * Backend: gin
 * Document: Swagger
 ## How to run this
-Use NVM to set the node version to 10.16.3. Run the backend(go run) and then navigate to the frontend dir. And run npm start.
+Use NVM to set the node version to 10.16.3. Run the backend(go run .) and then navigate to the frontend dir. And run npm start.
 ## Sprint 1 Showcase
 Backend v1.0
 
