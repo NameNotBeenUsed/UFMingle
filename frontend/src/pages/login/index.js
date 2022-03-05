@@ -13,10 +13,13 @@ import axios from "axios"
 const FormRight = () => {
     const onFinish = (values) => {
       console.log('Success:', values);
-      axios.post('/u/login', {
+      axios.post('http://localhost:8080/u/login', {
         ...values
-      })
-      .then((data)=>{
+      // }, {headers: {
+      //   'Content-Type': 'application/json;charset=UTF-8'
+      // }
+    }).then((data)=>{
+      console.log(data)
         message.info(data);
         localStorage.setItem("lt_token", data)
       })
