@@ -9,11 +9,14 @@ import sty from './index.module.scss';
 
 import Nav from '../components/nav'
 import axios from "axios"
+import {Link} from "react-router-dom";
 
 
 
 const { Option } = Select;
+function editSource(text){
 
+}
 const columns = [
   {
     title: (
@@ -27,9 +30,11 @@ const columns = [
           <div className={sty.titleItem}>
             save
           </div>
-          <Select style={{ width: '100px' }} defaultValue="全部">
-            <Option value="all">全部</Option>
-            <Option value="all">全部</Option>
+          <Select style={{ width: '100px' }} defaultValue="all">
+            <Option value="all">all</Option>
+            <Option value="girls">girls</Option>
+            <Option value="boys">boys</Option>
+            <Option value="unknown">unknown</Option>
           </Select>
         </div>
     ),
@@ -44,7 +49,10 @@ const columns = [
           }}>
             <img src={hot} alt="" srcset="" />
             <div>
-              {text}
+
+        　　<a className="edit-data" onClick={editSource.bind(this,text)}>{text}</a>
+
+
             </div>
           </div>
       );
@@ -70,7 +78,7 @@ const columns = [
     key: 'replyNum',
     dataIndex: 'replyNum',
     render: tags => (
-        <Tag color='cyan'>
+        <Tag color='orange'>
           180k
         </Tag>
     ),
@@ -218,13 +226,13 @@ function Index() {
               <div style={{
                 marginRight: 15
               }} className={sty.btn}>
-                <a href="/edit">POST</a>
+                <a href="/edit" >POST</a>
               </div>
 
             </div>
 
             <div className={sty.tableBox}>
-              <Table pagination={false} columns={columns} dataSource={articles} />
+              <Table pagination={{pageSize: 5}} columns={columns} dataSource={articles} />
               <div className={sty.paginationBox}>
                 <Pagination size="small" total={50} showSizeChanger showQuickJumper />
               </div>
