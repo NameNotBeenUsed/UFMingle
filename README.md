@@ -41,7 +41,7 @@ Backend Unit Test
 
 All files ending with "\_test.go" are used as unit test files. We have tested each function of each module and passed all tests.
 
-![image](https://github.com/NameNotBeenUsed/UFMingle/blob/Sprint2/Showcase/backend_test.png)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/backup/Showcase/backend_test.png)
 
 Frontend Test
-![image](https://github.com/mingHeap/UFMingle/blob/Sprint2/Showcase/frontend_test.jpeg)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/backup/Showcase/frontend_test.jpeg)
