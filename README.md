@@ -42,5 +42,9 @@ Backend Unit Test
 All files ending with "\_test.go" are used as unit test files. We have tested each function of each module and passed all tests.
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test.png)
 
+The document of backend API can be accessed through http://localhost:8080/swagger/index.html.
+
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_document.png)
+
 Frontend Test
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/frontend_test.jpeg)
