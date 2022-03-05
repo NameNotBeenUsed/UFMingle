@@ -48,5 +48,9 @@ The document of backend API can be accessed through http://localhost:8080/swagge
 
 The showcase of backend and frontend integration can be viewed at https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/integration_test.mp4 or https://youtu.be/eHHgqPNQrEU.
 
-Frontend Test
+Frontend 
+  1. Test
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/frontend_test.jpeg)
+
+  2. Demo
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/login_article_logout.gif)
