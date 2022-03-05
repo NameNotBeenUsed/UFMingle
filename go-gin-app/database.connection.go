@@ -30,7 +30,19 @@ func createArticleTable() error {
 			title 		TEXT 		NOT NULL,
 			content 	TEXT 		NOT NULL
     );
+
     `
+
+	/*sqlArticleTable := `
+			CREATE TABLE IF NOT EXISTS articles(
+				id 			INTEGER PRIMARY KEY AUTOINCREMENT,
+				author 		TEXT 		NOT NULL,
+				title 		TEXT 		NOT NULL,
+				content 	TEXT 		NOT NULL,
+				FOREIGN KEY (author) REFERENCES users(username)
+	    );
+
+	    `*/
 	_, err := DB.Exec(sqlArticleTable)
 	if err != nil {
 		return err

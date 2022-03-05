@@ -222,7 +222,7 @@ func TestArticleCreationPageAuthenticated(t *testing.T) {
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/article/create", nil)
-	req.Header = http.Header{"Cookie": w.Result().Header["Set-Cookie"]}
+	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
 
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)

@@ -17,7 +17,6 @@ func initializeRoutes() {
 	router.Use(setUserStatus())
 	router.Use(gin.Logger())
 	router.Use(cors.Default())
-
 	// Handle the index route
 	router.GET("/", showIndexPage)
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
