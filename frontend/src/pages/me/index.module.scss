@@ -1,0 +1,48 @@
+.contentBox{
+    padding: 20px 80px;
+    .meBox{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .meRightTop{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        .meright{
+            width: calc(100% - 200px);
+            margin-left: 20px;
+            .top{
+                .name{
+                    font-size: 20px;
+                    margin-right: 20px;
+                }
+                .samll{
+                    font-size: 8px;
+                    color: #ccc;
+                    margin-right: 40px;
+                }
+                .tag{
+                    margin-left: -8px;
+                    margin-right: 120px;
+                }
+            }
+            .bottom{
+                margin-top: 40px;
+                p{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+        }
+        
+    }
+}
+.blue{
+    color: rgb(118, 167, 231);
+    margin-right: 40px;
+}
+.m40{
+    margin: 40px 0;
+}
