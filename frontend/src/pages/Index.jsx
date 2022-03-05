@@ -50,7 +50,7 @@ const columns = [
             <img src={hot} alt="" srcset="" />
             <div>
 
-        　　<a className="edit-data" onClick={editSource.bind(this,text)}>{text}</a>
+        　　<a className="edit-data" href="/article">{text}</a>
 
 
             </div>
@@ -233,9 +233,7 @@ function Index() {
 
             <div className={sty.tableBox}>
               <Table pagination={{pageSize: 5}} columns={columns} dataSource={articles} />
-              <div className={sty.paginationBox}>
-                <Pagination size="small" total={50} showSizeChanger showQuickJumper />
-              </div>
+
             </div>
 
           </div>
