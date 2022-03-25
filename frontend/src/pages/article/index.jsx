@@ -24,7 +24,7 @@ function Article() {
     const {id : articleId} = useParams()
     console.log("This is article ID ")
     const onFinish = () => {
-        Axios.get('http://localhost:8080/article/view/'+articleId,
+        Axios.get(`http://localhost:8080/article/view/${articleId}`,
             {headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
