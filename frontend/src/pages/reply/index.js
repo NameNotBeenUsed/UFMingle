@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Breadcrumb, Carousel, Badge, Avatar, Button } from 'antd';
+import React, { Component, useState, useEffect } from 'react';
+import { Breadcrumb, Carousel, Badge, Avatar, Button, message } from 'antd';
 import { UserOutlined, ManOutlined } from '@ant-design/icons';
 
 import sty from './index.module.scss';
@@ -29,7 +29,7 @@ function Reply() {
         withCredentials: true
       })
       .then((response) => {
-        setArticle(response.data.reverse());
+        setArticle(response.data);
       })
       .catch((e) => {
         message.info(e);
