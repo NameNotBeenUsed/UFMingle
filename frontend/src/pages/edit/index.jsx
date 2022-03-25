@@ -21,7 +21,7 @@ function Edit() {
 
     const onFinish = (values) => {
         console.log('Success:', values);
-        Axios.post('/article/create', values)
+        Axios.post('http://localhost:8080/article/create', values)
         .then((data)=>{
             message.info(data);
         })
