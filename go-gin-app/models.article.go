@@ -113,7 +113,7 @@ func getArticleByID(id int) (article, error) {
 
 	articleResult := article{}
 
-	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Content, &articleResult.Content)
+	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Title, &articleResult.Content)
 
 	if sqlErr != nil {
 		if sqlErr == sql.ErrNoRows {

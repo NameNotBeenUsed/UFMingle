@@ -3,12 +3,13 @@
 package main
 
 import (
+	_ "go-gin-app/docs"
+	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-	_ "go-gin-app/docs"
-	"time"
 )
 
 func initializeRoutes() {
@@ -39,11 +40,11 @@ func initializeRoutes() {
 
 		// Handle POST requests at /u/login
 		// Ensure that the user is not logged in by using the middleware
-		userRoutes.POST("/login", ensureNotLoggedIn(), performLogin)
+		userRoutes.POST("/login", performLogin)
 
 		// Handle GET requests at /u/logout
 		// Ensure that the user is logged in by using the middleware
-		userRoutes.GET("/logout", ensureLoggedIn(), logout)
+		userRoutes.GET("/logout", logout)
 
 		// Handle the GET requests at /u/register
 		// Show the registration page
@@ -52,14 +53,14 @@ func initializeRoutes() {
 
 		// Handle POST requests at /u/register
 		// Ensure that the user is not logged in by using the middleware
-		userRoutes.POST("/register", ensureNotLoggedIn(), register)
+		userRoutes.POST("/register", register)
 	}
 
 	// Group article related routes together
 	articleRoutes := router.Group("/article")
 	{
 		// Handle GET requests at /article/view/some_article_id
-		articleRoutes.GET("/view/:article_id", ensureLoggedIn(), getArticle)
+		articleRoutes.GET("/view/:article_id", getArticle)
 		//articleRoutes.GET("/view/:article_id", getArticle)
 
 		// Handle the GET requests at /article/create
@@ -69,7 +70,7 @@ func initializeRoutes() {
 
 		// Handle POST requests at /article/create
 		// Ensure that the user is logged in by using the middleware
-		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
+		articleRoutes.POST("/create", createArticle)
 		//articleRoutes.POST("/create", ensureLoggedIn())
 	}
 }
