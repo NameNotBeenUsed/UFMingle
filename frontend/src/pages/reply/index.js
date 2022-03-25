@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Breadcrumb, Carousel, Badge, Avatar, Button, message } from 'antd';
+import { Breadcrumb, Carousel, Badge, Avatar, Button, message, Card } from 'antd';
 import { UserOutlined, ManOutlined } from '@ant-design/icons';
 
 import sty from './index.module.scss';
@@ -50,7 +50,7 @@ function Reply() {
             <div className={sty.headLeft}>
               <div className={sty.titleleft}>
                 <h2>{article.title}</h2>
-                <p className={sty.red} dangerouslySetInnerHTML={{__html: article.content}}></p>
+                <p className={sty.red}></p>
               </div>
               <div className={sty.divider}></div>
               <div className={sty.titleright}>
@@ -75,6 +75,13 @@ function Reply() {
               </Carousel>
             </div>
           </div>
+          <Card style={{ width: "100%" }}>
+            <p dangerouslySetInnerHTML={{ __html: article.content }}></p>
+          </Card>
+
+
+
+
 
           <div className={sty.contentCard}>
             <div className={sty.contentLeft}>
