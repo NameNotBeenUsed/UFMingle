@@ -1,4 +1,5 @@
 import React, {
+    useEffect,
     useState
 } from 'react';
 import {
@@ -16,19 +17,30 @@ import sty from './index.module.scss';
 import Nav from '../../components/nav'
 import ReactWEditor from 'wangeditor-for-react';
 import Axios from 'axios';
+import {useLocation, useParams} from "react-router-dom";
 
 function Article() {
-    const [articles, setArticles] = useState([])
+    const [article, setArticle] = useState([])
+    const {id : articleId} = useParams()
+    console.log("This is article ID ")
     const onFinish = () => {
-        Axios.get('/view/1')
-            .then((data)=>{
-                setArticles(data);
+        Axios.get('http://localhost:8080/article/view/'+articleId,
+            {headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                withCredentials: true
+            })
+            .then((response)=>{
+                setArticle(response.data);
             })
             .catch((e)=>{
                 message.info(e);
             })
     };
-    onFinish();
+    useEffect(() => {
+        onFinish()
+    }, [articleId])
     return (
         <div className={sty.box}>
             <Nav></Nav>
@@ -42,15 +54,19 @@ function Article() {
                         <Breadcrumb.Item>POST</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
-                <h1>Hello</h1>
+                <h1>{article.title}</h1>
 
 
-                <pre>hello hello</pre>
+                <pre>{article.content}</pre>
 
             </div>
         </div >
     )
 }
 
+// function getArticle() {
+//     var url = "http://localhost:8080/article/view"
+//
+// }
 
 export default Article;

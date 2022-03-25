@@ -30,11 +30,13 @@ export default function Nav() {
         setislogin(false)
       }
     },[])
+
 const logoutHandle=()=>{
   localStorage.removeItem('lt_token')
   setislogin(false);
   window.location.href='/login'
 }
+
   return <div className={sty.headBox}>
     <div className={sty.headCenter}>
       <div className={sty.headLeft}>

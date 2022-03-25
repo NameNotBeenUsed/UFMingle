@@ -77,7 +77,7 @@ class App extends Component {
               <Route path='/me' element={<Me />} />
               <Route path='/reply' element={<Reply />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/article' element={<Article />} />
+              <Route path='/article/:id' element={<Article />} />
             </Routes>
           </div>
         </Router>

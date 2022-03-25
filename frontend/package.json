@@ -1,5 +1,5 @@
 {
-  "name": "zzedu-student",
+  "name": "UFMingle",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -61,6 +61,5 @@
     "customize-cra": "^0.9.1",
     "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.1.6"
-  },
-  "proxy": "http://localhost:8080"
+  }
 }

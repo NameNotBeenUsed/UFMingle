@@ -9,7 +9,8 @@ import sty from './index.module.scss';
 
 import Nav from '../components/nav'
 import axios from "axios"
-import {Link} from "react-router-dom";
+import {Link, Route} from "react-router-dom";
+import Article from "./article";
 
 
 
@@ -39,9 +40,9 @@ const columns = [
         </div>
     ),
     dataIndex: 'title',
-    key: 'title',
+    key: 'id',
     width: 400,
-    render: text => {
+    render: (text, record) => {
       return (
           <div style={{
             display: 'flex',
@@ -49,10 +50,8 @@ const columns = [
           }}>
             <img src={hot} alt="" srcset="" />
             <div>
-
-        　　<a className="edit-data" href="/article">{text}</a>
-
-
+              {/*<a className="edit-data" href={'/article/' + record.id}>{text}</a>*/}
+              <Link className="edit-data" to={'/article/' + record.id}>{text}</Link>
             </div>
           </div>
       );
@@ -89,65 +88,6 @@ const columns = [
     key: 'time',
   },
 ];
-
-/* const data = [
-  {
-    key: '1',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  },
-  {
-    key: '2',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  },
-  {
-    key: '3',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  },
-  {
-    key: '4',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  },
-  {
-    key: '5',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  },
-  {
-    key: '6',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  },
-  {
-    key: '7',
-    title: '[征友] 93年博士 下定决心虎年脱单',
-    author: 32,
-    replyNum: 2000,
-    clickNum: 1000,
-    time: '卷卷毛/22-01-24 18:59'
-  }
-]; */
 
 function Index() {
   // useEffect(() => {

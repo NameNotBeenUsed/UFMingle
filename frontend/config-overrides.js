@@ -10,7 +10,7 @@ module.exports = {
             libraryDirectory: 'es',
             style: 'css',
         }), (config) => {
-            config.output.publicPath = './';
+            //config.output.publicPath = './';
 
             // config.module.rules.unshift({
             //     test: /\.txt$/,

@@ -3,6 +3,7 @@
 package main
 
 import (
+	"crypto/rand"
 	"database/sql"
 	"errors"
 	"strings"
@@ -175,4 +176,12 @@ func deleteUser(username string) (int64, error) {
 	tx.Commit()
 
 	return num, nil
+}
+
+func GenerateSalt() ([]byte, error) {
+	salt := make([]byte, 16)
+	if _, err := rand.Read(salt); err != nil {
+		return nil, err
+	}
+	return salt, nil
 }

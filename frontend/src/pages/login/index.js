@@ -15,11 +15,12 @@ const FormRight = () => {
       console.log('Success:', values);
       axios.post('http://localhost:8080/u/login', {
         ...values
-      // }, {headers: {
-      //   'Content-Type': 'application/json;charset=UTF-8'
-      // }
+      }, {headers: {
+              'Content-Type': 'application/json'
+          },
+          withCredentials: true
     }).then((data)=>{
-      console.log(data)
+        console.log(data)
         message.info(data);
         localStorage.setItem("lt_token", data)
       })

@@ -8,6 +8,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	_ "go-gin-app/docs"
+	"time"
 )
 
 func initializeRoutes() {
@@ -16,7 +17,14 @@ func initializeRoutes() {
 	// indicating whether the request was from an authenticated user or not
 	router.Use(setUserStatus())
 	router.Use(gin.Logger())
-	router.Use(cors.Default())
+	//router.Use(cors.Default())
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Accept"},
+		AllowCredentials: true,
+		MaxAge:           1 * time.Hour,
+	}))
 	// Handle the index route
 	router.GET("/", showIndexPage)
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -52,6 +60,7 @@ func initializeRoutes() {
 	{
 		// Handle GET requests at /article/view/some_article_id
 		articleRoutes.GET("/view/:article_id", ensureLoggedIn(), getArticle)
+		//articleRoutes.GET("/view/:article_id", getArticle)
 
 		// Handle the GET requests at /article/create
 		// Show the article creation page
