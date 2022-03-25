@@ -51,7 +51,7 @@ const columns = [
             <img src={hot} alt="" srcset="" />
             <div>
               {/*<a className="edit-data" href={'/article/' + record.id}>{text}</a>*/}
-              <Link className="edit-data" to={'/article/' + record.id}>{text}</Link>
+              <Link className="edit-data" to={'/reply/' + record.id}>{text}</Link>
             </div>
           </div>
       );
