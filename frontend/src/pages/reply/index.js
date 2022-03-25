@@ -29,7 +29,7 @@ function Reply() {
         withCredentials: true
       })
       .then((response) => {
-        setArticle(response.data);
+        setArticle(response.data.reverse());
       })
       .catch((e) => {
         message.info(e);
@@ -50,7 +50,7 @@ function Reply() {
             <div className={sty.headLeft}>
               <div className={sty.titleleft}>
                 <h2>{article.title}</h2>
-                <p className={sty.red}>{article.content}</p>
+                <p className={sty.red} dangerouslySetInnerHTML={{__html: article.content}}></p>
               </div>
               <div className={sty.divider}></div>
               <div className={sty.titleright}>
