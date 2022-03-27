@@ -190,8 +190,9 @@ function Index() {
         'Accept': 'application/json'
       }
     }).then(response => {
+      // console.log(response.data)
       if(response.status === 200){
-        //console.log(response.data)
+       
         setArticles(response.data.reverse())
       }
     })

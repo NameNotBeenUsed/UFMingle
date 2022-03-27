@@ -13,12 +13,19 @@ import axios from "axios"
 const FormRight = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
-    axios.post('/u/register', {
+    axios.post('http://localhost:8080/u/register', {
       ...values
     })
-      .then((data) => {
-        message.info(data);
-        localStorage.setItem("lt_token", data)
+      .then(async(data) => {
+        if(data.status === 200){
+          // message.info(data);
+          // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
+        
+         await message.success('Registration Successful'); // 打印message后再跳转
+         window.location.href = "/login";
+          
+        }
+        
       })
       .catch((e) => {
         message.info(e);
