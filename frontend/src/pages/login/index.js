@@ -22,7 +22,7 @@ const FormRight = () => {
     }).then((data)=>{
         console.log(data)
         message.info(data);
-        localStorage.setItem("lt_token", data)
+        sessionStorage.setItem("lt_token", data)
       })
       .catch((e)=>{
         message.info(e);
