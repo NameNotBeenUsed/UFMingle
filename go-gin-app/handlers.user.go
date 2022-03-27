@@ -60,6 +60,12 @@ func performLogin(c *gin.Context) {
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
+		//loggedInInterface, _ := c.Get("is_logged_in")
+		//loggedIn := loggedInInterface.(bool)
+		//
+		//fmt.Println("Print at performLogin()")
+		//fmt.Println(loggedIn)
+
 		render(c, gin.H{
 			"title":   "Successful Login",
 			"payload": "Successful Login"}, "login-successful.html")
@@ -94,9 +100,16 @@ func logout(c *gin.Context) {
 	// Clear the cookie
 	c.SetSameSite(sameSiteCookie)
 	c.SetCookie("token", "", -1, "", "", false, true)
-	c.JSON(http.StatusOK, gin.H{"message": "Log out successfully"})
+	c.JSON(http.StatusOK, gin.H{"payload": "Log out successfully"})
+
+	//loggedInInterface, _ := c.Get("is_logged_in")
+	//loggedIn := loggedInInterface.(bool)
+	//
+	//fmt.Println("Print at logout()")
+	//fmt.Println(loggedIn)
+
 	// Redirect to the home page
-	c.Redirect(http.StatusTemporaryRedirect, "/")
+	//c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
 // 前端的活

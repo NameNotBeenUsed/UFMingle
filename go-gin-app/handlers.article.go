@@ -78,6 +78,7 @@ func getArticle(c *gin.Context) {
 // @Produce json
 // @Param title header string true "The title of the article"
 // @Param content header string true "The content of the article"
+// @Param author header string true "The author of the article"
 // @Success 200 {int} int "If the article has been created successfully, return the number of rows been affected, else 0"
 // @Failure 400 {error} error "There is an error while creating the article"
 // @Router /article/create [post]

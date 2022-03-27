@@ -33,8 +33,19 @@ export default function Nav() {
 
 const logoutHandle=()=>{
   sessionStorage.removeItem('lt_token')
-  setislogin(false);
-  window.location.href='/login'
+  var url = "http://localhost:8080/u/logout"
+  axios.get(url, {
+    headers:{
+      'Accept': 'application/json'
+    },
+    withCredentials: true
+  }).then(response => {
+    // console.log(response.data)
+    if(response.status === 200){
+      setislogin(false);
+    }
+  })
+  window.location.href='/'
 }
 
   return <div className={sty.headBox}>

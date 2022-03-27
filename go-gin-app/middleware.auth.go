@@ -16,6 +16,10 @@ func ensureLoggedIn() gin.HandlerFunc {
 		// the user is not logged in
 		loggedInInterface, _ := c.Get("is_logged_in")
 		loggedIn := loggedInInterface.(bool)
+
+		//fmt.Println("Print at ensureLoggedIn()")
+		//fmt.Println(loggedIn)
+
 		if !loggedIn {
 			//if token, err := c.Cookie("token"); err != nil || token == "" {
 
@@ -41,6 +45,10 @@ func ensureNotLoggedIn() gin.HandlerFunc {
 		// the user is already logged in
 		loggedInInterface, _ := c.Get("is_logged_in")
 		loggedIn := loggedInInterface.(bool)
+
+		//fmt.Println("Print at ensureNotLoggedIn()")
+		//fmt.Println(loggedIn)
+
 		if loggedIn {
 			//if token, err := c.Cookie("token"); err == nil || token != "" {
 			c.AbortWithStatus(http.StatusUnauthorized)

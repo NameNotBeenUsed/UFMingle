@@ -40,11 +40,11 @@ func initializeRoutes() {
 
 		// Handle POST requests at /u/login
 		// Ensure that the user is not logged in by using the middleware
-		userRoutes.POST("/login", performLogin)
+		userRoutes.POST("/login", ensureNotLoggedIn(), performLogin)
 
 		// Handle GET requests at /u/logout
 		// Ensure that the user is logged in by using the middleware
-		userRoutes.GET("/logout", logout)
+		userRoutes.GET("/logout", ensureLoggedIn(), logout)
 
 		// Handle the GET requests at /u/register
 		// Show the registration page
@@ -53,15 +53,15 @@ func initializeRoutes() {
 
 		// Handle POST requests at /u/register
 		// Ensure that the user is not logged in by using the middleware
-		userRoutes.POST("/register", register)
+		userRoutes.POST("/register", ensureNotLoggedIn(), register)
 	}
 
 	// Group article related routes together
 	articleRoutes := router.Group("/article")
 	{
 		// Handle GET requests at /article/view/some_article_id
-		articleRoutes.GET("/view/:article_id", getArticle)
 		//articleRoutes.GET("/view/:article_id", getArticle)
+		articleRoutes.GET("/view/:article_id", ensureLoggedIn(), getArticle)
 
 		// Handle the GET requests at /article/create
 		// Show the article creation page
@@ -70,7 +70,7 @@ func initializeRoutes() {
 
 		// Handle POST requests at /article/create
 		// Ensure that the user is logged in by using the middleware
-		articleRoutes.POST("/create", createArticle)
-		//articleRoutes.POST("/create", ensureLoggedIn())
+		//articleRoutes.POST("/create", createArticle)
+		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
 	}
 }
