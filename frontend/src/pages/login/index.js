@@ -9,8 +9,10 @@ import lo from '../../img/lo.jpg';
 // import { http } from '../../utils/http'
 import axios from "axios"
 
+// import { Link, useHistory } from 'react-router-dom';
 
 const FormRight = () => {
+    // const history = useHistory();
     const onFinish = (values) => {
       console.log('Success:', values);
       axios.post('http://localhost:8080/u/login', {
@@ -20,9 +22,13 @@ const FormRight = () => {
           },
           withCredentials: true
     }).then((data)=>{
-        console.log(data)
-        message.info(data);
-        sessionStorage.setItem("lt_token", data)
+        if(data.status === 200){
+          console.log(data)
+          message.info(data);
+          sessionStorage.setItem("lt_token", data);
+          window.location.href = "/"
+        }
+        
       })
       .catch((e)=>{
         message.info(e);
@@ -85,6 +91,11 @@ const FormRight = () => {
           <Button type="primary" htmlType="submit">
             login account
           </Button>
+          {/* <Button type="primary" onClick={()=>{
+            history.push('/edit');
+          }}>
+            login account
+          </Button> */}
         </Form.Item>
       </Form>
     );
