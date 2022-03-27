@@ -23,7 +23,7 @@ export default function Nav() {
 
   useEffect(
     ()=>{
-      const temp = localStorage.getItem('lt_token')
+      const temp = sessionStorage.getItem('lt_token')
       if(temp){
         setislogin(true)
       }else{
