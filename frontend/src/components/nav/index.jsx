@@ -32,7 +32,7 @@ export default function Nav() {
     },[])
 
 const logoutHandle=()=>{
-  localStorage.removeItem('lt_token')
+  sessionStorage.removeItem('lt_token')
   setislogin(false);
   window.location.href='/login'
 }
