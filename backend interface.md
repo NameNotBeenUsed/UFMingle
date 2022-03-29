@@ -1,4 +1,4 @@
-# http method from front end to backend
+# http method from frontend to backend
 ## post to login
 ![image](https://user-images.githubusercontent.com/42493663/160507172-1526fc32-ae31-4f96-b4ea-c6e767568499.png)
 ![image](https://user-images.githubusercontent.com/42493663/160507211-4075a579-40ca-4fef-87cd-f2c628b966eb.png)
