@@ -11,8 +11,10 @@
 note:the get request should be sent with cookie!!!
 ![image](https://user-images.githubusercontent.com/42493663/160697193-e7eb3deb-80ba-4784-83c3-86de0f0532b9.png)
 ## post to create article
-![image](https://user-images.githubusercontent.com/42493663/160699505-11c761d0-89ce-41a5-9988-fc6f324c3425.png)
-![image](https://user-images.githubusercontent.com/42493663/160699615-419ae66e-846f-40ac-985c-f622a98c9645.png)
+need title and content
+![image](https://user-images.githubusercontent.com/42493663/160712878-f8e7db04-969b-40cd-9b13-106ee88ffc61.png)
+![image](https://user-images.githubusercontent.com/42493663/160712803-618bcbbc-7e78-4f97-901b-7989cfdff476.png)
+
 
 # database info
 ![image](https://user-images.githubusercontent.com/42493663/160507992-b85a30be-26ca-45e2-8573-69c056133c33.png)
