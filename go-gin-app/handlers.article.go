@@ -3,6 +3,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -101,8 +102,25 @@ func createArticle(c *gin.Context) {
 	//title := c.PostForm("title")
 	//content := c.PostForm("content")
 	//author := c.PostForm("author")
+	var tempuser mingleUser
+	token, _ := c.Cookie("token")
+	if err := json.Unmarshal([]byte(token), &tempuser); err == nil {
+		if num, err := createNewArticle(articleData, tempuser); num != 0 && err == nil {
+			// If the article is created successfully, show success message
+			render(c, gin.H{
+				"title":   "Submission Successful",
+				"payload": num}, "submission-successful.html")
+			//c.JSON(http.StatusOK, status)
+		} else {
+			// if there was an error while creating the article, abort with an error
+			//c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			c.AbortWithError(http.StatusBadRequest, err)
+		}
+	} else {
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
 
-	if num, err := createNewArticle(articleData); num != 0 && err == nil {
+	/*if num, err := createNewArticle(articleData); num != 0 && err == nil {
 		// If the article is created successfully, show success message
 		render(c, gin.H{
 			"title":   "Submission Successful",
@@ -112,5 +130,5 @@ func createArticle(c *gin.Context) {
 		// if there was an error while creating the article, abort with an error
 		//c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		c.AbortWithError(http.StatusBadRequest, err)
-	}
+	}*/
 }

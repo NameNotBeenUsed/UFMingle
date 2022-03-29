@@ -5,7 +5,6 @@ package main
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -143,10 +142,7 @@ func isGatorIdAvailable(gatorid string, gatorpw string) (bool, error) {
 
 	var tempPW string
 	sqlErr := stmt.QueryRow(gatorid).Scan(&tempPW)
-	fmt.Println("hehhhhhhh")
-	fmt.Println(tempPW)
-	fmt.Println("hehhhhhhh")
-	fmt.Println(gatorpw)
+
 	if sqlErr != nil || tempPW != gatorpw {
 		if sqlErr == sql.ErrNoRows {
 			return true, nil

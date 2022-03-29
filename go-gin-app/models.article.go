@@ -8,10 +8,12 @@ import (
 )
 
 type article struct {
-	ID      int    `json:"id"`
-	Author  string `json:"author"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	ID       int    `json:"id"`
+	Author   string `json:"author"`
+	Title    string `json:"title"`
+	Content  string `json:"content"`
+	Likes    int    `json:"likes"`
+	Dislikes int    `json:"dislikes"`
 }
 
 // For this demo, we're storing the article list in memory
@@ -38,7 +40,7 @@ type article struct {
 // Return a list of all the articles
 func getAllArticles() ([]article, error) {
 	//return articleList
-	rows, err := DB.Query("SELECT id, author, title, content from articles")
+	rows, err := DB.Query("SELECT id, author, title, content, likes, dislikes from articles")
 	//fmt.Println("getAllArticles")
 	//fmt.Println(err)
 	if err != nil {
@@ -51,7 +53,7 @@ func getAllArticles() ([]article, error) {
 
 	for rows.Next() {
 		singleArticle := article{}
-		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content)
+		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
 		checkErr(err)
 		articleResult = append(articleResult, singleArticle)
 	}
@@ -68,7 +70,7 @@ func getAllArticles() ([]article, error) {
 // Get number count of articles
 // 刷新页面用
 func getArticles(count int) ([]article, error) {
-	rows, err := DB.Query("SELECT id, author, title, content from articles LIMIT" + strconv.Itoa(count))
+	rows, err := DB.Query("SELECT id, author, title, content, likes, dislikes from articles LIMIT" + strconv.Itoa(count))
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +81,7 @@ func getArticles(count int) ([]article, error) {
 
 	for rows.Next() {
 		singleArticle := article{}
-		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content)
+		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
 
 		if err != nil {
 			return nil, err
@@ -104,7 +106,8 @@ func getArticleByID(id int) (article, error) {
 	//		return &a, nil
 	//	}
 	//}
-	stmt, err := DB.Prepare("SELECT id, author, title, content from articles WHERE id = ?")
+
+	stmt, err := DB.Prepare("SELECT id, author, title, content, likes, dislikes from articles WHERE id = ?")
 	if err != nil {
 		return article{}, err
 	}
@@ -113,7 +116,7 @@ func getArticleByID(id int) (article, error) {
 
 	articleResult := article{}
 
-	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Title, &articleResult.Content)
+	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Title, &articleResult.Content, &articleResult.Likes, &articleResult.Dislikes)
 
 	if sqlErr != nil {
 		if sqlErr == sql.ErrNoRows {
@@ -125,7 +128,7 @@ func getArticleByID(id int) (article, error) {
 }
 
 // Create a new article with the title and content provided
-func createNewArticle(newArticle article) (int64, error) {
+func createNewArticle(newArticle article, user mingleUser) (int64, error) {
 	//// Set the ID of a new article to one more than the number of articles
 	//a := article{ID: len(articleList) + 1, Author: author, Title: title, Content: content}
 	//
@@ -133,6 +136,20 @@ func createNewArticle(newArticle article) (int64, error) {
 	//articleList = append(articleList, a)
 	//
 	//return &a, nil
+	stmt0, err := DB.Prepare("SELECT password FROM users WHERE username = ?")
+	if err != nil {
+		return 0, err
+	}
+
+	defer stmt0.Close()
+
+	var tempPW string
+	sqlErr := stmt0.QueryRow(user.Username).Scan(&tempPW)
+
+	if sqlErr != nil || tempPW != user.Password {
+		return 0, sqlErr
+	}
+
 	tx, err := DB.Begin()
 	if err != nil {
 		return 0, err
@@ -145,7 +162,7 @@ func createNewArticle(newArticle article) (int64, error) {
 
 	defer stmt.Close()
 
-	result, execErr := stmt.Exec(newArticle.Author, newArticle.Title, newArticle.Content)
+	result, execErr := stmt.Exec(user.Username, newArticle.Title, newArticle.Content)
 	if execErr != nil {
 		return 0, execErr
 	}

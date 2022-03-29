@@ -3,6 +3,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -54,10 +55,12 @@ func performLogin(c *gin.Context) {
 	valid, err := isUserValid(u)
 	if valid && err == nil {
 		// If the username/password is valid set the token in a cookie
-		token := generateSessionToken()
+		//token := generateSessionToken()
+		//token = token + " " + u.Username + " " + u.Password
+		jsonstr, _ := json.Marshal(u)
 		c.SetSameSite(sameSiteCookie)
 		// maxAge: seconds
-		c.SetCookie("token", token, 3600, "", "", false, true)
+		c.SetCookie("token", string(jsonstr), 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
 		//loggedInInterface, _ := c.Get("is_logged_in")
@@ -86,6 +89,7 @@ func generateSessionToken() string {
 	// We're using a random 16 character string as the session token
 	// This is NOT a secure way of generating session tokens
 	// DO NOT USE THIS IN PRODUCTION
+
 	return strconv.FormatInt(rand.Int63(), 16)
 }
 
@@ -122,6 +126,8 @@ func showRegistrationPage(c *gin.Context) {
 }
 
 // @Summary Register a new user
+// @Param gatorlink header string true "Gatorlink"
+// @Param gatorPW header string true "GatorPW"
 // @Param username header string true "Username"
 // @Param password header string true "Password"
 // @Success 200 {int} int "Register successfully, return the number of rows been affected"
@@ -149,9 +155,12 @@ func register(c *gin.Context) {
 
 	if num, err := registerNewUser(newUser); err == nil {
 		// If the user is created, set the token in a cookie and log the user in
-		token := generateSessionToken()
+		//token := generateSessionToken()
+		//token = token + " " + newUser.Username + " " + newUser.Password
+		ufuser := mingleUser{newUser.Username, newUser.Password}
+		jsonstr, _ := json.Marshal(ufuser)
 		c.SetSameSite(sameSiteCookie)
-		c.SetCookie("token", token, 3600, "", "", false, true)
+		c.SetCookie("token", string(jsonstr), 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
 		render(c, gin.H{
