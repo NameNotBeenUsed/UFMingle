@@ -33,7 +33,7 @@ func performLogin(c *gin.Context) {
 	// Obtain the POSTed username and password values
 	//username := c.PostForm("username")
 	//password := c.PostForm("password")
-	var u user
+	var u mingleUser
 	if err := c.BindJSON(&u); err != nil {
 		//c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		c.AbortWithError(http.StatusBadRequest, err)

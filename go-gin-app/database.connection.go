@@ -23,26 +23,27 @@ func ConnectDB() error {
 
 func createArticleTable() error {
 	//create the table of article
-	sqlArticleTable := `
-		CREATE TABLE IF NOT EXISTS articles(
-			id 			INTEGER PRIMARY KEY AUTOINCREMENT,
-			author 		TEXT 		NOT NULL,
-			title 		TEXT 		NOT NULL,
-			content 	TEXT 		NOT NULL
-    );
-
-    `
-
 	/*sqlArticleTable := `
 			CREATE TABLE IF NOT EXISTS articles(
 				id 			INTEGER PRIMARY KEY AUTOINCREMENT,
 				author 		TEXT 		NOT NULL,
 				title 		TEXT 		NOT NULL,
-				content 	TEXT 		NOT NULL,
-				FOREIGN KEY (author) REFERENCES users(username)
+				content 	TEXT 		NOT NULL
 	    );
-
 	    `*/
+
+	sqlArticleTable := `
+			CREATE TABLE IF NOT EXISTS articles(
+				id 			INTEGER PRIMARY KEY AUTOINCREMENT,
+				author 		TEXT 		NOT NULL,
+				title 		TEXT 		NOT NULL,
+				content 	TEXT 		NOT NULL,
+				likes       INTEGER     default 0,
+				dislikes    INTEGER     default 0,
+				FOREIGN KEY (author) REFERENCES users(username)
+			    
+	    );
+	    `
 	_, err := DB.Exec(sqlArticleTable)
 	if err != nil {
 		return err
@@ -90,17 +91,31 @@ func createArticleTable() error {
 
 func createUserTable() error {
 	//create the table of user
-	sqlUserTable := `
-		CREATE TABLE IF NOT EXISTS users(
-			username 	TEXT PRIMARY KEY	NOT NULL,
-			password 	TEXT 				NOT NULL
-	);
-    `
-	_, err := DB.Exec(sqlUserTable)
+	sqlUFTable := `
+		CREATE TABLE IF NOT EXISTS gatorlink(
+			gatorId TEXT PRIMARY KEY NOT NULL,
+			password TEXT            NOT NULL
+			)  ;`
+
+	_, err := DB.Exec(sqlUFTable)
 	if err != nil {
 		return err
 	}
 
+	sqlUserTable := `
+		CREATE TABLE IF NOT EXISTS users(
+			username 	TEXT PRIMARY KEY	NOT NULL,
+			password 	TEXT 				NOT NULL,
+			gatorId     TEXT                NOT NULL,
+			birthday    date,
+			gender      TEXT  default 'unknown' check(gender = 'male' or gender='female' or gender='unknown'),
+		    profile_photo TEXT             default "./test.PNG" ,
+			foreign key (gatorID) references gatorlink(gatorId)
+	);`
+	_, err2 := DB.Exec(sqlUserTable)
+	if err2 != nil {
+		return err2
+	}
 	//Test: Insert some users
 	//var userList = []user{
 	//	user{Username: "user1", Password: "pass1"},
@@ -121,8 +136,44 @@ func createUserTable() error {
 	return nil
 }
 
+func createCommentTable() error {
+	sqlUFTable := `
+		CREATE TABLE IF NOT EXISTS comment(
+		    comment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+			topic_id INTEGER NOT NULL,
+			comment_user TEXT NOT NULL,
+			likes INTEGER default 0,
+			dislikes INTEGER  default 0,
+			foreign key (topic_id) references articles(id),
+		    foreign key (comment_user) references users(username)
+			)  ;`
+
+	_, err := DB.Exec(sqlUFTable)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Initiate table comments successfully")
+	return nil
+}
 func checkErr(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func createTables() {
+	createUserTableErr := createUserTable()
+	if createUserTableErr != nil {
+		fmt.Println(createUserTableErr.Error())
+	}
+
+	createArticleTableErr := createArticleTable()
+	if createArticleTableErr != nil {
+		fmt.Println(createArticleTableErr.Error())
+	}
+	createCommentErr := createCommentTable()
+	if createCommentErr != nil {
+		fmt.Println(createCommentErr.Error())
+	}
+
 }

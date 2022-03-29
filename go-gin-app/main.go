@@ -20,16 +20,7 @@ func main() {
 	if connDBErr != nil {
 		fmt.Println(connDBErr.Error())
 	}
-
-	createArticleTableErr := createArticleTable()
-	if createArticleTableErr != nil {
-		fmt.Println(createArticleTableErr.Error())
-	}
-
-	createUserTableErr := createUserTable()
-	if createUserTableErr != nil {
-		fmt.Println(createUserTableErr.Error())
-	}
+	createTables()
 
 	// Set Gin to production mode
 	gin.SetMode(gin.ReleaseMode)

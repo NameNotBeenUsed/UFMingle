@@ -3,15 +3,22 @@
 package main
 
 import (
-	"crypto/rand"
 	"database/sql"
 	"errors"
+	"fmt"
 	"strings"
 )
 
 type user struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Gatorlink string `json:"gatorlink"`
+	GatorPW   string `json:"gatorPW"`
+	Username  string `json:"username"`
+	Password  string `json:"password"`
+}
+
+type mingleUser struct {
+	Username string `form:"username" json:"username"`
+	Password string `form:"password" json:"password"`
 }
 
 // For this demo, we're storing the user list in memory
@@ -50,7 +57,7 @@ func getAllUsers() ([]user, error) {
 }
 
 // Check if the username and password combination is valid
-func isUserValid(u user) (bool, error) {
+func isUserValid(u mingleUser) (bool, error) {
 	//for _, u := range userList {
 	//	if u.Username == username && u.Password == password {
 	//		return true
@@ -65,7 +72,7 @@ func isUserValid(u user) (bool, error) {
 	//fmt.Println(u.Username, u.Password)
 	defer stmt.Close()
 
-	var temp user
+	var temp mingleUser
 	sqlErr := stmt.QueryRow(u.Username, u.Password).Scan(&temp.Username, &temp.Password)
 
 	if sqlErr != nil {
@@ -85,7 +92,7 @@ func registerNewUser(newUser user) (int64, error) {
 		return 0, errors.New("The password can't be empty")
 	}
 
-	flag, err := isUsernameAvailable(newUser.Username)
+	flag, err := isGatorIdAvailable(newUser.Gatorlink, newUser.GatorPW)
 	if flag == false && err == nil {
 		return 0, errors.New("The username isn't available")
 	}
@@ -95,7 +102,7 @@ func registerNewUser(newUser user) (int64, error) {
 		return 0, err
 	}
 
-	stmt, err := tx.Prepare("INSERT INTO users (username, password) VALUES (?, ?)")
+	stmt, err := tx.Prepare("INSERT INTO users (username, password, gatorID, gender) VALUES (?, ?, ?, ?)")
 
 	if err != nil {
 		return 0, err
@@ -103,7 +110,7 @@ func registerNewUser(newUser user) (int64, error) {
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(newUser.Username, newUser.Password)
+	result, err := stmt.Exec(newUser.Username, newUser.Password, newUser.Gatorlink, "unknown")
 
 	if err != nil {
 		return 0, err
@@ -120,31 +127,34 @@ func registerNewUser(newUser user) (int64, error) {
 }
 
 // Check if the supplied username is available
-func isUsernameAvailable(username string) (bool, error) {
+func isGatorIdAvailable(gatorid string, gatorpw string) (bool, error) {
 	//for _, u := range userList {
 	//	if u.Username == username {
 	//		return false
 	//	}
 	//}
 	//return true
-	stmt, err := DB.Prepare("SELECT username FROM users WHERE username = ?")
+	stmt, err := DB.Prepare("SELECT password FROM gatorlink WHERE gatorId = ?")
 	if err != nil {
 		return false, err
 	}
 
 	defer stmt.Close()
 
-	var tempName string
-	sqlErr := stmt.QueryRow(username).Scan(&tempName)
-
-	if sqlErr != nil {
+	var tempPW string
+	sqlErr := stmt.QueryRow(gatorid).Scan(&tempPW)
+	fmt.Println("hehhhhhhh")
+	fmt.Println(tempPW)
+	fmt.Println("hehhhhhhh")
+	fmt.Println(gatorpw)
+	if sqlErr != nil || tempPW != gatorpw {
 		if sqlErr == sql.ErrNoRows {
 			return true, nil
 		}
 		return false, sqlErr
 	}
 
-	return false, nil
+	return true, nil
 }
 
 func deleteUser(username string) (int64, error) {
@@ -176,12 +186,4 @@ func deleteUser(username string) (int64, error) {
 	tx.Commit()
 
 	return num, nil
-}
-
-func GenerateSalt() ([]byte, error) {
-	salt := make([]byte, 16)
-	if _, err := rand.Read(salt); err != nil {
-		return nil, err
-	}
-	return salt, nil
 }
