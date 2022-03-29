@@ -18,7 +18,8 @@ const FormRight = () => {
     })
       .then(async(data) => {
         if(data.status === 200){
-          // message.info(data);
+
+            // message.info(data);
           // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
         
          await message.success('Registration Successful'); // 打印message后再跳转
@@ -53,13 +54,37 @@ const FormRight = () => {
       autoComplete="off"
     >
       <h2>Account Registration</h2>
-      <Form.Item
+        <Form.Item
+            label="Gatorlink"
+            name="gatorlink"
+            rules={[
+                {
+                    required: true,
+                    message: 'Please input your gatorID!',
+                },
+            ]}
+        >
+            <Input />
+        </Form.Item>
+        <Form.Item
+            label="GatorPW"
+            name="gatorPW"
+            rules={[
+                {
+                    required: true,
+                    message: 'Please input your gatorID password!',
+                },
+            ]}
+        >
+            <Input.Password />
+        </Form.Item>
+        <Form.Item
         label="Username"
         name="username"
         rules={[
           {
             required: true,
-            message: 'Please input your username!',
+            message: 'Please create your username!',
           },
         ]}
       >
@@ -72,7 +97,7 @@ const FormRight = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Please create your password!',
           },
         ]}
       >
