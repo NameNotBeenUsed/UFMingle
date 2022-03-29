@@ -1,4 +1,6 @@
 # http method from frontend to backend
+# get '/'
+![image](https://user-images.githubusercontent.com/42493663/160699197-15044729-d1e4-4ea3-95f3-88468747d61c.png)
 ## post to login
 ![image](https://user-images.githubusercontent.com/42493663/160507172-1526fc32-ae31-4f96-b4ea-c6e767568499.png)
 ![image](https://user-images.githubusercontent.com/42493663/160507211-4075a579-40ca-4fef-87cd-f2c628b966eb.png)
@@ -8,6 +10,9 @@
 ## get to logout
 note:the get request should be sent with cookie!!!
 ![image](https://user-images.githubusercontent.com/42493663/160697193-e7eb3deb-80ba-4784-83c3-86de0f0532b9.png)
+## post to create article
+![image](https://user-images.githubusercontent.com/42493663/160699505-11c761d0-89ce-41a5-9988-fc6f324c3425.png)
+![image](https://user-images.githubusercontent.com/42493663/160699615-419ae66e-846f-40ac-985c-f622a98c9645.png)
 
 # database info
 ![image](https://user-images.githubusercontent.com/42493663/160507992-b85a30be-26ca-45e2-8573-69c056133c33.png)
