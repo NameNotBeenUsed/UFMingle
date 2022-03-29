@@ -5,6 +5,9 @@
 ## post to register
 ![image](https://user-images.githubusercontent.com/42493663/160511719-c573427b-76b2-468d-ad26-2bb49ed4e067.png)
 ![image](https://user-images.githubusercontent.com/42493663/160511745-f0047098-a14b-4779-82ea-d167bb042589.png)
+## get to logout
+note:the get request should be sent with cookie!!!
+![image](https://user-images.githubusercontent.com/42493663/160697193-e7eb3deb-80ba-4784-83c3-86de0f0532b9.png)
 
 # database info
 ![image](https://user-images.githubusercontent.com/42493663/160507992-b85a30be-26ca-45e2-8573-69c056133c33.png)
