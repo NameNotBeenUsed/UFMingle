@@ -5,6 +5,7 @@
 ## post to register
 # database info
 sqlite> .schema articles
+
 CREATE TABLE articles(
                                 id                      INTEGER PRIMARY KEY AUTOINCREMENT,
                                 author          TEXT            NOT NULL,
