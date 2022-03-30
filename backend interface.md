@@ -14,6 +14,9 @@ note:the get request should be sent with cookie!!!
 need title and content
 ![image](https://user-images.githubusercontent.com/42493663/160712878-f8e7db04-969b-40cd-9b13-106ee88ffc61.png)
 ![image](https://user-images.githubusercontent.com/42493663/160712803-618bcbbc-7e78-4f97-901b-7989cfdff476.png)
+## post to comment
+![image](https://user-images.githubusercontent.com/42493663/160943682-f762353e-4bab-4271-b2d4-724771799aee.png)
+![image](https://user-images.githubusercontent.com/42493663/160943715-f20e7cfe-3306-4259-868c-f4f6e5109d7b.png)
 
 
 # database info
