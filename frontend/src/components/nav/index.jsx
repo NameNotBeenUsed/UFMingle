@@ -83,7 +83,7 @@ const logoutHandle=()=>{
         </Badge>
         {/* <Avatar className={sty.avatar} style={{ backgroundColor: '#87d068' }} icon="user" /> */}
         {/*<Avatar className={sty.avatar} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />*/}
-            <Avatar className={sty.avatar} src="http://localhost:8080/image/img.png" />
+            <Avatar className={sty.avatar} src={"http://localhost:8080/image/avatar/" + sessionStorage.getItem('lt_token')}/>
             <div className={sty.login} onClick={() => tologin('/me')}>
           {(sessionStorage.getItem('lt_token'))}
         </div>
