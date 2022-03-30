@@ -74,5 +74,9 @@ func initializeRoutes() {
 		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
 	}
 
-	router.GET("/image/:image_name", ensureLoggedIn(), getImage)
+	imageRoutes := router.Group("/image")
+	{
+		imageRoutes.GET("/avatar/:username", ensureLoggedIn(), getAvatar)
+	}
+
 }

@@ -56,6 +56,35 @@ func getAllUsers() ([]user, error) {
 }
 
 // Check if the username and password combination is valid
+func isUserExist(u string) (bool, error) {
+	//for _, u := range userList {
+	//	if u.Username == username && u.Password == password {
+	//		return true
+	//	}
+	//}
+	//return false
+	stmt, err := DB.Prepare("SELECT username, password FROM users WHERE username = ?")
+
+	if err != nil {
+		return false, err
+	}
+	//fmt.Println(u.Username, u.Password)
+	defer stmt.Close()
+
+	var temp mingleUser
+	sqlErr := stmt.QueryRow(u).Scan(&temp.Username, &temp.Password)
+
+	if sqlErr != nil {
+		if sqlErr == sql.ErrNoRows {
+			//The user does not exist
+			return false, nil
+		}
+		return false, sqlErr
+	}
+	return true, nil
+}
+
+// Check if the username and password combination is valid
 func isUserValid(u mingleUser) (bool, error) {
 	//for _, u := range userList {
 	//	if u.Username == username && u.Password == password {
