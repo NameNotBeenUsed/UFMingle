@@ -16,12 +16,17 @@ import sty from './index.module.scss';
 import Nav from '../../components/nav'
 import ReactWEditor from 'wangeditor-for-react';
 import Axios from 'axios';
+import axios from "axios";
 
 function Edit() {
 
     const onFinish = (values) => {
-        console.log('Success:', values);
-        Axios.post('http://localhost:8080/article/create', values)
+
+        Axios.post('http://localhost:8080/article/create', values, {headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        })
         .then((data)=>{
             message.info(data);
         })
