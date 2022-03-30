@@ -73,4 +73,6 @@ func initializeRoutes() {
 		//articleRoutes.POST("/create", createArticle)
 		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
 	}
+
+	router.GET("/image/:image_name", ensureLoggedIn(), getImage)
 }

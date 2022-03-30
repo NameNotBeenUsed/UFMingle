@@ -60,7 +60,7 @@ func performLogin(c *gin.Context) {
 		jsonstr, _ := json.Marshal(u)
 		c.SetSameSite(sameSiteCookie)
 		// maxAge: seconds
-		c.SetCookie("token", string(jsonstr), 3600, "", "", false, true)
+		c.SetCookie("token", string(jsonstr), 3600, "", "localhost", false, true)
 		c.Set("is_logged_in", true)
 
 		//loggedInInterface, _ := c.Get("is_logged_in")
@@ -103,7 +103,7 @@ func logout(c *gin.Context) {
 
 	// Clear the cookie
 	c.SetSameSite(sameSiteCookie)
-	c.SetCookie("token", "", -1, "", "", false, true)
+	c.SetCookie("token", "", -1, "", "localhost", false, true)
 	c.JSON(http.StatusOK, gin.H{"payload": "Log out successfully"})
 
 	//loggedInInterface, _ := c.Get("is_logged_in")
@@ -160,7 +160,7 @@ func register(c *gin.Context) {
 		ufuser := mingleUser{newUser.Username, newUser.Password}
 		jsonstr, _ := json.Marshal(ufuser)
 		c.SetSameSite(sameSiteCookie)
-		c.SetCookie("token", string(jsonstr), 3600, "", "", false, true)
+		c.SetCookie("token", string(jsonstr), 3600, "", "localhost", false, true)
 		c.Set("is_logged_in", true)
 
 		render(c, gin.H{

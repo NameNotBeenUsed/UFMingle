@@ -20,7 +20,6 @@ var validate = validator.New()
 // @Success 200 {object} article "Return all the information of article"
 // @Router / [get]
 func showIndexPage(c *gin.Context) {
-	//fmt.Println("？？？？？？？？？？？？？？？？？？？？？？")
 	articles, err := getAllArticles()
 	if err != nil {
 		//print + exit
