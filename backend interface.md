@@ -17,6 +17,8 @@ need title and content
 ## post to comment
 ![image](https://user-images.githubusercontent.com/42493663/160943682-f762353e-4bab-4271-b2d4-724771799aee.png)
 ![image](https://user-images.githubusercontent.com/42493663/160943715-f20e7cfe-3306-4259-868c-f4f6e5109d7b.png)
+## get all comments for one article
+![image](https://user-images.githubusercontent.com/42493663/160947496-257d6a2a-d001-40ca-8634-bd3174d1e18a.png)
 
 
 # database info
