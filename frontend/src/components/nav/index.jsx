@@ -72,7 +72,7 @@ const logoutHandle=()=>{
 
             </Select>
 
-            <Search style={{ width: 400 }} placeholder="Please insert what you wanna search" />
+            <Search style={{ width: 350 }} placeholder="Please insert what you wanna search" />
           </InputGroup>
         </div>
 
@@ -82,11 +82,13 @@ const logoutHandle=()=>{
           <Icon type="notification" />
         </Badge>
         {/* <Avatar className={sty.avatar} style={{ backgroundColor: '#87d068' }} icon="user" /> */}
-        <Avatar className={sty.avatar} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-        <div className={sty.username}>
-          IVYJANG
+        {/*<Avatar className={sty.avatar} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />*/}
+            <Avatar className={sty.avatar} src="http://localhost:8080/image/img.png" />
+            <div className={sty.login} onClick={() => tologin('/me')}>
+          {(sessionStorage.getItem('lt_token'))}
         </div>
-        <a onClick={()=>logoutHandle()}>logout</a>
+        <div><a onClick={()=>logoutHandle()}>logout</a></div>
+
       </div>
       : <div className={sty.headRight}>
         <div className={sty.login} onClick={() => tologin('/login')}>
