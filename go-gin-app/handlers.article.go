@@ -116,7 +116,7 @@ func createArticle(c *gin.Context) {
 			c.AbortWithError(http.StatusBadRequest, err)
 		}
 	} else {
-		c.AbortWithError(http.StatusBadRequest, err)
+		c.AbortWithError(http.StatusUnauthorized, err)
 	}
 
 	/*if num, err := createNewArticle(articleData); num != 0 && err == nil {

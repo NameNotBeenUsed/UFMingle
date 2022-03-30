@@ -136,18 +136,9 @@ func createNewArticle(newArticle article, user mingleUser) (int64, error) {
 	//articleList = append(articleList, a)
 	//
 	//return &a, nil
-	stmt0, err := DB.Prepare("SELECT password FROM users WHERE username = ?")
-	if err != nil {
-		return 0, err
-	}
-
-	defer stmt0.Close()
-
-	var tempPW string
-	sqlErr := stmt0.QueryRow(user.Username).Scan(&tempPW)
-
-	if sqlErr != nil || tempPW != user.Password {
-		return 0, sqlErr
+	res, er := isUserValid(user)
+	if !res {
+		return 0, er
 	}
 
 	tx, err := DB.Begin()

@@ -142,6 +142,8 @@ func createCommentTable() error {
 		    comment_id INTEGER PRIMARY KEY AUTOINCREMENT,
 			topic_id INTEGER NOT NULL,
 			comment_user TEXT NOT NULL,
+			comment_content TEXT NOT NULL,
+			comment_time timestamp default (CURRENT_TIMESTAMP),
 			likes INTEGER default 0,
 			dislikes INTEGER  default 0,
 			foreign key (topic_id) references articles(id),

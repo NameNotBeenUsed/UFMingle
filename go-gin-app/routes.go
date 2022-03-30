@@ -72,6 +72,10 @@ func initializeRoutes() {
 		// Ensure that the user is logged in by using the middleware
 		//articleRoutes.POST("/create", createArticle)
 		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
+
+		articleRoutes.GET("/comment_view/:article_id", ensureLoggedIn(), getComment)
+
+		articleRoutes.POST("/comment/:article_id", ensureLoggedIn(), createComment)
 	}
 
 	imageRoutes := router.Group("/image")
