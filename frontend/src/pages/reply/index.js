@@ -7,6 +7,10 @@ import { useLocation, useParams } from "react-router-dom";
 import Nav from '../../components/nav'
 import ReactWEditor from 'wangeditor-for-react';
 import Axios from 'axios';
+import uf_news_1 from "../../img/uf_news_1.png";
+import uf_news_2 from "../../img/uf_news_2.png";
+import uf_news_3 from "../../img/uf_news_3.png";
+import uf_news_4 from "../../img/uf_news_4.png";
 
 function Reply() {
   const contentStyle = {
@@ -61,16 +65,16 @@ function Reply() {
             <div className={sty.headRight}>
               <Carousel autoplay>
                 <div>
-                  <h3 style={contentStyle}>1</h3>
+                  <h3 style={contentStyle} ><img  style={contentStyle} src={uf_news_1} alt="UF" srcSet=""/></h3>
                 </div>
                 <div>
-                  <h3 style={contentStyle}>2</h3>
+                  <h3 style={contentStyle}><img  style={contentStyle} src={uf_news_2} alt="UF" srcSet=""/></h3>
                 </div>
                 <div>
-                  <h3 style={contentStyle}>3</h3>
+                  <h3 style={contentStyle}><img  style={contentStyle} src={uf_news_3} alt="UF" srcSet=""/></h3>
                 </div>
                 <div>
-                  <h3 style={contentStyle}>4</h3>
+                  <h3 style={contentStyle}><img  style={contentStyle} src={uf_news_4} alt="UF" srcSet=""/></h3>
                 </div>
               </Carousel>
             </div>
