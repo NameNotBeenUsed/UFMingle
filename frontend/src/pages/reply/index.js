@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import {Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment} from 'antd';
+import {Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment, Form} from 'antd';
 import { UserOutlined, ManOutlined } from '@ant-design/icons';
 
 import sty from './index.module.scss';
@@ -63,11 +63,24 @@ function Reply() {
     onFinish()
     //getComment()
   }, [articleId])
-  //getComment()
 
-  // useEffect(() => {
-  //   getComment()
-  // }, [articleId])
+  const onComment = (values) =>{
+    Axios.post(`http://localhost:8080/article/comment/${articleId}`, values, {headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    })
+        .then((data)=>{
+          message.info(data);
+          if(data.status === 200){
+            //await message.success('COMMENT SUCCESS!'); // 打印message后再跳转
+            window.location.href = `/reply/${articleId}`;
+          }
+        })
+        .catch((e)=>{
+          message.info(e);
+        })
+  }
 
   return (
     <div className={sty.box}>
@@ -144,8 +157,7 @@ function Reply() {
                       </div>
 
                       <div className={sty.contentRight} >
-                        <article >{item.content}</article>
-
+                        <p dangerouslySetInnerHTML={{ __html: item.content }}></p>
                       </div>
                       <span className={sty.contentPage}>1</span>
                     </div>
@@ -224,32 +236,48 @@ function Reply() {
               <Breadcrumb.Item>UFmingle</Breadcrumb.Item>
             </Breadcrumb>
           </div>
-          <ReactWEditor
-            className={sty.editor}
-            defaultValue={'<h1>title</h1>'}
-            linkImgCallback={(src, alt, href) => {
-              // 插入网络图片的回调事件
-              console.log('image src ', src)
-              console.log('image description', alt)
-              console.log('href', href)
-            }}
-            onlineVideoCallback={(video) => {
-              // 插入网络视频的回调事件
-              console.log('post video content', video)
-            }}
-            onChange={(html) => {
-              console.log('onChange html:', html)
-            }}
-            onBlur={(html) => {
-              console.log('onBlur html:', html)
-            }}
-            onFocus={(html) => {
-              console.log('onFocus html:', html)
-            }}
-          />
-          <Button type="primary" shape="round" danger>
-            reply
-          </Button>
+          <Form
+              labelCol={{ span: 2 }}
+              wrapperCol={{ span: 20 }}
+              layout="horizontal"
+              onFinish={onComment}
+          >
+            <Form.Item label="content" name='content'>
+              <ReactWEditor
+                className={sty.editor}
+                defaultValue={'<h1>title</h1>'}
+                linkImgCallback={(src, alt, href) => {
+                  // 插入网络图片的回调事件
+                  console.log('image src ', src)
+                  console.log('image description', alt)
+                  console.log('href', href)
+                }}
+
+                onlineVideoCallback={(video) => {
+                  // 插入网络视频的回调事件
+                  console.log('post video content', video)
+                }}
+                onChange={(html) => {
+                  //console.log('onChange html:', html)
+                }}
+                onBlur={(html) => {
+                  console.log('onBlur html:', html)
+                }}
+                onFocus={(html) => {
+                  console.log('onFocus html:', html)
+                }}
+              />
+            </Form.Item>
+            <Form.Item wrapperCol={{
+              offset: 12,
+              span: 16,
+            }}>
+              <Button type="primary" htmlType="submit">REPLY</Button>
+            </Form.Item>
+          </Form>
+          {/*<Button type="primary" shape="round" danger >*/}
+          {/*  reply*/}
+          {/*</Button>*/}
         </div>
 
       </div>
