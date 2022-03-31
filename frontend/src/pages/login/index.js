@@ -23,10 +23,14 @@ const FormRight = () => {
           withCredentials: true
     }).then((data)=>{
         if(data.status === 200){
-          console.log(data)
-          message.info(data);
-          sessionStorage.setItem("lt_token", values.username);
-          window.location.href = "/"
+            let allCookies = document.cookie
+            console.log(allCookies)
+            console.log(data.config.data)
+            message.info(data);
+            const usermsg = data.config.data
+            var tempjson = JSON.parse(String(usermsg))
+            sessionStorage.setItem("lt_token", tempjson['username']);
+            window.location.href = "/"
         }
         
       })
