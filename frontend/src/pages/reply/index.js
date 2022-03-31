@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Breadcrumb, Carousel, Badge, Avatar, Button, message, Card } from 'antd';
+import {Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment} from 'antd';
 import { UserOutlined, ManOutlined } from '@ant-design/icons';
 
 import sty from './index.module.scss';
@@ -21,27 +21,53 @@ function Reply() {
     background: '#364d79',
   };
   const [article, setArticle] = useState([])
+  const [comment, setComment] = useState([[]])
   const { id: articleId } = useParams()
   console.log("This is article ID ")
   const onFinish = () => {
-    Axios.get(`http://localhost:8080/article/view/${articleId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        withCredentials: true
-      })
-      .then((response) => {
-        setArticle(response.data);
-      })
-      .catch((e) => {
-        message.info(e);
-      })
+    Axios.all([Axios.get(`http://localhost:8080/article/view/${articleId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          withCredentials: true
+        })
+        .then((response) => {
+          //comment = response.data
+          setArticle(response.data);
+
+        })
+        .catch((e) => {
+          message.info(e);
+        }), Axios.get(`http://localhost:8080/article/comment_view/${articleId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          withCredentials: true
+        })
+        .then((response) => {
+          let commentt = response.data
+          setComment(response.data);
+          console.log(comment)
+          //document.getElementById("commentt").innerHTML=commentt;
+        })
+        .catch((e) => {
+          message.info(e);
+        })]).then()
+
   };
   useEffect(() => {
     onFinish()
+    //getComment()
   }, [articleId])
+  //getComment()
+
+  // useEffect(() => {
+  //   getComment()
+  // }, [articleId])
 
   return (
     <div className={sty.box}>
@@ -86,163 +112,109 @@ function Reply() {
 
 
 
+          <List
+              className="comment-list"
+              dataSource={comment}
+              renderItem={item => (
+                  <li>
+                    <div className={sty.contentCard}>
+                      <div className={sty.contentLeft}>
+                        <div className={sty.avatarLeft}>
+                          <h3>hhhhh</h3>
+                          <p>articles 0</p>
+                          <p>flowers 0</p>
+                          <p>reputation 0</p>
+                          <p>mingle coin 0</p>
+                          <p>last time log in 0</p>
+                        </div>
+                        <div className={sty.avatarRight}>
+                          <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
+                            <Avatar size={64} icon={<UserOutlined />} />
+                          </Badge>
+                          <div>
+                            <Button size='small' shape="round">
+                              Subscribe
+                            </Button>
+                            <Button size='small' shape="round">
+                              Message
+                            </Button>
+                          </div>
 
-          <div className={sty.contentCard}>
-            <div className={sty.contentLeft}>
-              <div className={sty.avatarLeft}>
-                <h3>hhhhh</h3>
-                <p>articles 0</p>
-                <p>flowers 0</p>
-                <p>reputation 0</p>
-                <p>mingle coin 0</p>
-                <p>last time log in 0</p>
-              </div>
-              <div className={sty.avatarRight}>
-                <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
-                  <Avatar size={64} icon={<UserOutlined />} />
-                </Badge>
-                <div>
-                  <Button size='small' shape="round">
-                    Subscribe
-                  </Button>
-                  <Button size='small' shape="round">
-                    Message
-                  </Button>
-                </div>
+                        </div>
+                      </div>
 
-              </div>
-            </div>
-            <div className={sty.contentRight}>
-              1111111111111111
-              11111111111111111111111111
-              111111111111111111111111
-              111111111111111111
-              1111111111
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111
-              111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
-              1111111111111111111111111111111
-              1111111111111111111
-              111111111111111111
-              1111111111
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
+                      <div className={sty.contentRight} >
+                        <article >{item.content}</article>
 
+                      </div>
+                      <span className={sty.contentPage}>1</span>
+                    </div>
+                  </li>
+              )}
+          />
+          {/*  <div className={sty.contentCard}>*/}
+          {/*    <div className={sty.contentLeft}>*/}
+          {/*      <div className={sty.avatarLeft}>*/}
+          {/*        <h3>hhhhh</h3>*/}
+          {/*        <p>articles 0</p>*/}
+          {/*        <p>flowers 0</p>*/}
+          {/*        <p>reputation 0</p>*/}
+          {/*        <p>mingle coin 0</p>*/}
+          {/*        <p>last time log in 0</p>*/}
+          {/*      </div>*/}
+          {/*      <div className={sty.avatarRight}>*/}
+          {/*        <Badge count={<ManOutlined style={{ color: '#fff' }} />}>*/}
+          {/*          <Avatar size={64} icon={<UserOutlined />} />*/}
+          {/*        </Badge>*/}
+          {/*        <div>*/}
+          {/*          <Button size='small' shape="round">*/}
+          {/*            Subscribe*/}
+          {/*          </Button>*/}
+          {/*          <Button size='small' shape="round">*/}
+          {/*            Message*/}
+          {/*          </Button>*/}
+          {/*        </div>*/}
 
-              1111111111
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
+          {/*      </div>*/}
+          {/*    </div>*/}
 
+          {/*    <div className={sty.contentRight} >*/}
+          {/*      <article >{comment[0].content}</article>*/}
 
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
-              11111111111111111111111111111111111111111111111111
-              111111111111111111
-              1111111111
-              111111111111111
-              1111111111111111222211
-              111111111111111111111111111111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
-              111111111111111111111111
-              11111111111111111111111111
-              111111111111111111
-              1111111111
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
-              1111111111111111111111111
-              1111111111111111111111111
-              111111111111111111
-              1111111111
-              111111111111111
-              11111111111111112222
-            </div>
-            <span className={sty.contentPage}>1</span>
-          </div>
+          {/*    </div>*/}
+          {/*    <span className={sty.contentPage}>1</span>*/}
+          {/*  </div>*/}
 
-          <div className={sty.contentCard}>
-            <div className={sty.contentLeft}>
-              <div className={sty.avatarLeft}>
-                <h3>Ivy</h3>
-                <p>posts 0</p>
-                <p>followers 0</p>
-                <p>reputation 0</p>
-                <p>mingle coin 0</p>
-                <p>last time login 0</p>
-              </div>
-              <div className={sty.avatarRight}>
-                <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
-                  <Avatar size={64} icon={<UserOutlined />} />
-                </Badge>
-                <div>
-                  <Button size='small' shape="round">
-                    subscribe
-                  </Button>
-                  <Button size='small' shape="round">
-                    message
-                  </Button>
-                </div>
+          {/*<div className={sty.contentCard}>*/}
+          {/*  <div className={sty.contentLeft}>*/}
+          {/*    <div className={sty.avatarLeft}>*/}
+          {/*      <h3>Ivy</h3>*/}
+          {/*      <p>posts 0</p>*/}
+          {/*      <p>followers 0</p>*/}
+          {/*      <p>reputation 0</p>*/}
+          {/*      <p>mingle coin 0</p>*/}
+          {/*      <p>last time login 0</p>*/}
+          {/*    </div>*/}
+          {/*    <div className={sty.avatarRight}>*/}
+          {/*      <Badge count={<ManOutlined style={{ color: '#fff' }} />}>*/}
+          {/*        <Avatar size={64} icon={<UserOutlined />} />*/}
+          {/*      </Badge>*/}
+          {/*      <div>*/}
+          {/*        <Button size='small' shape="round">*/}
+          {/*          subscribe*/}
+          {/*        </Button>*/}
+          {/*        <Button size='small' shape="round">*/}
+          {/*          message*/}
+          {/*        </Button>*/}
+          {/*      </div>*/}
 
-              </div>
-            </div>
-            <div className={sty.contentRight}>
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111
-              111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
-              1111111111111111111111111111111
-              1111111111111111111
-              111111111111111111
-              1111111111
-              111111111111111
-              11111111111111112222
-              11111111111111111111111111111111111111111111
-              11111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              1111111111111111111111111111111111111
-              111111111111111111111111111111111111
-              111111111111111111111111111111111
-            </div>
-            <span className={sty.contentPage}>2</span>
-          </div>
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*  <div className={sty.contentRight}>*/}
+          {/*    comment 2*/}
+          {/*  </div>*/}
+          {/*  <span className={sty.contentPage}>2</span>*/}
+          {/*</div>*/}
         </div>
         <div className={sty.replyBox}>
           <div className={sty.breadcrumbBox}>
