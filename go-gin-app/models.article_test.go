@@ -52,9 +52,11 @@ func TestCreateNewArticle(t *testing.T) {
 	// get the original count of articles
 	//originalLength := len(getAllArticles())
 
-	newArticle := article{Title: "New test title", Author: "New test author", Content: "New test content"}
+	// With exising user
+	existUser := mingleUser{Username: "user1", Password: "pass1"}
+	newArticle := article{Title: "New test title", Author: "user1", Content: "New test content"}
 	// add another article
-	num, err := createNewArticle(newArticle)
+	num, err := createNewArticle(newArticle, existUser)
 	if err != nil {
 		t.Fail()
 	}

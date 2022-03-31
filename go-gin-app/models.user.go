@@ -182,6 +182,26 @@ func isGatorIdAvailable(gatorid string, gatorpw string) (bool, error) {
 	return true, nil
 }
 
+// Check if the supplied username is available
+func isUsernameAvailable(username string) (bool, error) {
+	stmt, err := DB.Prepare("SELECT username FROM users WHERE username = ?")
+	if err != nil {
+		return false, err
+	}
+
+	defer stmt.Close()
+
+	var tmpName string
+	sqlErr := stmt.QueryRow(username).Scan(tmpName)
+
+	if sqlErr == sql.ErrNoRows {
+		return true, nil
+	} else {
+		return false, sqlErr
+	}
+
+}
+
 func deleteUser(username string) (int64, error) {
 	tx, err := DB.Begin()
 
