@@ -192,7 +192,7 @@ func isUsernameAvailable(username string) (bool, error) {
 	defer stmt.Close()
 
 	var tmpName string
-	sqlErr := stmt.QueryRow(username).Scan(tmpName)
+	sqlErr := stmt.QueryRow(username).Scan(&tmpName)
 
 	if sqlErr == sql.ErrNoRows {
 		return true, nil

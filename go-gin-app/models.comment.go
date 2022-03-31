@@ -1,5 +1,10 @@
 package main
 
+import (
+	"database/sql"
+	"errors"
+)
+
 type comment struct {
 	ArticleId     int    `json:"article_id"`
 	CommentAuthor string `json:"comment_author"`
@@ -27,6 +32,7 @@ func getAllComment(articleId string) ([]comment, error) {
 		singleComment := comment{}
 		err = rows.Scan(&singleComment.CommentId, &singleComment.ArticleId, &singleComment.CommentAuthor, &singleComment.Content, &singleComment.CommentTime, &singleComment.Likes, &singleComment.Dislikes)
 		checkErr(err)
+		//fmt.Println(err)
 		commentResult = append(commentResult, singleComment)
 	}
 
@@ -41,12 +47,14 @@ func getAllComment(articleId string) ([]comment, error) {
 }
 
 func createNewComment(commentData comment, tempuser mingleUser) (int64, error) {
-	res, er := isUserValid(tempuser)
-	if res {
+	res_user, er := isUserValid(tempuser)
+	res_comment, er := isCommentValid(commentData)
+	if res_user && res_comment {
 		tx, err := DB.Begin()
 		if err != nil {
 			return 0, err
 		}
+		tx.Exec("PRAGMA foreign_keys = ON")
 
 		stmt, err := tx.Prepare("INSERT INTO comment (topic_id, comment_user, comment_content, comment_time) VALUES (?, ?, ?, CURRENT_TIMESTAMP)")
 		if err != nil {
@@ -69,4 +77,63 @@ func createNewComment(commentData comment, tempuser mingleUser) (int64, error) {
 	} else {
 		return 0, er
 	}
+}
+
+// Check if the comment matches the foreign key constraint
+func isCommentValid(newComment comment) (bool, error) {
+	stmt_article, err := DB.Prepare("SELECT id FROM articles WHERE id = ?")
+	if err != nil {
+		return false, err
+	}
+	defer stmt_article.Close()
+	var tmpId int
+	flag_article := false
+	sqlErr := stmt_article.QueryRow(newComment.ArticleId).Scan(&tmpId)
+	if sqlErr != sql.ErrNoRows && tmpId == newComment.ArticleId {
+		flag_article = true
+	}
+
+	stmt_user, err := DB.Prepare("SELECT username FROM users WHERE username = ?")
+	if err != nil {
+		return false, err
+	}
+	defer stmt_user.Close()
+	var tmpName string
+	flag_user := false
+	sqlErr = stmt_user.QueryRow(newComment.CommentAuthor).Scan(&tmpName)
+	if sqlErr != sql.ErrNoRows && tmpName == newComment.CommentAuthor {
+		flag_user = true
+	}
+
+	if flag_article && flag_user {
+		return true, nil
+	} else {
+		return false, errors.New("ERROR")
+	}
+}
+
+func deleteCommentByCommentId(commentId int) (int64, error) {
+	tx, err := DB.Begin()
+	if err != nil {
+		return 0, err
+	}
+
+	stmt, err := DB.Prepare("DELETE FROM comment WHERE comment_id = ?")
+	if err != nil {
+		return 0, err
+	}
+	defer stmt.Close()
+
+	result, err := stmt.Exec(commentId)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	tx.Commit()
+	return num, err
 }
