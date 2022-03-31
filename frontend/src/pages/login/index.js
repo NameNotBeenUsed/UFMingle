@@ -25,7 +25,7 @@ const FormRight = () => {
         if(data.status === 200){
           console.log(data)
           message.info(data);
-          sessionStorage.setItem("lt_token", data);
+          sessionStorage.setItem("lt_token", values.username);
           window.location.href = "/"
         }
         
