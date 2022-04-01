@@ -32,9 +32,6 @@ Backend Command Line Demo
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/y5Tblv36tNo/0.jpg)](https://www.youtube.com/watch?v=y5Tblv36tNo)
 
-Frontend
-
-![image](https://github.com/NameNotBeenUsed/UFMingle/blob/sprint1/Showcase/frontend_demo.gif)
 
 ## Sprint 2
 Backend Unit Test
@@ -54,3 +51,21 @@ Frontend
 
   2. Demo
 ![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/login_article_logout.gif)
+
+
+## Sprint 3
+
+Backend added more test cases for all the new functionality implemented in Sprint 3.
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test1.png)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test2.png)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test3.png)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test4.png)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test5.png)
+![image](https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/backend_test6.png)
+
+New main features:
+New post
+Add reply
+View personal page
+
+The new main features can be viewed at https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/sprint3.wmv or https://youtu.be/kGt7S6TCXAo.
