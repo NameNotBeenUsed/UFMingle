@@ -67,7 +67,7 @@ const FormRight = () => {
 
             ]}
         >
-            <Input /> 
+            <Input placeholder='YourGatorsEmail'/> 
         </Form.Item>
     
         <Form.Item
@@ -80,7 +80,7 @@ const FormRight = () => {
                 },
             ]}
         >
-            <Input.Password />
+            <Input.Password placeholder='PW_YourGatorsEmail'/>
         </Form.Item>
         <Form.Item
         label="Username"
@@ -92,7 +92,7 @@ const FormRight = () => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder='UFmingle_Username'/>
       </Form.Item>
 
       <Form.Item
@@ -105,7 +105,7 @@ const FormRight = () => {
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password placeholder='UFmingle_Password'/>
       </Form.Item>
 
       {/* <Form.Item
