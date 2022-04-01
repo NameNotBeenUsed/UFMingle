@@ -29,6 +29,7 @@ function Edit() {
         })
         .then((data)=>{
             message.info(data);
+            window.location.href = "/"
         })
         .catch((e)=>{
             message.info(e);
