@@ -69,3 +69,5 @@ Add reply
 View personal page
 
 The new main features can be viewed at https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/sprint3.wmv or https://youtu.be/kGt7S6TCXAo.
+
+This is our sprint board: https://github.com/NameNotBeenUsed/UFMingle/projects/1.
