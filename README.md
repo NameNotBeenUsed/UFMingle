@@ -2,12 +2,12 @@
 It is a dating forum only for UF students. The topic of this forum is about finding true love who has UF background.  Users start a new post by writing an article to introduce themselves. You are also welcomed to post your confusion about relationship or your love story in this forum.
 
 ## Team Members
-| Name      | UFID     | Github ID     |
-| ---------- | :-----------:  | :-----------: |
-| Heming Sun  | 69162072     | mingHeap     |
-| Yujian Yuan | 25195225  | yuanuf     |
-| Rulan Jiang | 80984324     | JiangRulan     |
-| Mingjun Yu  | 61707843    | NameNotBeenUsed|
+| Name      | UFID     | Github ID     | In Charge Of     |
+| ---------- | :-----------:  | :-----------: | :-----------: |
+| Heming Sun  | 69162072     | mingHeap     | FrontEnd |
+| Yujian Yuan | 25195225  | yuanuf     | FrontEnd |
+| Rulan Jiang | 80984324     | JiangRulan     | BackEnd |
+| Mingjun Yu  | 61707843    | NameNotBeenUsed| BackEnd |
 
 ## Tech Stacks
 * Frontend: React
