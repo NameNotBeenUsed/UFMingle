@@ -13,24 +13,25 @@ import axios from "axios"
 const FormRight = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
-    axios.post('http://localhost:8080/u/register', {
-      ...values
-    })
-      .then(async(data) => {
-        if(data.status === 200){
 
-            // message.info(data);
-          // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
-        
-         await message.success('Registration Successful'); // 打印message后再跳转
-         window.location.href = "/login";
-          
-        }
-        
-      })
-      .catch((e) => {
-        message.info(e);
-      })
+    // axios.post('http://localhost:8080/u/register', {
+    //   ...values
+    // })
+    //   .then(async(data) => {
+    //     if(data.status === 200){
+
+    //         // message.info(data);
+    //       // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
+
+    //      await message.success('Registration Successful'); // 打印message后再跳转
+    //      window.location.href = "/login";
+
+    //     }
+
+    //   })
+    //   .catch((e) => {
+    //     message.info(e);
+    //   })
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -62,10 +63,13 @@ const FormRight = () => {
                     required: true,
                     message: 'Please input your gatorID!',
                 },
+                 {pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:'Please input a valid gator email'}  // 正则表达式限制内容
+
             ]}
         >
-            <Input />
+            <Input placeholder='YourGatorsEmail'/> 
         </Form.Item>
+    
         <Form.Item
             label="GatorPW"
             name="gatorPW"
@@ -76,7 +80,7 @@ const FormRight = () => {
                 },
             ]}
         >
-            <Input.Password />
+            <Input.Password placeholder='PW_YourGatorsEmail'/>
         </Form.Item>
         <Form.Item
         label="Username"
@@ -88,7 +92,7 @@ const FormRight = () => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder='UFmingle_Username'/>
       </Form.Item>
 
       <Form.Item
@@ -101,7 +105,7 @@ const FormRight = () => {
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password placeholder='UFmingle_Password'/>
       </Form.Item>
 
       {/* <Form.Item
@@ -133,17 +137,17 @@ const FormRight = () => {
         </Radio.Group>
       </Form.Item> */}
 
-      <Form.Item
-        wrapperCol={{
-          offset: 4,
-          span: 16,
-        }}
-      >
-        <Button type="primary" htmlType="submit">
-          register account
-        </Button>
-      </Form.Item>
-    </Form>
+  <Form.Item
+    wrapperCol={{
+      offset: 4,
+      span: 16,
+    }}
+  >
+    <Button type="primary" htmlType="submit">
+      register account
+    </Button>
+  </Form.Item>
+    </Form >
   );
 };
 
