@@ -14,24 +14,24 @@ const FormRight = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
 
-    // axios.post('http://localhost:8080/u/register', {
-    //   ...values
-    // })
-    //   .then(async(data) => {
-    //     if(data.status === 200){
+    axios.post('http://localhost:8080/u/register', {
+      ...values
+    })
+      .then(async(data) => {
+        if(data.status === 200){
 
-    //         // message.info(data);
-    //       // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
+            // message.info(data);
+          // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
 
-    //      await message.success('Registration Successful'); // 打印message后再跳转
-    //      window.location.href = "/login";
+         await message.success('Registration Successful'); // 打印message后再跳转
+         window.location.href = "/login";
 
-    //     }
+        }
 
-    //   })
-    //   .catch((e) => {
-    //     message.info(e);
-    //   })
+      })
+      .catch((e) => {
+        message.info(e);
+      })
   };
 
   const onFinishFailed = (errorInfo) => {
