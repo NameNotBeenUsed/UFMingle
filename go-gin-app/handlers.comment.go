@@ -14,7 +14,7 @@ func getComment(c *gin.Context) {
 
 			render(c, gin.H{
 				"title":   "Comments",
-				"payload": allComments}, "")
+				"payload": allComments}, "comment.html")
 			//c.JSON(http.StatusOK, status)
 		} else {
 			// if there was an error while creating the article, abort with an error
