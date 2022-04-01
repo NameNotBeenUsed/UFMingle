@@ -133,7 +133,7 @@ function Reply() {
                     <div className={sty.contentCard}>
                       <div className={sty.contentLeft}>
                         <div className={sty.avatarLeft}>
-                          <h3>hhhhh</h3>
+                          <h3>Username</h3>
                           <p>articles 0</p>
                           <p>flowers 0</p>
                           <p>reputation 0</p>
