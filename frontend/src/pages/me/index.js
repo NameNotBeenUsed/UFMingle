@@ -54,7 +54,7 @@ function Reply() {
             </div>
             <Card style={{ width: "68%" }}>
               <div className={sty.meRightTop}>
-                <Avatar size={150} src={<Image src="https://joeschmoe.io/api/v1/random" style={{ width: '150px '}} />} />
+                <Avatar size={150} src={<Image src="http://localhost:8080/image/avatar/user1" style={{ width: '150px '}} />} />
                 <div className={sty.meright}>
                   <div className={sty.top}>
                     <span className={sty.name}>{(sessionStorage.getItem('lt_token'))}</span><span className={sty.samll}>registered user</span> <Tag color="magenta">likes received</Tag><Tag className={sty.tag} color="#ff0000">0</Tag> <Tag color="#ff0000">message</Tag>
