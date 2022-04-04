@@ -127,7 +127,8 @@ function Reply() {
 
           <List
               className="comment-list"
-              dataSource={comment}
+              dataSource={comment} 
+              pagination={{ onChange: page => { console.log(page); }, pageSize: 10, }} //list内部分页
               renderItem={item => (
                   <li>
                     <div className={sty.contentCard}>
