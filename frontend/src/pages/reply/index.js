@@ -36,7 +36,6 @@ function Reply() {
         .then((response) => {
           //comment = response.data
           setArticle(response.data);
-
         })
         .catch((e) => {
           message.info(e);
@@ -49,7 +48,7 @@ function Reply() {
           withCredentials: true
         })
         .then((response) => {
-          let commentt = response.data
+          let comment = response.data
           setComment(response.data);
           console.log(comment)
           //document.getElementById("commentt").innerHTML=commentt;
@@ -134,7 +133,7 @@ function Reply() {
                     <div className={sty.contentCard}>
                       <div className={sty.contentLeft}>
                         <div className={sty.avatarLeft}>
-                          <h3>Username</h3>
+                          <h3>{item.comment_author}</h3>
                           <p>articles 0</p>
                           <p>flowers 0</p>
                           <p>reputation 0</p>
