@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import {Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment, Form} from 'antd';
+import { Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment, Form } from 'antd';
 import { UserOutlined, ManOutlined } from '@ant-design/icons';
 
 import sty from './index.module.scss';
@@ -26,20 +26,20 @@ function Reply() {
   console.log("This is article ID ")
   const onFinish = () => {
     Axios.all([Axios.get(`http://localhost:8080/article/view/${articleId}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          withCredentials: true
-        })
-        .then((response) => {
-          //comment = response.data
-          setArticle(response.data);
-        })
-        .catch((e) => {
-          message.info(e);
-        }), Axios.get(`http://localhost:8080/article/comment_view/${articleId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        withCredentials: true
+      })
+      .then((response) => {
+        //comment = response.data
+        setArticle(response.data);
+      })
+      .catch((e) => {
+        message.info(e);
+      }), Axios.get(`http://localhost:8080/article/comment_view/${articleId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -63,24 +63,25 @@ function Reply() {
     //getComment()
   }, [articleId])
 
-  const onComment = (values) =>{
-    Axios.post(`http://localhost:8080/article/comment/${articleId}`, values, {headers: {
+  const onComment = (values) => {
+    Axios.post(`http://localhost:8080/article/comment/${articleId}`, values, {
+      headers: {
         'Content-Type': 'application/json'
       },
       withCredentials: true
     })
-        .then((data)=>{
-          message.info(data);
-          if(data.status === 200){
-            //await message.success('COMMENT SUCCESS!'); // 打印message后再跳转
-            window.location.href = `/reply/${articleId}`;
-          }
-        })
-        .catch((e)=>{
-          message.info(e);
-        })
+      .then((data) => {
+        message.info(data);
+        if (data.status === 200) {
+          //await message.success('COMMENT SUCCESS!'); // 打印message后再跳转
+          window.location.href = `/reply/${articleId}`;
+        }
+      })
+      .catch((e) => {
+        message.info(e);
+      })
   }
-  const [page,setPage]=useState(1)
+  const [page, setPage] = useState(1)
   return (
     <div className={sty.box}>
       <Nav></Nav>
@@ -103,16 +104,16 @@ function Reply() {
             <div className={sty.headRight}>
               <Carousel autoplay>
                 <div>
-                  <h3 style={contentStyle} ><img  style={contentStyle} src={uf_news_1} alt="UF" srcSet=""/></h3>
+                  <h3 style={contentStyle} ><img style={contentStyle} src={uf_news_1} alt="UF" srcSet="" /></h3>
                 </div>
                 <div>
-                  <h3 style={contentStyle}><img  style={contentStyle} src={uf_news_2} alt="UF" srcSet=""/></h3>
+                  <h3 style={contentStyle}><img style={contentStyle} src={uf_news_2} alt="UF" srcSet="" /></h3>
                 </div>
                 <div>
-                  <h3 style={contentStyle}><img  style={contentStyle} src={uf_news_3} alt="UF" srcSet=""/></h3>
+                  <h3 style={contentStyle}><img style={contentStyle} src={uf_news_3} alt="UF" srcSet="" /></h3>
                 </div>
                 <div>
-                  <h3 style={contentStyle}><img  style={contentStyle} src={uf_news_4} alt="UF" srcSet=""/></h3>
+                  <h3 style={contentStyle}><img style={contentStyle} src={uf_news_4} alt="UF" srcSet="" /></h3>
                 </div>
               </Carousel>
             </div>
@@ -121,50 +122,47 @@ function Reply() {
             <p dangerouslySetInnerHTML={{ __html: article.content }}></p>
           </Card>
 
-
-
-
           <List
-              className="comment-list"
-              dataSource={comment} 
-              pagination={{ onChange: page => { setPage(page) }, pageSize: 5, }} //list内部分页
-              renderItem={(item,index) => (
-                  <li>
-                    <div className={sty.contentCard}>
-                      <div className={sty.contentLeft}>
-                        <div className={sty.avatarLeft}>
-                          <h3>{item.comment_author}</h3>
-                          <p>articles 0</p>
-                          <p>flowers 0</p>
-                          <p>reputation 0</p>
-                          <p>mingle coin 0</p>
-                          <p>last time log in 0</p>
-                        </div>
-                        <div className={sty.avatarRight}>
-                          <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
-                            <Avatar size={64} icon={<UserOutlined />} />
-                          </Badge>
-                          <div>
-                            <Button size='small' shape="round">
-                              Subscribe
-                            </Button>
-                            <Button size='small' shape="round">
-                              Message
-                            </Button>
-                          </div>
-
-                        </div>
-                      </div>
-
-                      <div className={sty.contentRight} >
-                        <p dangerouslySetInnerHTML={{ __html: item.content }}></p>
-                      </div>
-                      <span className={sty.contentPage}>{page * index + 1}</span>01234 01234
+            className="comment-list"
+            dataSource={comment}
+            pagination={{ onChange: page => { setPage(page) }, pageSize: 5, }} //list内部分页
+            renderItem={(item, index) => (
+              <li>
+                <div className={sty.contentCard}>
+                  <div className={sty.contentLeft}>
+                    <div className={sty.avatarLeft}>
+                      <h3>{item.comment_author}</h3>
+                      <p>articles 0</p>
+                      <p>flowers 0</p>
+                      <p>reputation 0</p>
+                      <p>mingle coin 0</p>
+                      <p>last time log in 0</p>
                     </div>
-                  </li>
-              )}
+                    <div className={sty.avatarRight}>
+                      <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
+                        <Avatar size={64} icon={<UserOutlined />} />
+                      </Badge>
+                      <div>
+                        <Button size='small' shape="round">
+                          Subscribe
+                        </Button>
+                        <Button size='small' shape="round">
+                          Message
+                        </Button>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div className={sty.contentRight} >
+                    <p dangerouslySetInnerHTML={{ __html: item.content }}></p>
+                  </div>
+                  <span className={sty.contentPage}>{(page - 1) * 5 + (index + 1)}</span>
+                </div>
+              </li>
+            )}
           />
-          
+
         </div>
         <div className={sty.replyBox}>
           <div className={sty.breadcrumbBox}>
@@ -175,10 +173,10 @@ function Reply() {
             </Breadcrumb>
           </div>
           <Form
-              labelCol={{ span: 2 }}
-              wrapperCol={{ span: 20 }}
-              layout="horizontal"
-              onFinish={onComment}
+            labelCol={{ span: 2 }}
+            wrapperCol={{ span: 20 }}
+            layout="horizontal"
+            onFinish={onComment}
           >
             <Form.Item label="content" name='content'>
               <ReactWEditor
