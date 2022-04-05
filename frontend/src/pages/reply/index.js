@@ -80,7 +80,7 @@ function Reply() {
           message.info(e);
         })
   }
-
+  const [page,setPage]=useState(1)
   return (
     <div className={sty.box}>
       <Nav></Nav>
@@ -127,8 +127,8 @@ function Reply() {
           <List
               className="comment-list"
               dataSource={comment} 
-              pagination={{ onChange: page => { console.log(page); }, pageSize: 10, }} //list内部分页
-              renderItem={item => (
+              pagination={{ onChange: page => { setPage(page) }, pageSize: 5, }} //list内部分页
+              renderItem={(item,index) => (
                   <li>
                     <div className={sty.contentCard}>
                       <div className={sty.contentLeft}>
@@ -159,74 +159,12 @@ function Reply() {
                       <div className={sty.contentRight} >
                         <p dangerouslySetInnerHTML={{ __html: item.content }}></p>
                       </div>
-                      <span className={sty.contentPage}>1</span>
+                      <span className={sty.contentPage}>{page * index + 1}</span>01234 01234
                     </div>
                   </li>
               )}
           />
-          {/*  <div className={sty.contentCard}>*/}
-          {/*    <div className={sty.contentLeft}>*/}
-          {/*      <div className={sty.avatarLeft}>*/}
-          {/*        <h3>hhhhh</h3>*/}
-          {/*        <p>articles 0</p>*/}
-          {/*        <p>flowers 0</p>*/}
-          {/*        <p>reputation 0</p>*/}
-          {/*        <p>mingle coin 0</p>*/}
-          {/*        <p>last time log in 0</p>*/}
-          {/*      </div>*/}
-          {/*      <div className={sty.avatarRight}>*/}
-          {/*        <Badge count={<ManOutlined style={{ color: '#fff' }} />}>*/}
-          {/*          <Avatar size={64} icon={<UserOutlined />} />*/}
-          {/*        </Badge>*/}
-          {/*        <div>*/}
-          {/*          <Button size='small' shape="round">*/}
-          {/*            Subscribe*/}
-          {/*          </Button>*/}
-          {/*          <Button size='small' shape="round">*/}
-          {/*            Message*/}
-          {/*          </Button>*/}
-          {/*        </div>*/}
-
-          {/*      </div>*/}
-          {/*    </div>*/}
-
-          {/*    <div className={sty.contentRight} >*/}
-          {/*      <article >{comment[0].content}</article>*/}
-
-          {/*    </div>*/}
-          {/*    <span className={sty.contentPage}>1</span>*/}
-          {/*  </div>*/}
-
-          {/*<div className={sty.contentCard}>*/}
-          {/*  <div className={sty.contentLeft}>*/}
-          {/*    <div className={sty.avatarLeft}>*/}
-          {/*      <h3>Ivy</h3>*/}
-          {/*      <p>posts 0</p>*/}
-          {/*      <p>followers 0</p>*/}
-          {/*      <p>reputation 0</p>*/}
-          {/*      <p>mingle coin 0</p>*/}
-          {/*      <p>last time login 0</p>*/}
-          {/*    </div>*/}
-          {/*    <div className={sty.avatarRight}>*/}
-          {/*      <Badge count={<ManOutlined style={{ color: '#fff' }} />}>*/}
-          {/*        <Avatar size={64} icon={<UserOutlined />} />*/}
-          {/*      </Badge>*/}
-          {/*      <div>*/}
-          {/*        <Button size='small' shape="round">*/}
-          {/*          subscribe*/}
-          {/*        </Button>*/}
-          {/*        <Button size='small' shape="round">*/}
-          {/*          message*/}
-          {/*        </Button>*/}
-          {/*      </div>*/}
-
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*  <div className={sty.contentRight}>*/}
-          {/*    comment 2*/}
-          {/*  </div>*/}
-          {/*  <span className={sty.contentPage}>2</span>*/}
-          {/*</div>*/}
+  
         </div>
         <div className={sty.replyBox}>
           <div className={sty.breadcrumbBox}>
