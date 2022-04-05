@@ -104,17 +104,39 @@ const columns = [
 ];
 
 function Index() {
-  // useEffect(() => {
-  //   Axios.get("/article").then((data) => {
-  //     console.log(data)
-  //   }).catch((error) => {
-
-  //   })
-  // }, [])
-
   const [articles, setArticles] = useState([])
   const [refreshData, setRefreshData] = useState(false)
+  const [selectValue, setSelectval] = useState('title')
+  const onSearch = (value) => {
+    const array = [];
+    if (selectValue === "title") {
+      articles.forEach(item => {
+        if (item.title.includes(value)) {
+          array.push(item)
+        }
+      })
+    } else if (selectValue === "author") {
+      articles.forEach(item => {
+        if (item.author.includes(value)) {
+          array.push(item)
+        }
+      })
+    }else{
+      articles.forEach(item => {
+        if (item.content.includes(value)) {
+          array.push(item)
+        }
+      })
+    }
 
+
+    console.log(array);
+    setArticles(array)
+  }
+  const onSelectChange = (e) => {
+    console.log(e)
+    setSelectval(e)
+  }
   useEffect(() => {
     getAllArticles();
   }, [])
@@ -126,7 +148,10 @@ function Index() {
 
   return (
     <div className={sty.box}>
-      <Nav></Nav>
+      <Nav
+        onSearch={(e) => { onSearch(e) }}
+        onSelectChange={(e) => { onSelectChange(e) }}
+      />
 
       {/* 中间区域 */}
       <div className={sty.contentBox}>
