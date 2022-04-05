@@ -81,6 +81,8 @@ func initializeRoutes() {
 	imageRoutes := router.Group("/image")
 	{
 		imageRoutes.GET("/avatar/:username", ensureLoggedIn(), getAvatar)
+		//imageRoutes.POST("/upload", ensureLoggedIn(), uploadImages)
+		imageRoutes.POST("/upload", uploadImages)
 	}
 
 }

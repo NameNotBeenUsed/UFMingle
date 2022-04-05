@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
@@ -19,4 +20,16 @@ func getAvatar(c *gin.Context) {
 		c.AbortWithError(http.StatusNotFound, err)
 	}
 	return
+}
+
+func uploadImages(c *gin.Context) {
+	form, _ := c.MultipartForm()
+	files := form.File["file[]"]
+
+	for _, file := range files {
+		if err := c.SaveUploadedFile(file, "./image/"+file.Filename); err != nil {
+			fmt.Println(err)
+		}
+	}
+	c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
 }
