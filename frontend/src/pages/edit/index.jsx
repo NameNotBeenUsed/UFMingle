@@ -14,11 +14,14 @@ import {
 import sty from './index.module.scss';
 
 import Nav from '../../components/nav'
-import ReactWEditor from 'wangeditor-for-react';
+//import ReactWEditor from 'wangeditor-for-react';
+import {extend} from "wangeditor-for-react";
 import Axios from 'axios';
-import axios from "axios";
+import i18next from "i18next";
 
 function Edit() {
+
+    const ReactWEditorOfLang = extend({i18next})
 
     const onFinish = (values) => {
 
@@ -68,18 +71,28 @@ function Edit() {
                 <Switch>receive message alert</Switch>
             </Form.Item>
             <Form.Item label="content" name='content'>
-            <ReactWEditor
-                defaultValue={'<h1>title</h1>'}
-                linkImgCallback={(src,alt,href) => {
-                    // 插入网络图片的回调事件
-                    console.log('image src ', src)
-                    console.log('word illustration for image',alt)
-                    console.log('link',href)
-                }}
-                onlineVideoCallback={(video) => {
-                    // 插入网络视频的回调事件
-                    console.log('insert video', video)
-                }}
+            {/*<ReactWEditor*/}
+            {/*    defaultValue={'<h1>title</h1>'}*/}
+            {/*    linkImgCallback={(src,alt,href) => {*/}
+            {/*        // 插入网络图片的回调事件*/}
+            {/*        console.log('image src ', src)*/}
+            {/*        console.log('word illustration for image',alt)*/}
+            {/*        console.log('link',href)*/}
+            {/*    }}wangEditor: upload image return results error，return results errno=undefined*/}
+            {/*    onlineVideoCallback={(video) => {*/}
+            {/*        // 插入网络视频的回调事件*/}
+            {/*        console.log('insert video', video)*/}
+            {/*    }}*/}
+            {/*    />*/}
+                <ReactWEditorOfLang
+                    config = {{
+                        lang: 'en',
+                        uploadImgServer: 'http://localhost:8080/image/upload',
+                        uploadImgHeaders: {
+                            Accept: 'application/json'
+                        },
+                        uploadFileName: 'file[]'
+                    }}
                 />
             </Form.Item>
             <Form.Item wrapperCol={{

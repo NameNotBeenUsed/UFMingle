@@ -83,6 +83,7 @@ func initializeRoutes() {
 		imageRoutes.GET("/avatar/:username", ensureLoggedIn(), getAvatar)
 		//imageRoutes.POST("/upload", ensureLoggedIn(), uploadImages)
 		imageRoutes.POST("/upload", uploadImages)
+		imageRoutes.GET("/download/:filename", downloadImage)
 	}
 
 }
