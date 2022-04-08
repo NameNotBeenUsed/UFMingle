@@ -64,7 +64,10 @@ function Edit() {
                 'Content-Type': 'application/json'
             },
             withCredentials: true}),
-        deleteImgs(diff)]).catch((e) => {
+        deleteImgs(diff)]).then((data) => {
+                message.info(data)
+                window.location.href = "/"
+            }).catch((e) => {
             message.info(e)
         })
 

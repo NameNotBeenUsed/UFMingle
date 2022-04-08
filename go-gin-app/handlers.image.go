@@ -91,9 +91,9 @@ func deleteImage(c *gin.Context) {
 	_, errF := os.Stat("./image/" + filename)
 	if errF == nil {
 		if err := os.Remove("./image/" + filename); err != nil {
-
+			log.Println("err at 94", err)
 		} else {
-			log.Println("err at 96", err)
+			c.JSON(http.StatusOK, gin.H{"message": "Success"})
 		}
 	} else {
 		log.Fatal("err at 99", errF)
