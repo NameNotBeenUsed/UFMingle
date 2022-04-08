@@ -84,6 +84,7 @@ func initializeRoutes() {
 		//imageRoutes.POST("/upload", ensureLoggedIn(), uploadImages)
 		imageRoutes.POST("/upload", uploadImages)
 		imageRoutes.GET("/download/:filename", downloadImage)
+		imageRoutes.DELETE("/delete/:filename", deleteImage)
 	}
 
 }

@@ -23,7 +23,7 @@ function Reply() {
   const [article, setArticle] = useState([])
   const [comment, setComment] = useState([[]])
   const { id: articleId } = useParams()
-  console.log("This is article ID ")
+  // console.log("This is article ID ")
   const onFinish = () => {
     Axios.all([Axios.get(`http://localhost:8080/article/view/${articleId}`,
       {

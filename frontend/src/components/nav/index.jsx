@@ -52,7 +52,7 @@ export default function Nav(props) {
   return <div className={sty.headBox}>
     <div className={sty.headCenter}>
       <div className={sty.headLeft}>
-        <img className={sty.logo} src={logo} alt="" srcset="" />
+        <img className={sty.logo} src={logo} alt="" srcSet="" />
         <div className={sty.logoName}>
           UFmingle
         </div>

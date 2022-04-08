@@ -22,21 +22,64 @@ import i18next from "i18next";
 function Edit() {
 
     const ReactWEditorOfLang = extend({i18next})
+    let initialImgFiles = []
+    let finalImgFiles = []
+
+    const getImgSrc = (html) => {
+        let imgReg = /<img.*?(?:>|\/>)/gi
+        let srcReg = /src=[\\"]?([^\\"]*)[\\"]?/i
+        let arr = html.match(imgReg)
+        console.log('arr', arr)
+        const imgUrls = []
+        if (arr) {
+            for (let i = 0; i < arr.length; i++) {
+                let src = arr[i].match(srcReg)[1]
+                // console.log('0', arr[i].match(srcReg)[0])
+                // console.log('1', arr[i].match(srcReg)[1])
+                let index = src.lastIndexOf('\/');
+                let filename = src.substring(index+1)
+                imgUrls.push(filename)
+            }
+        }
+        return imgUrls
+    }
+
+    const deleteImgs = (imgUrls) => {
+        for(let img of imgUrls){
+            Axios.delete('http://localhost:8080/image/delete/' + img)
+        }
+    }
 
     const onFinish = (values) => {
+        console.log("This function onFinish in Edit()")
+        console.log(values)
 
-        Axios.post('http://localhost:8080/article/create', values, {headers: {
+        console.log("initialImgFiles", initialImgFiles)
+        finalImgFiles = getImgSrc(values.content)
+        console.log("finalImgFiles", finalImgFiles)
+        let diff = initialImgFiles.filter(function (v) { return finalImgFiles.indexOf(v) == -1 })
+        console.log(diff)
+
+        Axios.all([Axios.post('http://localhost:8080/article/create', values, {headers: {
                 'Content-Type': 'application/json'
             },
-            withCredentials: true
+            withCredentials: true}),
+        deleteImgs(diff)]).catch((e) => {
+            message.info(e)
         })
-        .then((data)=>{
-            message.info(data);
-            window.location.href = "/"
-        })
-        .catch((e)=>{
-            message.info(e);
-        })
+
+        // Axios.post('http://localhost:8080/article/create', values, {headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     withCredentials: true
+        // })
+        // .then((data)=>{
+        //     message.info(data);
+        //     //window.location.href = "/"
+        // })
+        // .catch((e)=>{
+        //     message.info(e);
+        // })
     };
 
     return (  
@@ -91,7 +134,24 @@ function Edit() {
                         uploadImgHeaders: {
                             Accept: 'application/json'
                         },
-                        uploadFileName: 'file[]'
+                        //uploadFileName: 'file[]',
+                        uploadImgHooks: {
+                            before: function (xhr, editor, resultFiles) {
+                                console.log('before', xhr.form)
+                                console.log('resultFiles in before', resultFiles)
+                                for(let file of resultFiles){
+                                    //console.log(file.name)
+                                    initialImgFiles.push(file.name)
+                                }
+                            }
+                            // success: function (xhr, editor, resultFiles) {
+                            //     console.log('success', xhr.form)
+                            //     console.log('xhr.formData in success', resultFiles)
+                            //     // for(let pair of xhr.formData.entries()){
+                            //     //     console.log(pair[0] + ',' + pair[1])
+                            //     // }
+                            // }
+                        }
                     }}
                 />
             </Form.Item>

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"os"
 )
@@ -54,11 +55,15 @@ type returnData struct {
 
 func uploadImages(c *gin.Context) {
 	form, _ := c.MultipartForm()
-	fmt.Println(form)
-	files := form.File["file[]"]
+	//fmt.Println(form)
+	//files := form.File["file[]"]
+	filesMap := form.File
+	fmt.Println("form.File[\"file[]\"]: ", form.File["file[]"])
+	fmt.Println("form.File: ", form.File)
 
 	imgResult := make([]returnData, 0)
-	for _, file := range files {
+	for _, files := range filesMap {
+		file := files[0]
 		if err := c.SaveUploadedFile(file, "./image/"+file.Filename); err != nil {
 			fmt.Println(err)
 		}
@@ -79,4 +84,18 @@ func downloadImage(c *gin.Context) {
 		c.File("./image/test.jpg")
 	}
 	return
+}
+
+func deleteImage(c *gin.Context) {
+	filename := c.Param("filename")
+	_, errF := os.Stat("./image/" + filename)
+	if errF == nil {
+		if err := os.Remove("./image/" + filename); err != nil {
+
+		} else {
+			log.Println("err at 96", err)
+		}
+	} else {
+		log.Fatal("err at 99", errF)
+	}
 }
