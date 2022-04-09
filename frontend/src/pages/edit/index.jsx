@@ -140,7 +140,7 @@ function Edit() {
                         //uploadFileName: 'file[]',
                         uploadImgHooks: {
                             before: function (xhr, editor, resultFiles) {
-                                console.log('before', xhr.form)
+                                //console.log('before', xhr.form)
                                 console.log('resultFiles in before', resultFiles)
                                 for(let file of resultFiles){
                                     //console.log(file.name)

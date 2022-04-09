@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -58,14 +57,14 @@ func uploadImages(c *gin.Context) {
 	//fmt.Println(form)
 	//files := form.File["file[]"]
 	filesMap := form.File
-	fmt.Println("form.File[\"file[]\"]: ", form.File["file[]"])
-	fmt.Println("form.File: ", form.File)
+	//fmt.Println("form.File[\"file[]\"]: ", form.File["file[]"])
+	//fmt.Println("form.File: ", form.File)
 
 	imgResult := make([]returnData, 0)
 	for _, files := range filesMap {
 		file := files[0]
 		if err := c.SaveUploadedFile(file, "./image/"+file.Filename); err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		}
 		tmpData := returnData{URL: "http://localhost:8080/image/download/" + file.Filename}
 		imgResult = append(imgResult, tmpData)
@@ -77,20 +76,20 @@ func uploadImages(c *gin.Context) {
 
 func downloadImage(c *gin.Context) {
 	filename := c.Param("filename")
-	_, errF := os.Stat("./image/" + filename)
+	_, errF := os.Stat("./Image/" + filename)
 	if errF == nil {
-		c.File("./image/" + filename)
+		c.File("./Image/" + filename)
 	} else {
-		c.File("./image/test.jpg")
+		log.Println("err at 84", errF)
 	}
 	return
 }
 
 func deleteImage(c *gin.Context) {
 	filename := c.Param("filename")
-	_, errF := os.Stat("./image/" + filename)
+	_, errF := os.Stat("./Image/" + filename)
 	if errF == nil {
-		if err := os.Remove("./image/" + filename); err != nil {
+		if err := os.Remove("./Image/" + filename); err != nil {
 			log.Println("err at 94", err)
 		} else {
 			c.JSON(http.StatusOK, gin.H{"message": "Success"})

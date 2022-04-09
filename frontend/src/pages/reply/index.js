@@ -5,14 +5,44 @@ import { UserOutlined, ManOutlined } from '@ant-design/icons';
 import sty from './index.module.scss';
 import { useLocation, useParams } from "react-router-dom";
 import Nav from '../../components/nav'
-import ReactWEditor from 'wangeditor-for-react';
+//import ReactWEditor from 'wangeditor-for-react';
 import Axios from 'axios';
+import {extend} from "wangeditor-for-react";
+import i18next from "i18next";
 import uf_news_1 from "../../img/uf_news_1.png";
 import uf_news_2 from "../../img/uf_news_2.png";
 import uf_news_3 from "../../img/uf_news_3.png";
 import uf_news_4 from "../../img/uf_news_4.png";
 
 function Reply() {
+
+  const ReactWEditorOfLang = extend({i18next})
+  let initialImgFiles = []
+  let finalImgFiles = []
+
+  const getImgSrc = (html) => {
+    let imgReg = /<img.*?(?:>|\/>)/gi
+    let srcReg = /src=[\\"]?([^\\"]*)[\\"]?/i
+    let arr = html.match(imgReg)
+    console.log('arr', arr)
+    const imgUrls = []
+    if (arr) {
+      for (let i = 0; i < arr.length; i++) {
+        let src = arr[i].match(srcReg)[1]
+        let index = src.lastIndexOf('\/')
+        let filename = src.substring(index+1)
+        imgUrls.push(filename)
+      }
+    }
+    return imgUrls
+  }
+
+  const deleteImgs = (imgUrls) => {
+    for(let img of imgUrls){
+      Axios.delete('http://localhost:8080/image/delete/' + img)
+    }
+  }
+
   const contentStyle = {
     height: '120px',
     color: '#fff',
@@ -50,7 +80,7 @@ function Reply() {
         .then((response) => {
           let comment = response.data
           setComment(response.data);
-          console.log(comment)
+          //console.log(comment)
           //document.getElementById("commentt").innerHTML=commentt;
         })
         .catch((e) => {
@@ -64,22 +94,31 @@ function Reply() {
   }, [articleId])
 
   const onComment = (values) => {
-    Axios.post(`http://localhost:8080/article/comment/${articleId}`, values, {
+    console.log("initialImgFiles", initialImgFiles)
+    finalImgFiles = getImgSrc(values.content)
+    console.log("finalImgFiles", finalImgFiles)
+    let diff = initialImgFiles.filter(function (v) { return finalImgFiles.indexOf(v) == -1 })
+    console.log("diff", diff)
+
+    Axios.all([Axios.post(`http://localhost:8080/article/comment/${articleId}`, values, {
       headers: {
         'Content-Type': 'application/json'
       },
       withCredentials: true
+    }),
+    deleteImgs(diff)]).then((results) => {
+      // if (data.status === 200) {
+      //   window.location.href = `/reply/${articleId}`;
+      // }
+      const acct = results[0];
+      const perm = results[1];
+      //console.log("results", acct, perm)
+      if(acct.status === 200) {
+        window.location.href = `/reply/${articleId}`;
+      }
+    }).catch((e) => {
+      message.info(e)
     })
-      .then((data) => {
-        message.info(data);
-        if (data.status === 200) {
-          //await message.success('COMMENT SUCCESS!'); // 打印message后再跳转
-          window.location.href = `/reply/${articleId}`;
-        }
-      })
-      .catch((e) => {
-        message.info(e);
-      })
   }
   const [page, setPage] = useState(1)
   return (
@@ -179,30 +218,48 @@ function Reply() {
             onFinish={onComment}
           >
             <Form.Item label="content" name='content'>
-              <ReactWEditor
-                className={sty.editor}
-                defaultValue={'<h1>title</h1>'}
-                linkImgCallback={(src, alt, href) => {
-                  // 插入网络图片的回调事件
-                  console.log('image src ', src)
-                  console.log('image description', alt)
-                  console.log('href', href)
-                }}
+              {/*<ReactWEditor*/}
+              {/*  className={sty.editor}*/}
+              {/*  defaultValue={'<h1>title</h1>'}*/}
+              {/*  linkImgCallback={(src, alt, href) => {*/}
+              {/*    // 插入网络图片的回调事件*/}
+              {/*    console.log('image src ', src)*/}
+              {/*    console.log('image description', alt)*/}
+              {/*    console.log('href', href)*/}
+              {/*  }}*/}
 
-                onlineVideoCallback={(video) => {
-                  // 插入网络视频的回调事件
-                  console.log('post video content', video)
-                }}
-                onChange={(html) => {
-                  //console.log('onChange html:', html)
-                }}
-                onBlur={(html) => {
-                  console.log('onBlur html:', html)
-                }}
-                onFocus={(html) => {
-                  console.log('onFocus html:', html)
-                }}
-              />
+              {/*  onlineVideoCallback={(video) => {*/}
+              {/*    // 插入网络视频的回调事件*/}
+              {/*    console.log('post video content', video)*/}
+              {/*  }}*/}
+              {/*  onChange={(html) => {*/}
+              {/*    //console.log('onChange html:', html)*/}
+              {/*  }}*/}
+              {/*  onBlur={(html) => {*/}
+              {/*    console.log('onBlur html:', html)*/}
+              {/*  }}*/}
+              {/*  onFocus={(html) => {*/}
+              {/*    console.log('onFocus html:', html)*/}
+              {/*  }}*/}
+              {/*/>*/}
+              <ReactWEditorOfLang
+                  config = {{
+                    lang: 'en',
+                    uploadImgServer: 'http://localhost:8080/image/upload',
+                    uploadImgHeaders: {
+                      Accept: 'spplication/json'
+                    },
+                    uploadImgHooks: {
+                        before: function (xhr, editor, resultFiles) {
+                            console.log('resultFiles in before', resultFiles)
+                            for(let file of resultFiles){
+                                console.log(file.name)
+                                initialImgFiles.push(file.name)
+                            }
+                        }
+                    }
+                  }}
+                />
             </Form.Item>
             <Form.Item wrapperCol={{
               offset: 12,
