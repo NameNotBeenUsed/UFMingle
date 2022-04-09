@@ -71,3 +71,12 @@ View personal page
 The new main features can be viewed at https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/sprint3.wmv or https://youtu.be/kGt7S6TCXAo.
 
 This is our sprint board: https://github.com/NameNotBeenUsed/UFMingle/projects/1.
+
+
+
+Frontend updated reigister page, login page, article page and reply page, and fix some bugs.
+
+
+## Sprint 4
+
+Frontend implements searching feature, update reply page and personal page.
