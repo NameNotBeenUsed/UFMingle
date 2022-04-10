@@ -14,8 +14,19 @@ import {
   LayoutOutlined,
 } from '@ant-design/icons';
 
-function Reply() {
+import Followers from './component/Followers';
+import PersonalPage from './component/PersonalPage';
+import Replies from './component/Replies';
+import Subscribes from './component/Subscribes';
+import UserData from './component/UserData';
 
+
+function Reply() {
+  const [menuKey,setMenuKey]=React.useState('1')
+  const menuClick =(e)=>{
+    console.log(e)
+    setMenuKey(e.key)
+  }
   return (
     <div className={sty.box}>
       <Nav></Nav>
@@ -34,6 +45,7 @@ function Reply() {
               defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
               mode="inline"
+              onClick={menuClick}
             >
               <Menu.Item key="1" icon={<HomeOutlined />}>
                 个人主页
@@ -53,7 +65,8 @@ function Reply() {
             </Menu>
           </div>
           <Card style={{ width: "68%" }}>
-            <div className={sty.meRightTop}>
+            {menuKey ==='1'?<PersonalPage />:menuKey==='2'?<UserData />:menuKey==='3'?<Replies />:menuKey==='4'?<Subscribes />:menuKey==='5'?<Followers />:''}
+            {/* <div className={sty.meRightTop}>
               <Avatar size={150} src={<Image src="http://localhost:8080/image/avatar/user1" style={{ width: '150px ' }} />} />
               <div className={sty.meright}>
                 <div className={sty.top}>
@@ -80,7 +93,7 @@ function Reply() {
               <p><span className={sty.blue}>hello</span>2020-29-20 10:10:10</p>
               <p>hello, world!</p>
               <Divider></Divider>
-            </div>
+            </div> */}
           </Card>
         </div>
       </div>
