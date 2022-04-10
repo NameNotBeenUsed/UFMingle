@@ -1,0 +1,33 @@
+.meRightTop{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    .meright{
+        width: calc(100% - 200px);
+        margin-left: 20px;
+        .top{
+            .name{
+                font-size: 20px;
+                margin-right: 20px;
+            }
+            .samll{
+                font-size: 8px;
+                color: #ccc;
+                margin-right: 40px;
+            }
+            .tag{
+                margin-left: -8px;
+                margin-right: 120px;
+            }
+        }
+        .bottom{
+            margin-top: 40px;
+            p{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+    
+}
