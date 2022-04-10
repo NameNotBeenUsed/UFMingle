@@ -20,25 +20,26 @@ function editSource(text) {
 }
 const columns = [
   {
-    title: (
-      <div className={sty.titleBox}>
-        <div className={sty.titleItem}>
-          all
-        </div>
-        <div className={sty.titleItem}>
-          highly discussed
-        </div>
-        <div className={sty.titleItem}>
-          save
-        </div>
-        <Select style={{ width: '100px' }} defaultValue="all">
-          <Option value="all">all</Option>
-          <Option value="girls">girls</Option>
-          <Option value="boys">boys</Option>
-          <Option value="unknown">unknown</Option>
-        </Select>
-      </div>
-    ),
+    // title: (
+    //   <div className={sty.titleBox}>
+    //     <div className={sty.titleItem}>
+    //       all
+    //     </div>
+    //     <div className={sty.titleItem}>
+    //       highly discussed
+    //     </div>
+    //     <div className={sty.titleItem}>
+    //       save
+    //     </div>
+    //     <Select style={{ width: '100px' }} defaultValue="all">
+    //       <Option value="all">all</Option>
+    //       <Option value="girls">girls</Option>
+    //       <Option value="boys">boys</Option>
+    //       <Option value="unknown">unknown</Option>
+    //     </Select>
+    //   </div>
+    // ),
+    title:'title',
     dataIndex: 'title',
     key: 'id',
     width: 400,
@@ -76,31 +77,31 @@ const columns = [
     dataIndex: 'author',
     key: 'author',
   },
-  {
-    title: 'click',
-    key: 'clickNum',
-    dataIndex: 'clickNum',
-    render: tags => (
-      <Tag color='blue'>
-        180k
-      </Tag>
-    ),
-  },
-  {
-    title: 'reply',
-    key: 'replyNum',
-    dataIndex: 'replyNum',
-    render: tags => (
-      <Tag color='orange'>
-        180k
-      </Tag>
-    ),
-  },
-  {
-    title: 'last reply time',
-    dataIndex: 'time',
-    key: 'time',
-  },
+  // {
+  //   title: 'click',
+  //   key: 'clickNum',
+  //   dataIndex: 'clickNum',
+  //   render: tags => (
+  //     <Tag color='blue'>
+  //       180k
+  //     </Tag>
+  //   ),
+  // },
+  // {
+  //   title: 'reply',
+  //   key: 'replyNum',
+  //   dataIndex: 'replyNum',
+  //   render: tags => (
+  //     <Tag color='orange'>
+  //       180k
+  //     </Tag>
+  //   ),
+  // },
+  // {
+  //   title: 'last reply time',
+  //   dataIndex: 'time',
+  //   key: 'time',
+  // },
 ];
 
 function Index() {
