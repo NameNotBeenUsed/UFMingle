@@ -63,7 +63,7 @@ export default function Nav(props) {
         <div className={sty.navItem} onClick={() => window.location.href = "/edit" }>
           new article
         </div>
-        <div>
+        <div style={{display:window.location.pathname==='/'?'block':'none'}}>
           <InputGroup compact>
             <Select style={{ width: '100px' }}
               onChange={(e) => onSelectChange(e)}
