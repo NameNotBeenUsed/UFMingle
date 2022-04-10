@@ -60,11 +60,8 @@ export default function Nav(props) {
         <div className={sty.navItem} onClick={() => {tologin('/'); onBlockListChange()} }>
           block list
         </div>
-        <div className={sty.navItem}>
+        <div className={sty.navItem} onClick={() => window.location.href = "/edit" }>
           new article
-        </div>
-        <div className={sty.navItem}>
-          follow
         </div>
         <div>
           <InputGroup compact>
