@@ -171,11 +171,11 @@ function Reply() {
                   <div className={sty.contentLeft}>
                     <div className={sty.avatarLeft}>
                       <h3>{item.comment_author}</h3>
-                      <p>articles 0</p>
-                      <p>flowers 0</p>
+                      {/* <p>articles 0</p> */}
+                      {/* <p>flowers 0</p>
                       <p>reputation 0</p>
                       <p>mingle coin 0</p>
-                      <p>last time log in 0</p>
+                      <p>last time log in 0</p> */}
                     </div>
                     <div className={sty.avatarRight}>
                       <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
