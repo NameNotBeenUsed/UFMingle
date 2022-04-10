@@ -145,12 +145,16 @@ function Index() {
     setRefreshData(false);
     getAllArticles();
   }
+  const onBlockListChange  = () => {
+    getAllArticles();
+  }
 
   return (
     <div className={sty.box}>
       <Nav
         onSearch={(e) => { onSearch(e) }}
         onSelectChange={(e) => { onSelectChange(e) }}
+        onBlockListChange={(e) => {onBlockListChange(e)}}
       />
 
       {/* 中间区域 */}

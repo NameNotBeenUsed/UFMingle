@@ -15,7 +15,7 @@ const { Option } = Select;
 
 export default function Nav(props) {
   const history = useNavigate()
-  const { onSearch, onSelectChange } = props
+  const { onSearch, onSelectChange, onBlockListChange } = props
 
   const [islogin, setislogin] = useState(false)
   const tologin = (value) => {
@@ -57,7 +57,7 @@ export default function Nav(props) {
           UFmingle
         </div>
         <Divider type="vertical" />
-        <div className={sty.navItem} onClick={() => tologin('/')}>
+        <div className={sty.navItem} onClick={() => {tologin('/'); onBlockListChange()} }>
           block list
         </div>
         <div className={sty.navItem}>
