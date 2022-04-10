@@ -183,21 +183,6 @@ function Index() {
                 </div>
               </div>
             </div>
-            <div className={sty.mainHeadRight}>
-              <div className={sty.mainHeadRightItemBox}>
-                <div style={{
-                  marginBottom: 10
-                }} className={sty.mainHeadRightItem}>
-                  <div className={sty.mainHeadRightItem1}>Today's post</div>
-                  <div className={sty.mainHeadRightItem2}>14</div>
-                </div>
-                <div className={sty.mainHeadRightItem}>
-                  <div className={sty.mainHeadRightItem1}>Total post</div>
-                  <div className={sty.mainHeadRightItem2}>34772</div>
-                </div>
-              </div>
-              <Button>unsubscribe</Button>
-            </div>
           </div>
 
 
