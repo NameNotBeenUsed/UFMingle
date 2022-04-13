@@ -134,6 +134,8 @@ function Edit() {
                     config = {{
                         lang: 'en',
                         uploadImgServer: 'http://localhost:8080/image/upload',
+                        showLinkImg: false,
+                        withCredentials: true,
                         uploadImgHeaders: {
                             Accept: 'application/json'
                         },

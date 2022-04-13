@@ -257,6 +257,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/u/info/:item": {
+            "patch": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Modify three types of user information: password, birthday and gender. Birthday must be in the form \"2010-12-30\", and the gender can be male, female or unknown",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "can be password/birthday/gender",
+                        "name": "item",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Failure",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
+            }
+        },
         "/u/login": {
             "get": {
                 "produces": [
@@ -390,6 +421,9 @@ const docTemplate = `{
                 },
                 "likes": {
                     "type": "integer"
+                },
+                "postTime": {
+                    "type": "string"
                 },
                 "title": {
                     "type": "string"

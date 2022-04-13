@@ -13,6 +13,8 @@ type user struct {
 	GatorPW   string `json:"gatorPW"`
 	Username  string `json:"username"`
 	Password  string `json:"password"`
+	Birthday  string `json:"birthday"`
+	Gender    string `json:"gender"`
 }
 
 type mingleUser struct {
@@ -122,7 +124,7 @@ func registerNewUser(newUser user) (int64, error) {
 
 	flag, err := isGatorIdAvailable(newUser.Gatorlink, newUser.GatorPW)
 	if flag == false && err == nil {
-		return 0, errors.New("The username isn't available")
+		return 0, errors.New("The username is not available")
 	}
 
 	tx, err := DB.Begin()
@@ -130,7 +132,7 @@ func registerNewUser(newUser user) (int64, error) {
 		return 0, err
 	}
 
-	stmt, err := tx.Prepare("INSERT INTO users (username, password, gatorID, gender) VALUES (?, ?, ?, ?)")
+	stmt, err := tx.Prepare("INSERT INTO users (username, password, gatorID, gender, birthday) VALUES (?, ?, ?, ?, ?)")
 
 	if err != nil {
 		return 0, err
@@ -138,7 +140,7 @@ func registerNewUser(newUser user) (int64, error) {
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(newUser.Username, newUser.Password, newUser.Gatorlink, "unknown")
+	result, err := stmt.Exec(newUser.Username, newUser.Password, newUser.Gatorlink, newUser.Gender, newUser.Birthday)
 
 	if err != nil {
 		return 0, err
@@ -231,4 +233,57 @@ func deleteUser(username string) (int64, error) {
 	tx.Commit()
 
 	return num, nil
+}
+
+//item:
+// -password
+// -birthday
+// -gender
+func updateUserItem(username string, column string, content string) (int64, error) {
+	switch column {
+	case "password":
+		stmt, err := DB.Prepare("UPDATE users SET password=? WHERE username=?")
+		if err != nil {
+			return 0, err
+		}
+		res, errStmt := stmt.Exec(content, username)
+		if errStmt != nil {
+			return 0, errStmt
+		}
+		affect, errRes := res.RowsAffected()
+		if errRes != nil {
+			return 0, errRes
+		}
+		return affect, nil
+	case "birthday":
+		stmt, err := DB.Prepare("UPDATE users SET birthday=? WHERE username=?")
+		if err != nil {
+			return 0, err
+		}
+		res, errStmt := stmt.Exec(content, username)
+		if errStmt != nil {
+			return 0, errStmt
+		}
+		affect, errRes := res.RowsAffected()
+		if errRes != nil {
+			return 0, errRes
+		}
+		return affect, nil
+	case "gender":
+		stmt, err := DB.Prepare("UPDATE users SET gender=? WHERE username=?")
+		if err != nil {
+			return 0, err
+		}
+		res, errStmt := stmt.Exec(content, username)
+		if errStmt != nil {
+			return 0, errStmt
+		}
+		affect, errRes := res.RowsAffected()
+		if errRes != nil {
+			return 0, errRes
+		}
+		return affect, nil
+	default:
+		return 0, errors.New("invalid parameters")
+	}
 }

@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -177,4 +178,40 @@ func register(c *gin.Context) {
 		//c.JSON(http.StatusBadRequest, err.Error())
 
 	}
+}
+
+// @Summary Modify three types of user information: password, birthday and gender. Birthday must be in the form "2010-12-30", and the gender can be male, female or unknown
+// @Produce json
+// @Param item path string true "can be password/birthday/gender"
+// @Success 200 {string} string "Success"
+// @Failure 400 {error} error "Failure"
+// @Router /u/info/:item [patch]
+func updateUserInfo(c *gin.Context) {
+	item := c.Param("item")
+	var tempUser mingleUser
+	token, err := c.Cookie("token")
+	if err != nil {
+		log.Println("at 188", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	err = json.Unmarshal([]byte(token), &tempUser)
+	if err != nil {
+		log.Println("at 194", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	var content map[string]string
+	if err = c.BindJSON(&content); err != nil {
+		fmt.Println(content)
+		log.Println("at 201", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+	num, errUpdate := updateUserItem(tempUser.Username, item, content[item])
+	if num != 1 || errUpdate != nil {
+		log.Println("at 206", errUpdate)
+		c.AbortWithError(http.StatusBadRequest, errUpdate)
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }

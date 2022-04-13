@@ -54,6 +54,8 @@ func initializeRoutes() {
 		// Handle POST requests at /u/register
 		// Ensure that the user is not logged in by using the middleware
 		userRoutes.POST("/register", ensureNotLoggedIn(), register)
+
+		userRoutes.PATCH("/info/:item", ensureLoggedIn(), updateUserInfo)
 	}
 
 	// Group article related routes together
@@ -83,10 +85,9 @@ func initializeRoutes() {
 	imageRoutes := router.Group("/image")
 	{
 		imageRoutes.GET("/avatar/:username", ensureLoggedIn(), getAvatar)
-		//imageRoutes.POST("/upload", ensureLoggedIn(), uploadImages)
-		imageRoutes.POST("/upload", uploadImages)
-		imageRoutes.GET("/download/:filename", downloadImage)
-		imageRoutes.DELETE("/delete/:filename", deleteImage)
+		imageRoutes.POST("/upload", ensureLoggedIn(), uploadImages)
+		imageRoutes.GET("/download/:filename", ensureLoggedIn(), downloadImage)
+		imageRoutes.DELETE("/delete/:filename", ensureLoggedIn(), deleteImage)
 	}
 
 }

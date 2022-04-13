@@ -11,6 +11,8 @@ definitions:
         type: integer
       likes:
         type: integer
+      postTime:
+        type: string
       title:
         type: string
     type: object
@@ -177,6 +179,28 @@ paths:
           schema:
             type: error
       summary: Upload images inserted by users in posts or replies
+  /u/info/:item:
+    patch:
+      parameters:
+      - description: can be password/birthday/gender
+        in: path
+        name: item
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "400":
+          description: Failure
+          schema:
+            type: error
+      summary: 'Modify three types of user information: password, birthday and gender.
+        Birthday must be in the form "2010-12-30", and the gender can be male, female
+        or unknown'
   /u/login:
     get:
       produces:
