@@ -99,6 +99,34 @@ func getArticles(count int) ([]article, error) {
 	return articleResults, err
 }
 
+func getArticlesByUser(username string) ([]article, error) {
+	rows, err := DB.Query("SELECT id, author, title, content, likes, dislikes from articles WHERE author = ?", username)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	articleResults := make([]article, 0)
+
+	for rows.Next() {
+		singleArticle := article{}
+		err := rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
+		if err != nil {
+			return nil, err
+		}
+
+		articleResults = append(articleResults, singleArticle)
+	}
+
+	err = rows.Err()
+
+	if err != nil {
+		return nil, err
+	}
+	return articleResults, err
+}
+
 // Fetch an article based on the ID supplied
 func getArticleByID(id int) (article, error) {
 	//for _, a := range articleList {

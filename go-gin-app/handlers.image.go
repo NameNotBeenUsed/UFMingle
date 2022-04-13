@@ -7,6 +7,12 @@ import (
 	"os"
 )
 
+// @Summary Get the avatar of the user
+// @Produce json
+// @Param username path string true "username"
+// @Success 200 {file} file "An avatar is returned"
+// @Failure 404 {error} error "Error"
+// @Router /image/avatar/:username [get]
 func getAvatar(c *gin.Context) {
 	username := c.Param("username")
 	if res, err := isUserExist(username); err == nil && res == true {
@@ -52,6 +58,11 @@ type returnData struct {
 	Href string `json:"href"`
 }
 
+// @Summary Upload images inserted by users in posts or replies
+// @Produce json
+// @Success 200 {map} map "errno: 0, data: A list of download addresses of images"
+// @Failure 400 {error} error "Error"
+// @Router /image/upload [post]
 func uploadImages(c *gin.Context) {
 	form, _ := c.MultipartForm()
 	//fmt.Println(form)
@@ -65,6 +76,7 @@ func uploadImages(c *gin.Context) {
 		file := files[0]
 		if err := c.SaveUploadedFile(file, "./image/"+file.Filename); err != nil {
 			log.Println(err)
+			c.AbortWithError(http.StatusBadRequest, err)
 		}
 		tmpData := returnData{URL: "http://localhost:8080/image/download/" + file.Filename}
 		imgResult = append(imgResult, tmpData)
@@ -74,27 +86,42 @@ func uploadImages(c *gin.Context) {
 		"data": imgResult})
 }
 
+// @Summary Retrieve images inserted in the posts or replies
+// @Produce jpeg
+// @Param filename path string true "Image filename"
+// @Success 200 {file} file "Success"
+// @Failure 400 {error} error "Failure"
+// @Router /image/download/:filename [get]
 func downloadImage(c *gin.Context) {
 	filename := c.Param("filename")
 	_, errF := os.Stat("./Image/" + filename)
 	if errF == nil {
 		c.File("./Image/" + filename)
 	} else {
+		c.AbortWithError(http.StatusBadRequest, errF)
 		log.Println("err at 84", errF)
 	}
 	return
 }
 
+// @Summary Delete an image file
+// @Produce json
+// @Param filename path string true "Filename of the image"
+// @Success 200 {map} map "Success"
+// @Failure 400 {error} error "Failure"
+// @Router /image/delete/:filename [delete]
 func deleteImage(c *gin.Context) {
 	filename := c.Param("filename")
 	_, errF := os.Stat("./Image/" + filename)
 	if errF == nil {
 		if err := os.Remove("./Image/" + filename); err != nil {
+			c.AbortWithError(http.StatusBadRequest, err)
 			log.Println("err at 94", err)
 		} else {
 			c.JSON(http.StatusOK, gin.H{"message": "Success"})
 		}
 	} else {
+		c.AbortWithError(http.StatusBadRequest, errF)
 		log.Fatal("err at 99", errF)
 	}
 }

@@ -1,9 +1,15 @@
 definitions:
   main.article:
     properties:
+      author:
+        type: string
       content:
         type: string
+      dislikes:
+        type: integer
       id:
+        type: integer
+      likes:
         type: integer
       title:
         type: string
@@ -12,7 +18,7 @@ info:
   contact: {}
   description: An on-campus dating application
   title: UFMingle
-  version: "1.0"
+  version: "2.0"
 paths:
   /:
     get:
@@ -20,16 +26,11 @@ paths:
       - application/json
       responses:
         "200":
-          description: Return an array of structure article
+          description: Return all the information of article
           schema:
-            items:
-              $ref: '#/definitions/main.article'
-            type: array
+            $ref: '#/definitions/main.article'
       summary: Show forum home page and all articles
   /article/create:
-    get:
-      responses: {}
-      summary: Show article creation page
     post:
       parameters:
       - description: The title of the article
@@ -42,18 +43,46 @@ paths:
         name: content
         required: true
         type: string
+      - description: The author of the article
+        in: header
+        name: author
+        required: true
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: Create an article successfully
+          description: If the article has been created successfully, return the number
+            of rows been affected, else 0
           schema:
             type: int
         "400":
-          description: Failed to create an article
+          description: There is an error while creating the article
           schema:
-            type: int
+            type: error
       summary: Create an article
+  /article/pastposts/:username:
+    get:
+      parameters:
+      - description: username, i.e. author of the article
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            items:
+              $ref: '#/definitions/main.article'
+            type: array
+        "400":
+          description: failure
+          schema:
+            type: error
+      summary: Get article posted by the user
   /article/view/:article_id:
     get:
       parameters:
@@ -66,14 +95,88 @@ paths:
       - application/json
       responses:
         "200":
-          description: Return the struct article
+          description: Return the article
           schema:
             $ref: '#/definitions/main.article'
         "404":
           description: Not found or invalid article_id
           schema:
-            type: int
+            type: string
       summary: Open the article page
+  /image/avatar/:username:
+    get:
+      parameters:
+      - description: username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: An avatar is returned
+          schema:
+            type: file
+        "404":
+          description: Error
+          schema:
+            type: error
+      summary: Get the avatar of the user
+  /image/delete/:filename:
+    delete:
+      parameters:
+      - description: Filename of the image
+        in: path
+        name: filename
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: map
+        "400":
+          description: Failure
+          schema:
+            type: error
+      summary: Delete an image file
+  /image/download/:filename:
+    get:
+      parameters:
+      - description: Image filename
+        in: path
+        name: filename
+        required: true
+        type: string
+      produces:
+      - image/jpeg
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: file
+        "400":
+          description: Failure
+          schema:
+            type: error
+      summary: Retrieve images inserted in the posts or replies
+  /image/upload:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'errno: 0, data: A list of download addresses of images'
+          schema:
+            type: map
+        "400":
+          description: Error
+          schema:
+            type: error
+      summary: Upload images inserted by users in posts or replies
   /u/login:
     get:
       produces:
@@ -98,23 +201,56 @@ paths:
         "200":
           description: Log in successfully
           schema:
-            type: int
+            type: string
         "400":
           description: Failed to log in
           schema:
-            type: int
+            type: string
       summary: Perform function login
   /u/logout:
     get:
       produces:
       - application/json
-      responses: {}
+      responses:
+        "200":
+          description: Log out successfully
+          schema:
+            type: string
       summary: Logout
   /u/register:
     get:
       responses: {}
       summary: Show the registration page
     post:
-      responses: {}
+      parameters:
+      - description: Gatorlink
+        in: header
+        name: gatorlink
+        required: true
+        type: string
+      - description: GatorPW
+        in: header
+        name: gatorPW
+        required: true
+        type: string
+      - description: Username
+        in: header
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: header
+        name: password
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Register successfully, return the number of rows been affected
+          schema:
+            type: int
+        "400":
+          description: ErrorMessage
+          schema:
+            type: error
       summary: Register a new user
 swagger: "2.0"

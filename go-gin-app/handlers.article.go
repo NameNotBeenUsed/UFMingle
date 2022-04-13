@@ -131,3 +131,20 @@ func createArticle(c *gin.Context) {
 		c.AbortWithError(http.StatusBadRequest, err)
 	}*/
 }
+
+// @Summary Get article posted by the user
+// @Produce json
+// @Param username path string true "username, i.e. author of the article"
+// @Success 200 {array} article "success"
+// @Failure 400 {error} error "failure"
+// @Router /article/pastposts/:username [get]
+func getArticleByUsername(c *gin.Context) {
+	username := c.Param("username")
+	articleList, err := getArticlesByUser(username)
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+		log.Fatal(err)
+	}
+
+	c.JSON(http.StatusOK, articleList)
+}

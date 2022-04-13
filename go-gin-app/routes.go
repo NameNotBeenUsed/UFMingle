@@ -76,6 +76,8 @@ func initializeRoutes() {
 		articleRoutes.GET("/comment_view/:article_id", ensureLoggedIn(), getComment)
 
 		articleRoutes.POST("/comment/:article_id", ensureLoggedIn(), createComment)
+
+		articleRoutes.GET("/pastposts/:username", ensureLoggedIn(), getArticleByUsername)
 	}
 
 	imageRoutes := router.Group("/image")
