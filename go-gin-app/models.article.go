@@ -11,6 +11,7 @@ type article struct {
 	ID       int    `json:"id"`
 	Author   string `json:"author"`
 	Title    string `json:"title"`
+	PostTime string `json:"postTime"`
 	Content  string `json:"content"`
 	Likes    int    `json:"likes"`
 	Dislikes int    `json:"dislikes"`
@@ -40,7 +41,7 @@ type article struct {
 // Return a list of all the articles
 func getAllArticles() ([]article, error) {
 	//return articleList
-	rows, err := DB.Query("SELECT id, author, title, content, likes, dislikes from articles")
+	rows, err := DB.Query("SELECT id, author, title, post_time, content, likes, dislikes from articles")
 	//fmt.Println("getAllArticles")
 	//fmt.Println(err)
 	if err != nil {
@@ -53,7 +54,7 @@ func getAllArticles() ([]article, error) {
 
 	for rows.Next() {
 		singleArticle := article{}
-		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
+		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.PostTime, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
 		checkErr(err)
 		articleResult = append(articleResult, singleArticle)
 	}
@@ -70,7 +71,7 @@ func getAllArticles() ([]article, error) {
 // Get number count of articles
 // 刷新页面用
 func getArticles(count int) ([]article, error) {
-	rows, err := DB.Query("SELECT id, author, title, content, likes, dislikes from articles LIMIT" + strconv.Itoa(count))
+	rows, err := DB.Query("SELECT id, author, title, post_time, content, likes, dislikes from articles LIMIT" + strconv.Itoa(count))
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +82,7 @@ func getArticles(count int) ([]article, error) {
 
 	for rows.Next() {
 		singleArticle := article{}
-		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
+		err = rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.PostTime, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
 
 		if err != nil {
 			return nil, err
@@ -100,7 +101,7 @@ func getArticles(count int) ([]article, error) {
 }
 
 func getArticlesByUser(username string) ([]article, error) {
-	rows, err := DB.Query("SELECT id, author, title, content, likes, dislikes from articles WHERE author = ?", username)
+	rows, err := DB.Query("SELECT id, author, title, post_time, content, likes, dislikes from articles WHERE author = ?", username)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +112,7 @@ func getArticlesByUser(username string) ([]article, error) {
 
 	for rows.Next() {
 		singleArticle := article{}
-		err := rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
+		err := rows.Scan(&singleArticle.ID, &singleArticle.Author, &singleArticle.Title, &singleArticle.PostTime, &singleArticle.Content, &singleArticle.Likes, &singleArticle.Dislikes)
 		if err != nil {
 			return nil, err
 		}
@@ -135,7 +136,7 @@ func getArticleByID(id int) (article, error) {
 	//	}
 	//}
 
-	stmt, err := DB.Prepare("SELECT id, author, title, content, likes, dislikes from articles WHERE id = ?")
+	stmt, err := DB.Prepare("SELECT id, author, title, post_time, content, likes, dislikes from articles WHERE id = ?")
 	if err != nil {
 		return article{}, err
 	}
@@ -144,7 +145,7 @@ func getArticleByID(id int) (article, error) {
 
 	articleResult := article{}
 
-	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Title, &articleResult.Content, &articleResult.Likes, &articleResult.Dislikes)
+	sqlErr := stmt.QueryRow(id).Scan(&articleResult.ID, &articleResult.Author, &articleResult.Title, &articleResult.PostTime, &articleResult.Content, &articleResult.Likes, &articleResult.Dislikes)
 
 	if sqlErr != nil {
 		if sqlErr == sql.ErrNoRows {

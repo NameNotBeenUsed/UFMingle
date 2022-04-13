@@ -37,6 +37,7 @@ func createArticleTable() error {
 				id 			INTEGER PRIMARY KEY AUTOINCREMENT,
 				author 		TEXT 		NOT NULL,
 				title 		TEXT 		NOT NULL,
+				post_time 	timestamp 	default (CURRENT_TIMESTAMP),
 				content 	TEXT 		NOT NULL,
 				likes       INTEGER     default 0,
 				dislikes    INTEGER     default 0,
