@@ -57,7 +57,7 @@ func initializeRoutes() {
 
 		userRoutes.GET("/info", ensureLoggedIn(), getUserInfo)
 
-		userRoutes.PATCH("/info/:item", ensureLoggedIn(), updateUserInfo)
+		userRoutes.PATCH("/info", ensureLoggedIn(), updateUserInfo)
 	}
 
 	// Group article related routes together
