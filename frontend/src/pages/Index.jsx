@@ -11,7 +11,7 @@ import Nav from '../components/nav'
 import axios from "axios"
 import { Link, Route } from "react-router-dom";
 import Article from "./article";
-
+import moment from 'moment';
 
 
 const { Option } = Select;
@@ -77,6 +77,14 @@ const columns = [
     dataIndex: 'author',
     key: 'author',
   },
+  {
+    title: 'postTime',
+    key: 'postTime',
+    dataIndex: 'postTime',
+    render:text=>{
+      return moment(moment(text).valueOf()).format("YYYY-MM-DD HH:ss:mm");
+    }
+  }
   // {
   //   title: 'click',
   //   key: 'clickNum',
