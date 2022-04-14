@@ -108,7 +108,7 @@ func createUserTable() error {
 			username 	TEXT PRIMARY KEY	NOT NULL,
 			password 	TEXT 				NOT NULL,
 			gatorId     TEXT                NOT NULL,
-			birthday    date, default (date('2020-12-30'))
+			birthday    date  default (date('2020-12-30')),
 			gender      TEXT  default 'unknown' check(gender = 'male' or gender='female' or gender='unknown'),
 		    profile_photo TEXT             default "./test.PNG" ,
 			foreign key (gatorID) references gatorlink(gatorId)
