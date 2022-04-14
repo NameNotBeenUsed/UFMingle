@@ -126,3 +126,36 @@ func TestUsernameAvailability(t *testing.T) {
 	}
 	//restoreLists()
 }
+
+func TestAFunc(t *testing.T) {
+	str1 := "gender"
+	str2 := "female"
+	str2_2 := "'" + str2 + "'"
+	str3 := "user_mj"
+	str3_3 := "'" + str3 + "'"
+	query := fmt.Sprintf("UPDATE users SET %s=%s WHERE username=%s", str1, str2_2, str3_3)
+	fmt.Println(query)
+	res, err := DB.Exec(query)
+	if err != nil {
+		fmt.Println(err)
+	}
+	affect, errRes := res.RowsAffected()
+	if errRes != nil {
+		fmt.Println(errRes)
+	}
+	fmt.Println(affect)
+
+	//stmt, err := DB.Prepare("UPDATE users SET ?=? WHERE username=?")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//res, errStmt := stmt.Exec("gender", "'unknown'", "'user_mj'")
+	//if errStmt != nil {
+	//	fmt.Println(errStmt)
+	//}
+	//affect, errRes := res.RowsAffected()
+	//if errRes != nil {
+	//	fmt.Println(errRes)
+	//}
+	//fmt.Println(affect)
+}
