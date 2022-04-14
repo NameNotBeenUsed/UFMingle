@@ -110,7 +110,7 @@ func createUserTable() error {
 			gatorId     TEXT                NOT NULL,
 			birthday    date  default (date('2020-12-30')),
 			gender      TEXT  default 'unknown' check(gender = 'male' or gender='female' or gender='unknown'),
-		    profile_photo TEXT             default "./test.PNG" ,
+		    profile_photo TEXT             default "test.jpg" ,
 			foreign key (gatorID) references gatorlink(gatorId)
 	);`
 	_, err2 := DB.Exec(sqlUserTable)

@@ -1,10 +1,13 @@
 package main
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"os"
+	"path"
+	"strings"
 )
 
 // @Summary Get the avatar of the user
@@ -16,16 +19,96 @@ import (
 func getAvatar(c *gin.Context) {
 	username := c.Param("username")
 	if res, err := isUserExist(username); err == nil && res == true {
-		_, errF := os.Stat("./Avatar/" + username + ".png")
+		//fmt.Println("./Avatar/" + username + ".jpg")
+		_, errF := os.Stat("./Avatar/" + username + ".jpg")
+		//fmt.Println(fileInfo)
 		if errF == nil {
-			c.File("./Avatar/" + username + ".png")
+			c.File("./Avatar/" + username + ".jpg")
 		} else {
-			c.File("./Avatar/test.png")
+			log.Println(errF)
+			c.File("./Avatar/test.jpg")
 		}
 	} else {
 		c.AbortWithError(http.StatusNotFound, err)
 	}
 	return
+}
+
+// @Summary Upload the avatar of the user, the name of the file should be "avatar".
+// @Produce json
+// @Param username path string true "username"
+// @Success 200 {file} file "An avatar is uploaded"
+// @Failure 400 {error} error "Bad request"
+// @Failure 500 {error} error "Internal server error"
+// @Router /image/avatar/:username [post]
+func uploadAvatar(c *gin.Context) {
+	username := c.Param("username")
+	if flag, err := isUserExist(username); flag == false || err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusBadRequest, errors.New("user does not exist"))
+	}
+
+	file, err := c.FormFile("avatar")
+	if err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	//The file must be in jpg format
+	fileExt := strings.ToLower(path.Ext(file.Filename))
+	if fileExt != ".jpg" {
+		c.AbortWithError(http.StatusBadRequest, errors.New("the file must be in jpg format"))
+	}
+
+	filePath := path.Join("./Avatar", username+fileExt)
+
+	err = c.SaveUploadedFile(file, filePath)
+	if err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	//只在第一次上传时修改数据库
+	//先存文件再改数据库
+	//经测试同名文件直接覆盖
+	stmt, err := DB.Prepare("SELECT profile_photo FROM users WHERE username=?")
+	if err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	defer stmt.Close()
+
+	var avatarName string
+	sqlErr := stmt.QueryRow(username).Scan(&avatarName)
+	if sqlErr != nil {
+		log.Println(sqlErr)
+		c.AbortWithError(http.StatusInternalServerError, sqlErr)
+	}
+
+	//update database
+	if avatarName == "test.jpg" {
+		stmtAva, err := DB.Prepare("UPDATE users SET profile_photo=? WHERE username=?")
+		if err != nil {
+			log.Println(err)
+			c.AbortWithError(http.StatusInternalServerError, err)
+		}
+		resAva, errStmt := stmtAva.Exec(username+fileExt, username)
+		if errStmt != nil {
+			log.Println(errStmt)
+			c.AbortWithError(http.StatusInternalServerError, errStmt)
+		}
+		affect, errRes := resAva.RowsAffected()
+		if errRes != nil {
+			log.Println(errRes)
+			c.AbortWithError(http.StatusInternalServerError, errRes)
+		}
+		if affect != 1 {
+			log.Println("Error in uploadAvatar")
+			c.AbortWithError(http.StatusInternalServerError, errors.New("error in uploadAvatar"))
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Upload successful"})
 }
 
 //type article struct {

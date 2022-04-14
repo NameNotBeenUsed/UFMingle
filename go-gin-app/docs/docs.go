@@ -171,6 +171,41 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Upload the avatar of the user, the name of the file should be \"avatar\".",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "username",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An avatar is uploaded",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
             }
         },
         "/image/delete/:filename": {
@@ -285,15 +320,6 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "summary": "Modify three types of user information: password, birthday and gender. Birthday must be in the form \"2010-12-30\", and the gender can be male, female or unknown",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "can be password/birthday/gender",
-                        "name": "item",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Success",

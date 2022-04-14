@@ -140,6 +140,29 @@ paths:
           schema:
             type: error
       summary: Get the avatar of the user
+    post:
+      parameters:
+      - description: username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: An avatar is uploaded
+          schema:
+            type: file
+        "400":
+          description: Bad request
+          schema:
+            type: error
+        "500":
+          description: Internal server error
+          schema:
+            type: error
+      summary: Upload the avatar of the user, the name of the file should be "avatar".
   /image/delete/:filename:
     delete:
       parameters:
@@ -210,12 +233,6 @@ paths:
       summary: Get user information by username
   /u/info/:item:
     patch:
-      parameters:
-      - description: can be password/birthday/gender
-        in: path
-        name: item
-        required: true
-        type: string
       produces:
       - application/json
       responses:
