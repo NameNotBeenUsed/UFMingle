@@ -1,39 +1,62 @@
 import React from 'react';
 import { Form, Input, Button, Select } from 'antd';
 import styles from './index.module.scss';
+import Axios from 'axios';
+import moment from 'moment';
 
 export default () => {
   const [form] = Form.useForm();
   const [flag, setFlag] = React.useState(false);
-  const obj = {
-    name: '123',
-    emil: '123456@qq.com',
-    mm: 'Admin@123',
-    xb: '男',
-    sr: '1995-07-22',
-  };
+
   const postHandle = () => {
     setFlag(true);
     form.setFieldsValue({
-      ...obj,
+      ...data,
+      birthday: moment(moment(data.birthday).valueOf()).format('YYYY-MM-DD')
     });
   };
+  const[data,setData] =React.useState({})
+  const getobj =()=>{
+    Axios.get('http://localhost:8080/u/info',{headers: {
+        'Content-Type': 'application/json'
+    },withCredentials: true}).then(r=>{
+      console.log(r.data)
+      setData(r.data)
+    })
+
+  }
+  React.useEffect(()=>{
+    getobj()
+  },[])
+const submit =()=>{
+  const VaL = form.getFieldValue()
+  console.log(form.getFieldValue())
+  Axios.post('http://localhost:8080/u/info',VaL,{headers: {
+    'Content-Type': 'application/json'
+},withCredentials: true}).then(r=>{
+  getobj()
+  setFlag(false)
+})
+}
   return (
     <div className={styles.header}>
       {!flag ? (
         <>
           <div>
             <div>
-              姓名:<span>{obj.name}</span>
+              姓名:<span>{data.username}</span>
             </div>
             <div>
-              邮箱:<span>{obj.emil}</span>
+              邮箱:<span>{data.gatorlink}</span>
             </div>
             <div>
-              性别:<span>{obj.xb}</span>
+              password:<span>{data.password}</span>
             </div>
             <div>
-              生日:<span>{obj.sr}</span>
+              性别:<span>{data.gender}</span>
+            </div>
+            <div>
+              生日:<span>{moment(moment(data.birthday).valueOf()).format('YYYY-MM-DD')}</span>
             </div>
           </div>
           <Button
@@ -47,19 +70,19 @@ export default () => {
       ) : (
         <>
           <Form form={form}>
-            <Form.Item label="姓名" name="name">
+            <Form.Item label="姓名" name="username">
               <Input style={{ width: 300 }} />
             </Form.Item>
-            <Form.Item label="邮箱" name="emil">
+            <Form.Item label="邮箱" name="gatorlink">
               <Input style={{ width: 300 }} />
             </Form.Item>
-            <Form.Item label="密码" name="mm">
+            <Form.Item label="密码" name="password">
               <Input style={{ width: 300 }} />
             </Form.Item>
-            <Form.Item label="性别" name="xb">
+            <Form.Item label="性别" name="gender">
               <Input style={{ width: 300 }} />
             </Form.Item>
-            <Form.Item label="生日" name="sr">
+            <Form.Item label="生日" name="birthday">
               <Input style={{ width: 300 }} />
             </Form.Item>
           </Form>
@@ -72,7 +95,7 @@ export default () => {
               返回
             </Button>
             &emsp;&emsp;
-            <Button type="primary">确定</Button>
+            <Button type="primary" onClick={()=>submit()}>确定</Button>
           </div>
         </>
       )}
