@@ -5,6 +5,7 @@ package main
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -239,53 +240,73 @@ func deleteUser(username string) (int64, error) {
 // -password
 // -birthday
 // -gender
-func updateUserItem(username string, column string, content string) (int64, error) {
-	switch column {
-	case "password":
-		stmt, err := DB.Prepare("UPDATE users SET password=? WHERE username=?")
+//func updateUserItem(username string, column string, content string) (int64, error) {
+//	switch column {
+//	case "password":
+//		stmt, err := DB.Prepare("UPDATE users SET password=? WHERE username=?")
+//		if err != nil {
+//			return 0, err
+//		}
+//		res, errStmt := stmt.Exec(content, username)
+//		if errStmt != nil {
+//			return 0, errStmt
+//		}
+//		affect, errRes := res.RowsAffected()
+//		if errRes != nil {
+//			return 0, errRes
+//		}
+//		return affect, nil
+//	case "birthday":
+//		stmt, err := DB.Prepare("UPDATE users SET birthday=? WHERE username=?")
+//		if err != nil {
+//			return 0, err
+//		}
+//		res, errStmt := stmt.Exec(content, username)
+//		if errStmt != nil {
+//			return 0, errStmt
+//		}
+//		affect, errRes := res.RowsAffected()
+//		if errRes != nil {
+//			return 0, errRes
+//		}
+//		return affect, nil
+//	case "gender":
+//		stmt, err := DB.Prepare("UPDATE users SET gender=? WHERE username=?")
+//		if err != nil {
+//			return 0, err
+//		}
+//		res, errStmt := stmt.Exec(content, username)
+//		if errStmt != nil {
+//			return 0, errStmt
+//		}
+//		affect, errRes := res.RowsAffected()
+//		if errRes != nil {
+//			return 0, errRes
+//		}
+//		return affect, nil
+//	default:
+//		return 0, errors.New("invalid parameters")
+//	}
+//}
+
+//Returned value should be equal to the length of the map
+func updateUserItem(username string, content map[string]string) (int64, error) {
+	var affect int64
+	for k, v := range content {
+		value := "'" + v + "'"
+		tempUsername := "'" + username + "'"
+		update := fmt.Sprintf("UPDATE users SET %s=%s WHERE username=%s", k, value, tempUsername)
+		res, err := DB.Exec(update)
 		if err != nil {
 			return 0, err
 		}
-		res, errStmt := stmt.Exec(content, username)
-		if errStmt != nil {
-			return 0, errStmt
-		}
-		affect, errRes := res.RowsAffected()
+		eachAffect, errRes := res.RowsAffected()
 		if errRes != nil {
 			return 0, errRes
 		}
-		return affect, nil
-	case "birthday":
-		stmt, err := DB.Prepare("UPDATE users SET birthday=? WHERE username=?")
-		if err != nil {
-			return 0, err
-		}
-		res, errStmt := stmt.Exec(content, username)
-		if errStmt != nil {
-			return 0, errStmt
-		}
-		affect, errRes := res.RowsAffected()
-		if errRes != nil {
-			return 0, errRes
-		}
-		return affect, nil
-	case "gender":
-		stmt, err := DB.Prepare("UPDATE users SET gender=? WHERE username=?")
-		if err != nil {
-			return 0, err
-		}
-		res, errStmt := stmt.Exec(content, username)
-		if errStmt != nil {
-			return 0, errStmt
-		}
-		affect, errRes := res.RowsAffected()
-		if errRes != nil {
-			return 0, errRes
-		}
-		return affect, nil
-	default:
-		return 0, errors.New("invalid parameters")
+		affect += eachAffect
 	}
+	return affect, nil
 }
 
 func getUserByUsername(username string) (user, error) {
