@@ -257,6 +257,28 @@ const docTemplate = `{
                 }
             }
         },
+        "/u/info": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get user information by username",
+                "responses": {
+                    "200": {
+                        "description": "Contains password, gatorId, birthday and gender",
+                        "schema": {
+                            "$ref": "#/definitions/main.user"
+                        }
+                    },
+                    "500": {
+                        "description": "Failure",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
+            }
+        },
         "/u/info/:item": {
             "patch": {
                 "produces": [
@@ -426,6 +448,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.user": {
+            "type": "object",
+            "properties": {
+                "birthday": {
+                    "type": "string"
+                },
+                "gatorPW": {
+                    "type": "string"
+                },
+                "gatorlink": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

@@ -215,3 +215,31 @@ func updateUserInfo(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
+
+// @Summary Get user information by username
+// @Produce json
+// @Success 200 {object} user "Contains password, gatorId, birthday and gender"
+// @Failure 500 {error} error "Failure"
+// @Router /u/info [get]
+func getUserInfo(c *gin.Context) {
+	var tempUser mingleUser
+	token, err := c.Cookie("token")
+	if err != nil {
+		log.Println("at getUserInfo1", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	err = json.Unmarshal([]byte(token), &tempUser)
+	if err != nil {
+		log.Println("at getUserInfo2", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	userInfo, err := getUserByUsername(tempUser.Username)
+
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	c.JSON(http.StatusOK, userInfo)
+}

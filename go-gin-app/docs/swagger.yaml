@@ -16,6 +16,21 @@ definitions:
       title:
         type: string
     type: object
+  main.user:
+    properties:
+      birthday:
+        type: string
+      gatorPW:
+        type: string
+      gatorlink:
+        type: string
+      gender:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
 info:
   contact: {}
   description: An on-campus dating application
@@ -179,6 +194,20 @@ paths:
           schema:
             type: error
       summary: Upload images inserted by users in posts or replies
+  /u/info:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Contains password, gatorId, birthday and gender
+          schema:
+            $ref: '#/definitions/main.user'
+        "500":
+          description: Failure
+          schema:
+            type: error
+      summary: Get user information by username
   /u/info/:item:
     patch:
       parameters:

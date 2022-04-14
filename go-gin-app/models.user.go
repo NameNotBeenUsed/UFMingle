@@ -287,3 +287,21 @@ func updateUserItem(username string, column string, content string) (int64, erro
 		return 0, errors.New("invalid parameters")
 	}
 }
+
+func getUserByUsername(username string) (user, error) {
+	stmt, err := DB.Prepare("SELECT password, gatorId, birthday, gender FROM users WHERE username=?")
+	if err != nil {
+		return user{}, err
+	}
+
+	defer stmt.Close()
+
+	userResult := user{}
+
+	sqlErr := stmt.QueryRow(username).Scan(&userResult.Password, &userResult.Gatorlink, &userResult.Birthday, &userResult.Gender)
+
+	if sqlErr != nil {
+		return user{}, sqlErr
+	}
+	return userResult, nil
+}

@@ -55,6 +55,8 @@ func initializeRoutes() {
 		// Ensure that the user is not logged in by using the middleware
 		userRoutes.POST("/register", ensureNotLoggedIn(), register)
 
+		userRoutes.GET("/info", ensureLoggedIn(), getUserInfo)
+
 		userRoutes.PATCH("/info/:item", ensureLoggedIn(), updateUserInfo)
 	}
 
