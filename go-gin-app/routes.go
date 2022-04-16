@@ -58,6 +58,10 @@ func initializeRoutes() {
 		userRoutes.GET("/info", ensureLoggedIn(), getUserInfo)
 
 		userRoutes.PATCH("/info", ensureLoggedIn(), updateUserInfo)
+
+		userRoutes.GET("/article/:articleId", ensureLoggedIn(), checkReaction)
+
+		userRoutes.PATCH("/article/:articleId", ensureLoggedIn(), changeReaction)
 	}
 
 	// Group article related routes together

@@ -75,3 +75,16 @@ func testMiddlewareRequest(t *testing.T, r *gin.Engine, expectedHTTPCode int) {
 //	userList = tmpUserList
 //	articleList = tmpArticleList
 //}
+
+func TestConvIntListToStr(t *testing.T) {
+	list := []int{}
+	fmt.Println("print", convIntListToStr(list))
+}
+
+func TestDelete(t *testing.T) {
+	likeList := []int{1}
+	fmt.Println(likeList[:0])
+	fmt.Println(likeList[0+1:])
+	likeList = append(likeList[:0], likeList[0+1:]...)
+	fmt.Println(likeList)
+}

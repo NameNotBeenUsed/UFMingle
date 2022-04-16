@@ -249,3 +249,33 @@ func deleteArticleByTitle(title string) (int64, error) {
 
 	return num, err
 }
+
+//给一篇文章likes和dislike要加的数字，可能的值有-1/0/1
+//之前是否操作过的逻辑判断放到上一层函数完成
+func reactionToAnArticle(articleId int, like int, dislike int) (int64, error) {
+	//先查询
+	var likeNum, dislikeNum int
+	stmtQuery, errQuery := DB.Prepare("SELECT likes, dislikes FROM articles WHERE id=?")
+	if errQuery != nil {
+		return 0, errQuery
+	}
+	defer stmtQuery.Close()
+	querySqlErr := stmtQuery.QueryRow(articleId).Scan(&likeNum, &dislikeNum)
+	if querySqlErr != nil {
+		return 0, querySqlErr
+	}
+	//再更新
+	stmtUpdate, errUpdate := DB.Prepare("UPDATE articles SET likes=?, dislikes=? WHERE id=?")
+	if errUpdate != nil {
+		return 0, errUpdate
+	}
+	res, errStmt := stmtUpdate.Exec(likeNum+like, dislikeNum+dislike, articleId)
+	if errStmt != nil {
+		return 0, errStmt
+	}
+	affect, errRes := res.RowsAffected()
+	if errRes != nil {
+		return 0, errRes
+	}
+	return affect, nil
+}

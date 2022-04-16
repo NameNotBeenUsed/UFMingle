@@ -2,7 +2,10 @@
 
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 // Test the validity of different combinations of username/password
 func TestUserValidity(t *testing.T) {

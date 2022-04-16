@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -325,4 +326,340 @@ func getUserByUsername(username string) (user, error) {
 		return user{}, sqlErr
 	}
 	return userResult, nil
+}
+
+//一个用户可能对一篇文章点过赞，点过踩，或者没做过操作
+//第一个返回int 状态 未操作:0；赞过:1；踩过:2，出错:-1
+//第二个返回int 下标 状态为0/-1时，返回-1
+func checkArticleStatus(username string, articleId int) (int, int, error) {
+	stmt, err := DB.Prepare("SELECT like_list, dislike_list FROM users WHERE username=?")
+	if err != nil {
+		return -1, -1, err
+	}
+	defer stmt.Close()
+
+	var queryLike string
+	var queryDislike string
+	sqlErr := stmt.QueryRow(username).Scan(&queryLike, &queryDislike)
+	if sqlErr != nil {
+		return -1, -1, sqlErr
+	}
+
+	res := 0
+	index := -1
+
+	//如果queryLike/queryDislike为空
+	if queryLike == "" && queryDislike == "" {
+		return 0, -1, nil
+	}
+
+	if queryLike == "" && queryDislike != "" {
+		indexDislike, ifDisliked, err := checkIfStrContainsEle(queryDislike, articleId)
+		if err != nil {
+			return -1, -1, err
+		}
+		if ifDisliked {
+			res = 2
+			index = indexDislike
+		}
+	}
+
+	if queryLike != "" && queryDislike == "" {
+		indexLike, ifLiked, err := checkIfStrContainsEle(queryLike, articleId)
+		if err != nil {
+			return -1, -1, err
+		}
+		if ifLiked {
+			res = 1
+			index = indexLike
+		}
+	}
+
+	if queryLike != "" && queryDislike != "" {
+		indexLike, ifLiked, errLike := checkIfStrContainsEle(queryLike, articleId)
+		if errLike != nil {
+			return -1, -1, errLike
+		}
+		indexDislike, ifDisliked, errDislike := checkIfStrContainsEle(queryDislike, articleId)
+		if errDislike != nil {
+			return -1, -1, errDislike
+		}
+		if ifLiked {
+			res = 1
+			index = indexLike
+		} else if ifDisliked {
+			res = 2
+			index = indexDislike
+		}
+	}
+
+	return res, index, nil
+}
+
+//第一个返回int  index
+//第二个返回bool 包含返回true，不包含返回false
+func checkIfStrContainsEle(str string, ele int) (int, bool, error) {
+	intList, err := convStrToIntList(str)
+	if err != nil {
+		return -1, false, err
+	}
+	index, ifContain := contains(intList, ele)
+	return index, ifContain, nil
+}
+
+//三个参数：username, articleId, status
+//status = true  点赞
+//status = false 点踩
+//返回affectUsers, affectArticles, error
+func changeArticleStatus(username string, articleId int, thumbsUp bool) (int64, int64, error) {
+	//先查看之前是否点过赞或踩，一个用户只能对一篇文章赞或踩一次，这个判断由前端做
+	//未操作:0；赞过:1；踩过:2，出错:-1
+	status, index, err := checkArticleStatus(username, articleId)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	stmtQuery, errQuery := DB.Prepare("SELECT like_list, dislike_list FROM users WHERE username=?")
+	if errQuery != nil {
+		return 0, 0, errQuery
+	}
+	defer stmtQuery.Close()
+
+	var likeStr, dislikeStr string
+	sqlErr := stmtQuery.QueryRow(username).Scan(&likeStr, &dislikeStr)
+	if sqlErr != nil {
+		return 0, 0, sqlErr
+	}
+
+	stmtUpdateUserLike, err := DB.Prepare("UPDATE users SET like_list=? WHERE username=?")
+	if err != nil {
+		return 0, 0, err
+	}
+
+	stmtUpdateUserDislike, err := DB.Prepare("UPDATE users SET dislike_list=? WHERE username=?")
+	if err != nil {
+		return 0, 0, err
+	}
+
+	stmtUpdate, errUpdate := DB.Prepare("UPDATE users SET like_list=?, dislike_list=? WHERE username=?")
+	if errUpdate != nil {
+		return 0, 0, err
+	}
+	defer stmtUpdate.Close()
+
+	if likeStr == "" && dislikeStr == "" {
+		if thumbsUp == true {
+			//点赞
+			res, err := stmtUpdateUserLike.Exec(strconv.Itoa(articleId), username)
+			if err != nil {
+				return 0, 0, err
+			}
+			affectUser, err := res.RowsAffected()
+			if err != nil {
+				return 0, 0, err
+			}
+			affectArticle, err := reactionToAnArticle(articleId, 1, 0)
+			if err != nil {
+				return 0, 0, err
+			}
+			return affectUser, affectArticle, nil
+		} else {
+			//点踩
+			res, err := stmtUpdateUserDislike.Exec(strconv.Itoa(articleId), username)
+			if err != nil {
+				return 0, 0, err
+			}
+			affectUser, err := res.RowsAffected()
+			if err != nil {
+				return 0, 0, err
+			}
+			affectArticle, err := reactionToAnArticle(articleId, 0, 1)
+			if err != nil {
+				return 0, 0, err
+			}
+			return affectUser, affectArticle, nil
+		}
+	}
+
+	if likeStr != "" && dislikeStr == "" {
+		if thumbsUp == true {
+			//点赞
+			res, err := stmtUpdateUserLike.Exec(strconv.Itoa(articleId), username)
+			if err != nil {
+				return 0, 0, err
+			}
+			affectUser, err := res.RowsAffected()
+			if err != nil {
+				return 0, 0, err
+			}
+			affectArticle, err := reactionToAnArticle(articleId, 1, 0)
+			if err != nil {
+				return 0, 0, err
+			}
+			return affectUser, affectArticle, nil
+		} else {
+			//点踩
+			indexLike, ifLiked, err := checkIfStrContainsEle(likeStr, articleId)
+			if err != nil {
+				return 0, 0, err
+			}
+			if ifLiked {
+				likeList, err := convStrToIntList(likeStr)
+				if err != nil {
+					return 0, 0, err
+				}
+				likeList = append(likeList[:indexLike], likeList[indexLike+1:]...)
+				newLikeStr := convIntListToStr(likeList)
+				res, err := stmtUpdate.Exec(newLikeStr, strconv.Itoa(articleId), username)
+				if err != nil {
+					return 0, 0, err
+				}
+				affectUser, err := res.RowsAffected()
+				if err != nil {
+					return 0, 0, err
+				}
+				affectArticle, err := reactionToAnArticle(articleId, -1, 1)
+				if err != nil {
+					return 0, 0, err
+				}
+				return affectUser, affectArticle, nil
+			} else {
+				res, err := stmtUpdateUserDislike.Exec(strconv.Itoa(articleId), username)
+				if err != nil {
+					return 0, 0, err
+				}
+				affectUser, err := res.RowsAffected()
+				if err != nil {
+					return 0, 0, err
+				}
+				affectArticle, err := reactionToAnArticle(articleId, 0, 1)
+				if err != nil {
+					return 0, 0, err
+				}
+				return affectUser, affectArticle, nil
+			}
+		}
+	}
+
+	if likeStr == "" && dislikeStr != "" {
+		if thumbsUp == true {
+			//点赞
+			indexDislike, ifDisliked, err := checkIfStrContainsEle(dislikeStr, articleId)
+			if err != nil {
+				return 0, 0, err
+			}
+			if ifDisliked {
+				dislikeList, err := convStrToIntList(dislikeStr)
+				if err != nil {
+					return 0, 0, err
+				}
+				dislikeList = append(dislikeList[:indexDislike], dislikeList[indexDislike+1:]...)
+				newDislikeStr := convIntListToStr(dislikeList)
+				res, err := stmtUpdate.Exec(strconv.Itoa(articleId), newDislikeStr, username)
+				if err != nil {
+					return 0, 0, err
+				}
+				affectUser, err := res.RowsAffected()
+				if err != nil {
+					return 0, 0, err
+				}
+				affectArticle, err := reactionToAnArticle(articleId, 1, -1)
+				if err != nil {
+					return 0, 0, err
+				}
+				return affectUser, affectArticle, nil
+			} else {
+				res, err := stmtUpdateUserLike.Exec(strconv.Itoa(articleId), username)
+				if err != nil {
+					return 0, 0, err
+				}
+				affectUser, err := res.RowsAffected()
+				if err != nil {
+					return 0, 0, err
+				}
+				affectArticle, err := reactionToAnArticle(articleId, 1, 0)
+				if err != nil {
+					return 0, 0, err
+				}
+				return affectUser, affectArticle, nil
+			}
+		} else {
+			//点踩
+			res, err := stmtUpdateUserDislike.Exec(strconv.Itoa(articleId), username)
+			if err != nil {
+				return 0, 0, err
+			}
+			affectUser, err := res.RowsAffected()
+			if err != nil {
+				return 0, 0, err
+			}
+			affectArticle, err := reactionToAnArticle(articleId, 0, 1)
+			if err != nil {
+				return 0, 0, err
+			}
+			return affectUser, affectArticle, nil
+		}
+	}
+
+	if likeStr != "" && dislikeStr != "" {
+		likeList, err := convStrToIntList(likeStr)
+		if err != nil {
+			return 0, 0, err
+		}
+		dislikeList, err := convStrToIntList(dislikeStr)
+		if err != nil {
+			return 0, 0, err
+		}
+
+		likeNum := 0
+		dislikeNum := 0
+		newLikeStr := ""
+		newDislikeStr := ""
+
+		if status == 2 && index != -1 && thumbsUp == true {
+			//之前点过踩，要赞，改变用户表中的两个列表，改变文章表中的两个统计数字
+			//从dislike_list中删除，加到like_list中
+			dislikeList = append(dislikeList[:index], dislikeList[index+1:]...)
+			likeList = append(likeList, articleId)
+			//更新文章表中的统计数字
+			likeNum = 1
+			dislikeNum = -1
+		} else if status == 1 && index != -1 && thumbsUp == false {
+			//之前点过赞，要踩
+			//从like_list中删除，加到dislike_list中
+			likeList = append(likeList[:index], likeList[index+1:]...)
+			dislikeList = append(dislikeList, articleId)
+			//更新文章表中的统计数字
+			likeNum = -1
+			dislikeNum = 1
+		} else if status == 0 && index == -1 {
+			//之前什么操作也没做过，要赞/踩
+			if thumbsUp == true {
+				likeList = append(likeList, articleId)
+				likeNum = 1
+			} else {
+				dislikeList = append(dislikeList, articleId)
+				dislikeNum = 1
+			}
+		}
+
+		newDislikeStr = convIntListToStr(dislikeList)
+		newLikeStr = convIntListToStr(likeList)
+		res, errStmt := stmtUpdate.Exec(newLikeStr, newDislikeStr, username)
+		if errStmt != nil {
+			return 0, 0, errStmt
+		}
+		affectUsers, errRes := res.RowsAffected()
+		if errRes != nil {
+			return 0, 0, errRes
+		}
+		affectArticles, err := reactionToAnArticle(articleId, likeNum, dislikeNum)
+		if err != nil {
+			return 0, 0, err
+		}
+
+		return affectUsers, affectArticles, nil
+	}
+
+	return 0, 0, errors.New("error in changeArticleStatus")
 }

@@ -105,12 +105,14 @@ func createUserTable() error {
 
 	sqlUserTable := `
 		CREATE TABLE IF NOT EXISTS users(
-			username 	TEXT PRIMARY KEY	NOT NULL,
-			password 	TEXT 				NOT NULL,
-			gatorId     TEXT                NOT NULL,
-			birthday    date  default (date('2020-12-30')),
-			gender      TEXT  default 'unknown' check(gender = 'male' or gender='female' or gender='unknown'),
-		    profile_photo TEXT             default "test.jpg" ,
+			username 	   TEXT  PRIMARY KEY	  NOT NULL,
+			password 	   TEXT 				  NOT NULL,
+			gatorId        TEXT                   NOT NULL,
+			birthday       date                   default (date('2020-12-30')),
+			gender         TEXT  			      default 'unknown' check(gender = 'male' or gender='female' or gender='unknown'),
+		    profile_photo  TEXT                   default "test.jpg",
+		    like_list      TEXT					  default "", 			      
+		    dislike_list   TEXT                   default "",
 			foreign key (gatorID) references gatorlink(gatorId)
 	);`
 	_, err2 := DB.Exec(sqlUserTable)

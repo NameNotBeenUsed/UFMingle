@@ -242,3 +242,77 @@ func getUserInfo(c *gin.Context) {
 
 	c.JSON(http.StatusOK, userInfo)
 }
+
+// @Summary See how users react to an article.
+// @Produce json
+// @Success 200 {int} int "There are four possibilities. 0: no reaction; 1: thumbs up; 2: thumbs down; -1: error"
+// @Failure 400 {error} error "Unable to get the cookie"
+// @Failure 500 {error} error "Failure"
+// @Router /u/article/:articleId [get]
+func checkReaction(c *gin.Context) {
+	var tempUser mingleUser
+	token, _ := c.Cookie("token")
+	if err := json.Unmarshal([]byte(token), &tempUser); err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	articleId, err := strconv.Atoi(c.Param("articleId"))
+	if err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	status, _, err := checkArticleStatus(tempUser.Username, articleId)
+	if err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	c.JSON(http.StatusOK, status)
+}
+
+// @Summary Change user's reaction to an article.
+// @Produce json
+// @Success 200 {int} int "Success"
+// @Failure 400 {error} error "Unable to get the cookie"
+// @Failure 500 {error} error "Failure"
+// @Router /u/article/:articleId [patch]
+func changeReaction(c *gin.Context) {
+	var tempUser mingleUser
+	token, _ := c.Cookie("token")
+	if err := json.Unmarshal([]byte(token), &tempUser); err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	articleId, err := strconv.Atoi(c.Param("articleId"))
+	if err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	//thumbsUpMap["thumbsup"] = 0, 点踩
+	//thumbsUpMap["thumbsup"] = 1, 点赞
+	var thumbsUpMap map[string]int
+	if err = c.BindJSON(&thumbsUpMap); err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	var errUpdate error
+	var affectUsers, affectArticles int64
+	//status = true  点赞
+	//status = false 点踩
+	if thumbsUpMap["thumbsup"] == 0 {
+		//点踩
+		affectUsers, affectArticles, errUpdate = changeArticleStatus(tempUser.Username, articleId, false)
+	} else if thumbsUpMap["thumbsup"] == 1 {
+		//点赞
+		affectUsers, affectArticles, errUpdate = changeArticleStatus(tempUser.Username, articleId, true)
+	}
+	if errUpdate != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusInternalServerError, errUpdate)
+	}
+	fmt.Println("affectUsers: ", affectUsers, " affectArticles: ", affectArticles)
+	c.JSON(http.StatusOK, gin.H{"message": "Success"})
+}
