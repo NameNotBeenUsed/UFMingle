@@ -292,6 +292,78 @@ const docTemplate = `{
                 }
             }
         },
+        "/u/article/:articleId": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "See how users react to an article.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The id of the article",
+                        "name": "articleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "There are four possibilities. 0: no reaction; 1: thumbs up; 2: thumbs down; -1: error",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "400": {
+                        "description": "Unable to get the cookie",
+                        "schema": {
+                            "type": "error"
+                        }
+                    },
+                    "500": {
+                        "description": "Failure",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Change user's reaction to an article.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The id of the article",
+                        "name": "articleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "400": {
+                        "description": "Unable to get the cookie",
+                        "schema": {
+                            "type": "error"
+                        }
+                    },
+                    "500": {
+                        "description": "Failure",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
+            }
+        },
         "/u/info": {
             "get": {
                 "produces": [
@@ -329,6 +401,34 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Failure",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
+            }
+        },
+        "/u/likes": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get the number of likes a user received.",
+                "responses": {
+                    "200": {
+                        "description": "The number of likes a user received",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "400": {
+                        "description": "Unable to get the cookie",
+                        "schema": {
+                            "type": "error"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
                         "schema": {
                             "type": "error"
                         }

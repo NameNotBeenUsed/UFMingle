@@ -217,6 +217,54 @@ paths:
           schema:
             type: error
       summary: Upload images inserted by users in posts or replies
+  /u/article/:articleId:
+    get:
+      parameters:
+      - description: The id of the article
+        in: path
+        name: articleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'There are four possibilities. 0: no reaction; 1: thumbs up;
+            2: thumbs down; -1: error'
+          schema:
+            type: int
+        "400":
+          description: Unable to get the cookie
+          schema:
+            type: error
+        "500":
+          description: Failure
+          schema:
+            type: error
+      summary: See how users react to an article.
+    patch:
+      parameters:
+      - description: The id of the article
+        in: path
+        name: articleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: int
+        "400":
+          description: Unable to get the cookie
+          schema:
+            type: error
+        "500":
+          description: Failure
+          schema:
+            type: error
+      summary: Change user's reaction to an article.
   /u/info:
     get:
       produces:
@@ -247,6 +295,24 @@ paths:
       summary: 'Modify three types of user information: password, birthday and gender.
         Birthday must be in the form "2010-12-30", and the gender can be male, female
         or unknown'
+  /u/likes:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The number of likes a user received
+          schema:
+            type: int
+        "400":
+          description: Unable to get the cookie
+          schema:
+            type: error
+        "500":
+          description: Server internal error
+          schema:
+            type: error
+      summary: Get the number of likes a user received.
   /u/login:
     get:
       produces:

@@ -245,6 +245,7 @@ func getUserInfo(c *gin.Context) {
 
 // @Summary See how users react to an article.
 // @Produce json
+// @Param articleId path int true "The id of the article"
 // @Success 200 {int} int "There are four possibilities. 0: no reaction; 1: thumbs up; 2: thumbs down; -1: error"
 // @Failure 400 {error} error "Unable to get the cookie"
 // @Failure 500 {error} error "Failure"
@@ -272,6 +273,7 @@ func checkReaction(c *gin.Context) {
 
 // @Summary Change user's reaction to an article.
 // @Produce json
+// @Param articleId path int true "The id of the article"
 // @Success 200 {int} int "Success"
 // @Failure 400 {error} error "Unable to get the cookie"
 // @Failure 500 {error} error "Failure"
@@ -317,6 +319,12 @@ func changeReaction(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Success"})
 }
 
+// @Summary Get the number of likes a user received.
+// @Produce json
+// @Success 200 {int} int "The number of likes a user received"
+// @Failure 400 {error} error "Unable to get the cookie"
+// @Failure 500 {error} error "Server internal error"
+// @Router /u/likes [get]
 func likesReceivedByUser(c *gin.Context) {
 	var tempUser mingleUser
 	token, _ := c.Cookie("token")
