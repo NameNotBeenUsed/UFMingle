@@ -396,17 +396,6 @@ func checkArticleStatus(username string, articleId int) (int, int, error) {
 	return res, index, nil
 }
 
-//第一个返回int  index
-//第二个返回bool 包含返回true，不包含返回false
-func checkIfStrContainsEle(str string, ele int) (int, bool, error) {
-	intList, err := convStrToIntList(str)
-	if err != nil {
-		return -1, false, err
-	}
-	index, ifContain := contains(intList, ele)
-	return index, ifContain, nil
-}
-
 //三个参数：username, articleId, status
 //status = true  点赞
 //status = false 点踩
@@ -662,4 +651,19 @@ func changeArticleStatus(username string, articleId int, thumbsUp bool) (int64, 
 	}
 
 	return 0, 0, errors.New("error in changeArticleStatus")
+}
+
+//likes received
+func getLikesReceived(username string) (int, error) {
+	articleList, err := getArticlesByUser(username)
+	if err != nil {
+		return -1, err
+	}
+
+	likesReceived := 0
+	for _, a := range articleList {
+		likesReceived += a.Likes
+	}
+
+	return likesReceived, nil
 }

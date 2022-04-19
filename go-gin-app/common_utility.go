@@ -37,3 +37,14 @@ func contains(list []int, num int) (int, bool) {
 	}
 	return -1, false
 }
+
+//第一个返回int  index
+//第二个返回bool 包含返回true，不包含返回false
+func checkIfStrContainsEle(str string, ele int) (int, bool, error) {
+	intList, err := convStrToIntList(str)
+	if err != nil {
+		return -1, false, err
+	}
+	index, ifContain := contains(intList, ele)
+	return index, ifContain, nil
+}

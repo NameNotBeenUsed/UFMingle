@@ -316,3 +316,19 @@ func changeReaction(c *gin.Context) {
 	fmt.Println("affectUsers: ", affectUsers, " affectArticles: ", affectArticles)
 	c.JSON(http.StatusOK, gin.H{"message": "Success"})
 }
+
+func likesReceivedByUser(c *gin.Context) {
+	var tempUser mingleUser
+	token, _ := c.Cookie("token")
+	if err := json.Unmarshal([]byte(token), &tempUser); err != nil {
+		log.Println(err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	likes, err := getLikesReceived(tempUser.Username)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	c.JSON(http.StatusOK, likes)
+}

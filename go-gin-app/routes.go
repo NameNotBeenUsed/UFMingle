@@ -62,6 +62,8 @@ func initializeRoutes() {
 		userRoutes.GET("/article/:articleId", ensureLoggedIn(), checkReaction)
 
 		userRoutes.PATCH("/article/:articleId", ensureLoggedIn(), changeReaction)
+
+		userRoutes.GET("/likes", ensureLoggedIn(), likesReceivedByUser)
 	}
 
 	// Group article related routes together
