@@ -48,19 +48,19 @@ function Reply() {
               onClick={menuClick}
             >
               <Menu.Item key="1" icon={<HomeOutlined />}>
-                个人主页
+                Personal Page
               </Menu.Item>
               <Menu.Item key="2" icon={<ProfileOutlined />}>
-                修改资料
+                Update User Data
               </Menu.Item>
               <Menu.Item key="3" icon={<PushpinOutlined />}>
-                我的回复
+                Myreply
               </Menu.Item>
               <Menu.Item key="4" icon={<LaptopOutlined />}>
-                关注用户
+                Subscribes
               </Menu.Item>
               <Menu.Item key="5" icon={<LayoutOutlined />}>
-                我的粉丝
+                Followers
               </Menu.Item>
             </Menu>
           </div>
