@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"reflect"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -77,14 +78,69 @@ func testMiddlewareRequest(t *testing.T, r *gin.Engine, expectedHTTPCode int) {
 //}
 
 func TestConvIntListToStr(t *testing.T) {
-	list := []int{}
-	fmt.Println("print", convIntListToStr(list))
+	//corner case
+	emptyList := []int{}
+	//fmt.Println("print", convIntListToStr(list))
+	//fmt.Println("test", convIntListToStr(list) == "")
+	if convIntListToStr(emptyList) != "" {
+		t.Fail()
+	}
+
+	//regular case
+	testList := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
+	//fmt.Println(convIntListToStr(testList))
+	if convIntListToStr(testList) != "1,2,3,4,5,6,7,8,9,0" {
+		t.Fail()
+	}
 }
 
 func TestDelete(t *testing.T) {
+	//corner case
 	likeList := []int{1}
-	fmt.Println(likeList[:0])
-	fmt.Println(likeList[0+1:])
 	likeList = append(likeList[:0], likeList[0+1:]...)
-	fmt.Println(likeList)
+	if len(likeList) != 0 {
+		t.Fail()
+	}
+
+	//regular case
+	testList := []int{1, 2, 3}
+	testList = append(testList[:1], testList[2:]...)
+	if !reflect.DeepEqual(testList, []int{1, 3}) {
+		t.Fail()
+	}
+}
+
+func TestConvStrToIntList(t *testing.T) {
+	//corner case
+	emptyStr := ""
+	resList, err := convStrToIntList(emptyStr)
+	if len(resList) != 0 || err != nil {
+		t.Fail()
+	}
+
+	//regular case
+	testStr := "1,2,3,4,5,6,7,8,9,0"
+	resList, err = convStrToIntList(testStr)
+	if err != nil || !reflect.DeepEqual(resList, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}) {
+		t.Fail()
+	}
+}
+
+func TestContains(t *testing.T) {
+	//corner case
+	index, ifContains := contains([]int{}, 0)
+	if index != -1 || ifContains != false {
+		t.Fail()
+	}
+
+	//regular case
+	index, ifContains = contains([]int{1, 2, 3, 4, 5}, 5)
+	if index != 4 || ifContains != true {
+		t.Fail()
+	}
+
+	index, ifContains = contains([]int{1, 2, 3, 4, 5}, 9)
+	if index != -1 || ifContains != false {
+		t.Fail()
+	}
 }
