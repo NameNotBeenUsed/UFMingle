@@ -1,7 +1,15 @@
 .contentBox{
     padding: 20px 40px;
 }
-
+.feel{
+    display: flex;
+}
+.like{
+    cursor:pointer;
+}
+.dislike{
+    cursor:pointer;
+}
 .headCard{
     width: 100%;
     height: 120px;
