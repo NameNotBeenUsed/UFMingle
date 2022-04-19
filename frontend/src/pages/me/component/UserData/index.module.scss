@@ -1,6 +1,21 @@
-.header {
+.header{
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  .flexItem{
+    width: 600px;
+    display: flex;
+    margin: 5px 0px;
+    .flexItemLeftName{
+      width: 100px;
+      // background: red;
+      display: flex;
+      align-items: center;
+    }
+    .flexItemRightIpt{
+      flex: 1;
+      display: flex;
+    }
+  }
 }

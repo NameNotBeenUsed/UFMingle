@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment, Form } from 'antd';
-import { UserOutlined, ManOutlined } from '@ant-design/icons';
+import { UserOutlined, ManOutlined, SmileOutlined, FrownOutlined} from '@ant-design/icons';
 
 import sty from './index.module.scss';
 import { useLocation, useParams } from "react-router-dom";
@@ -157,10 +157,22 @@ function Reply() {
               </Carousel>
             </div>
           </div>
+        
           <Card style={{ width: "100%" }}>
             <p dangerouslySetInnerHTML={{ __html: article.content }}></p>
           </Card>
-
+        {/* 点和踩 */}
+        <div className={sty.feel}>
+          <div className={sty.like}>
+            <SmileOutlined />
+          </div>
+          &emsp;
+          <div className={sty.dislike}>
+            <FrownOutlined />
+          </div>
+        </div>
+       
+        
           <List
             className="comment-list"
             dataSource={comment}
@@ -205,6 +217,7 @@ function Reply() {
         </div>
         <div className={sty.replyBox}>
           <div className={sty.breadcrumbBox}>
+          
             <Breadcrumb>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
               <Breadcrumb.Item>block list</Breadcrumb.Item>
