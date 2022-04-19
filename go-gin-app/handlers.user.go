@@ -274,6 +274,7 @@ func checkReaction(c *gin.Context) {
 // @Summary Change user's reaction to an article.
 // @Produce json
 // @Param articleId path int true "The id of the article"
+// @Param thumbsup body string true "0, object; 1, support" SchemaExample(Subject: thumbsup\r\n\r\n1\r\n)
 // @Success 200 {int} int "Success"
 // @Failure 400 {error} error "Unable to get the cookie"
 // @Failure 500 {error} error "Failure"

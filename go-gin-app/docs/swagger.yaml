@@ -249,6 +249,13 @@ paths:
         name: articleId
         required: true
         type: integer
+      - description: 0, object; 1, support
+        in: body
+        name: thumbsup
+        required: true
+        schema:
+          example: "Subject: thumbsup\r\n\r\n1\r\n"
+          type: string
       produces:
       - application/json
       responses:

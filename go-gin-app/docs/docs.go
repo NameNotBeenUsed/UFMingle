@@ -340,6 +340,16 @@ const docTemplate = `{
                         "name": "articleId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "description": "0, object; 1, support",
+                        "name": "thumbsup",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Subject: thumbsup\r\n\r\n1\r\n"
+                        }
                     }
                 ],
                 "responses": {
