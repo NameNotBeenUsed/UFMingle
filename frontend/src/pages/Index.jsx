@@ -177,7 +177,7 @@ function Index() {
     getAllArticles();
   }
   const contentStyle = {
-    height: '480px',
+    height: '630px',
     color: '#fff',
     lineHeight: '120px',
     textAlign: 'center',
