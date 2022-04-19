@@ -8,6 +8,9 @@ import (
 
 //将string转为[]int，string中数字用逗号分隔
 func convStrToIntList(str string) ([]int, error) {
+	if str == "" {
+		return []int{}, nil
+	}
 	strArr := strings.Split(str, ",")
 	intList := make([]int, len(strArr))
 	for i, v := range strArr {
