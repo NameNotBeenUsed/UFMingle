@@ -167,6 +167,10 @@ func checkErr(err error) {
 }
 
 func createTables() {
+	if _, err := DB.Exec("PRAGMA foreign_keys=ON"); err != nil {
+		//fmt.Println("?????????????????????????????")
+		log.Fatal(err)
+	}
 	createUserTableErr := createUserTable()
 	if createUserTableErr != nil {
 		fmt.Println(createUserTableErr.Error())
