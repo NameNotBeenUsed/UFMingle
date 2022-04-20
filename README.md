@@ -94,7 +94,8 @@ https://user-images.githubusercontent.com/77484113/164302734-f055e807-a584-489b-
 
 
 ### Link to API Documentation
-
+Run the backend by command "go run ." and then visit the URL http://localhost:8080/swagger/index.html.
+URL of the screen shot: https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/API_document.png.
 
 ### Link to Project Board
 https://github.com/NameNotBeenUsed/UFMingle/projects/1
@@ -106,6 +107,5 @@ https://github.com/NameNotBeenUsed/UFMingle/projects/1
 | Name      | UFID     | Github ID     | In Charge Of     |
 | ---------- | :-----------:  | :-----------: | :-----------: |
 | Heming Sun  | 69162072     | mingHeap     | FrontEnd |
-| Yujian Yuan | 25195225  | yuanuf     | FrontEnd |
 | Rulan Jiang | 80984324     | JiangRulan     | BackEnd |
 | Mingjun Yu  | 61707843    | NameNotBeenUsed| BackEnd |
