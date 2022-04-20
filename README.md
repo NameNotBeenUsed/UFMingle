@@ -86,7 +86,8 @@ This is an online dating platform designed for students at the University of Flo
 ### Demo Video
 
 
-### Cypress Test Video
+### Cypress Test Video  
+https://user-images.githubusercontent.com/77484113/164302734-f055e807-a584-489b-b8bb-c278fedcfa35.mp4
 
 
 ### Backend Unit Test Video
@@ -102,5 +103,9 @@ This is an online dating platform designed for students at the University of Flo
 
 
 ### Frontend and Backend Team Members
-
-Frontend implements searching feature, update reply page and personal page.
+| Name      | UFID     | Github ID     | In Charge Of     |
+| ---------- | :-----------:  | :-----------: | :-----------: |
+| Heming Sun  | 69162072     | mingHeap     | FrontEnd |
+| Yujian Yuan | 25195225  | yuanuf     | FrontEnd |
+| Rulan Jiang | 80984324     | JiangRulan     | BackEnd |
+| Mingjun Yu  | 61707843    | NameNotBeenUsed| BackEnd |
