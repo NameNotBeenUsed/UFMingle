@@ -51,7 +51,7 @@ export default () => {
                  <div className={sty.bottom}>
                      <p><span>gender {user_data.gender}</span> </p>
                     {/*<p><span>gender {user_data.gender}</span> <span>past_post_num 0</span> </p>*/}
-                    <p><span>register time {user_data.birthday}</span>  </p>
+                    <p><span>birthday {user_data.birthday}</span>  </p>
                 </div>
             </div>
         </div>
