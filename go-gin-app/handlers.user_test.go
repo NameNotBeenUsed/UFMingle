@@ -28,7 +28,7 @@ func TestShowLoginPageAuthenticated(t *testing.T) {
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/u/login", nil)
-	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
+	req.Header = http.Header{"Cookie": w.Result().Header["Set-Cookie"]}
 
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)
@@ -172,7 +172,7 @@ func TestShowRegistrationPageAuthenticated(t *testing.T) {
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/u/register", nil)
-	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
+	req.Header = http.Header{"Cookie": w.Result().Header["Set-Cookie"]}
 
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)
@@ -216,7 +216,7 @@ func TestRegisterAuthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Set the token cookie to simulate an authenticated user
-	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
+	http.SetCookie(w, &http.Cookie{Name: "token", Value: "%7B%22username%22%3A%22user1%22%2C%22password%22%3A%22pass1%22%7D"})
 
 	// Define the route similar to its definition in the routes file
 	r.POST("/u/register", ensureNotLoggedIn(), register)
@@ -224,7 +224,7 @@ func TestRegisterAuthenticated(t *testing.T) {
 	// Create a request to send to the above route
 	registrationPayload := getRegistrationPOSTPayload()
 	req, _ := http.NewRequest("POST", "/u/register", strings.NewReader(registrationPayload))
-	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
+	req.Header = http.Header{"Cookie": w.Result().Header["Set-Cookie"]}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(registrationPayload)))
 
@@ -277,7 +277,7 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	}
 }
 
-// Test that a POST request to register returns a an error when
+// Test that a POST request to register returns an error when
 // the username is already in use
 func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	// Create a response recorder
@@ -290,7 +290,7 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	r.POST("/u/register", ensureNotLoggedIn(), register)
 
 	// Create a request to send to the above route
-	registrationPayload := getLoginPOSTPayload()
+	registrationPayload := getRegistrationPOSTPayload()
 	req, _ := http.NewRequest("POST", "/u/register", strings.NewReader(registrationPayload))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(registrationPayload)))
@@ -326,7 +326,10 @@ func getRegistrationPOSTPayload() string {
 
 	testUser := `{
 		"username": "u1",
-		"password": "p1"
+		"password": "p1",
+		"gender": "unknown",
+		"gatorlink": "user1@ufl.edu",
+		"gatorPW": "1111"
 	}`
 	return testUser
 }

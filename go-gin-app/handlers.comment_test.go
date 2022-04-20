@@ -76,14 +76,14 @@ func TestCreateCommentAuthenticated(t *testing.T) {
 
 	r.ServeHTTP(w, req)
 
-	fmt.Println(w.Code)
+	//fmt.Println(w.Code)
 	if w.Code != http.StatusOK {
 		t.Fail()
 	}
 
 	p, err := ioutil.ReadAll(w.Body)
-	fmt.Println(string(p))
-	fmt.Println(err)
+	//fmt.Println(string(p))
+	//fmt.Println(err)
 	if err != nil || strings.Index(string(p), "successfully submitted") < 0 {
 		t.Fail()
 	}

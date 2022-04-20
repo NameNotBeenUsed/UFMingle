@@ -269,7 +269,7 @@ func TestArticleCreationAuthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Set the token cookie to simulate an authenticated user
-	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
+	http.SetCookie(w, &http.Cookie{Name: "token", Value: "%7B%22username%22%3A%22user1%22%2C%22password%22%3A%22pass1%22%7D"})
 
 	// Define the route similar to its definition in the routes file
 	r.POST("/article/create", ensureLoggedIn(), createArticle)

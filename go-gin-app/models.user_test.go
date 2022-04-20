@@ -3,7 +3,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -52,14 +51,15 @@ func TestValidUserRegistration(t *testing.T) {
 	//saveLists()
 
 	//newUser := mingleUser{Username: "newuser", Password: "newpass"}
-	newUser := user{Gatorlink: "user1@ufl.edu", GatorPW: "1111", Username: "TestUser", Password: "TestPass"}
+	newUser := user{Gatorlink: "user1@ufl.edu", GatorPW: "1111", Username: "TestUser", Password: "TestPass", Gender: "unknown"}
 	num, err := registerNewUser(newUser)
-
+	//fmt.Println(num, err)
 	if err != nil || num == 0 {
 		t.Fail()
 	}
 
 	num, err = deleteUser(newUser.Username)
+	//fmt.Println(err)
 	if num == 0 || err != nil {
 		t.Fail()
 	}
@@ -109,7 +109,7 @@ func TestUsernameAvailability(t *testing.T) {
 	}
 
 	// Register a new user
-	newUser := user{Gatorlink: "user2@ufl.edu", GatorPW: "2222", Username: "newuser", Password: "newpass"}
+	newUser := user{Gatorlink: "user2@ufl.edu", GatorPW: "2222", Username: "newuser", Password: "newpass", Gender: "unknown"}
 	registerNewUser(newUser)
 
 	// This newly registered username should not be available
@@ -130,38 +130,38 @@ func TestUsernameAvailability(t *testing.T) {
 	//restoreLists()
 }
 
-func TestAFunc(t *testing.T) {
-	str1 := "gender"
-	str2 := "female"
-	str2_2 := "'" + str2 + "'"
-	str3 := "user_mj"
-	str3_3 := "'" + str3 + "'"
-	query := fmt.Sprintf("UPDATE users SET %s=%s WHERE username=%s", str1, str2_2, str3_3)
-	fmt.Println(query)
-	res, err := DB.Exec(query)
-	if err != nil {
-		fmt.Println(err)
-	}
-	affect, errRes := res.RowsAffected()
-	if errRes != nil {
-		fmt.Println(errRes)
-	}
-	fmt.Println(affect)
-
-	//stmt, err := DB.Prepare("UPDATE users SET ?=? WHERE username=?")
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//res, errStmt := stmt.Exec("gender", "'unknown'", "'user_mj'")
-	//if errStmt != nil {
-	//	fmt.Println(errStmt)
-	//}
-	//affect, errRes := res.RowsAffected()
-	//if errRes != nil {
-	//	fmt.Println(errRes)
-	//}
-	//fmt.Println(affect)
-}
+//func TestAFunc(t *testing.T) {
+//	str1 := "gender"
+//	str2 := "female"
+//	str2_2 := "'" + str2 + "'"
+//	str3 := "user_mj"
+//	str3_3 := "'" + str3 + "'"
+//	query := fmt.Sprintf("UPDATE users SET %s=%s WHERE username=%s", str1, str2_2, str3_3)
+//	//fmt.Println(query)
+//	res, err := DB.Exec(query)
+//	if err != nil {
+//		fmt.Println(err)
+//	}
+//	affect, errRes := res.RowsAffected()
+//	if errRes != nil || affect != 1 {
+//		fmt.Println(errRes)
+//	}
+//	//fmt.Println(affect)
+//
+//	//stmt, err := DB.Prepare("UPDATE users SET ?=? WHERE username=?")
+//	//if err != nil {
+//	//	fmt.Println(err)
+//	//}
+//	//res, errStmt := stmt.Exec("gender", "'unknown'", "'user_mj'")
+//	//if errStmt != nil {
+//	//	fmt.Println(errStmt)
+//	//}
+//	//affect, errRes := res.RowsAffected()
+//	//if errRes != nil {
+//	//	fmt.Println(errRes)
+//	//}
+//	//fmt.Println(affect)
+//}
 
 //测试了三个函数：checkArticleStatus，changeArticleStatus，getLikesReceived
 func TestManipulateArticleStatus(t *testing.T) {

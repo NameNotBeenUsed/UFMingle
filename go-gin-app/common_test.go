@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 
 	connDBErr := ConnectDB()
 	if connDBErr != nil {
-		fmt.Println(connDBErr.Error())
+		log.Println(connDBErr.Error())
 	}
 	// Run the other tests
 	os.Exit(m.Run())

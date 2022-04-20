@@ -172,6 +172,7 @@ func register(c *gin.Context) {
 	} else {
 		// If the username/password combination is invalid,
 		// show the error message on the login page
+		log.Println(err)
 		c.HTML(http.StatusBadRequest, "register.html", gin.H{
 			"ErrorTitle":   "Registration Failed",
 			"ErrorMessage": err.Error()})
