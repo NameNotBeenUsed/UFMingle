@@ -95,6 +95,7 @@ https://user-images.githubusercontent.com/77484113/164302734-f055e807-a584-489b-
 
 ### Link to API Documentation
 Run the backend by command "go run ." and then visit the URL http://localhost:8080/swagger/index.html.
+
 URL of the screen shot: https://github.com/NameNotBeenUsed/UFMingle/blob/main/Showcase/API_document.png.
 
 ### Link to Project Board
