@@ -102,7 +102,7 @@ URL of the screen shot: https://github.com/NameNotBeenUsed/UFMingle/blob/main/Sh
 https://github.com/NameNotBeenUsed/UFMingle/projects/1
 
 ### Link to Sprint 4 Deliverables
-
+https://github.com/NameNotBeenUsed/UFMingle/blob/main/README.md#sprint-4
 
 ### Frontend and Backend Team Members
 | Name      | UFID     | Github ID     | In Charge Of     |
