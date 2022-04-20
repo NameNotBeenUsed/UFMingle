@@ -9,21 +9,34 @@ import Item from 'antd/lib/list/Item';
 export default () => {
     const [dataList, setDataList] = React.useState([]);
     const [total, setTotal] = React.useState(0);
+    const [user_data, setuser_data] = React.useState([])
     const getobj = () => {
-        Axios.get('http://localhost:8080/article/pastposts/user1', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
+        Axios.get('http://localhost:8080/article/pastposts/' + sessionStorage.getItem('lt_token'), {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
         }).then((r) => {
-          console.log(r);
-          setDataList(r.data);
-          setTotal(r.data.length);
+            console.log(r);
+            setDataList(r.data);
+            setTotal(r.data.length);
         });
-      };
-      React.useEffect(() => {
+    };
+    const getuser= () => {
+        Axios.get('http://localhost:8080/u/info', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        }).then((r) => {
+            console.log(r);
+            setuser_data(r.data)
+        });
+    };
+    React.useEffect(() => {
         getobj();
-      }, []);
+        getuser();
+    }, []);
 
 
     return <>
@@ -31,14 +44,15 @@ export default () => {
             <Avatar size={150} src={<Image src={"http://localhost:8080/image/avatar/" + sessionStorage.getItem('lt_token')} style={{ width: '150px ' }} />} />
             <div className={sty.meright}>
                 <div className={sty.top}>
-                    <span className={sty.name}>{(sessionStorage.getItem('lt_token'))}</span><span className={sty.samll}>registered user</span> 
-                    {/* <Tag color="magenta">likes received</Tag><Tag className={sty.tag} color="#ff0000">0</Tag> 
+                    <span className={sty.name}>{(sessionStorage.getItem('lt_token'))}</span><span className={sty.samll}>registered user</span>
+                    {/* <Tag color="magenta">likes received</Tag><Tag className={sty.tag} color="#ff0000">0</Tag>
                     <Tag color="#ff0000">message</Tag> */}
                 </div>
-                {/* <div className={sty.bottom}>
-                    <p><span>gender male</span> <span>past_post_num 0</span> </p>
-                    <p><span>register time 00：00：00</span> <span>last time login 00：00：00</span> </p>
-                </div> */}
+                 <div className={sty.bottom}>
+                     <p><span>gender {user_data.gender}</span> </p>
+                    {/*<p><span>gender {user_data.gender}</span> <span>past_post_num 0</span> </p>*/}
+                    <p><span>register time {user_data.birthday}</span>  </p>
+                </div>
             </div>
         </div>
         <div className={sty.titles}>
@@ -48,28 +62,29 @@ export default () => {
         {dataList&&dataList.length>0?
             dataList.map(item=>{
                 return <div key={item.id}>
-                 <h3 className={sty.m40}>{item.title}</h3>
-        <div className={sty.repo}>
-          
-            <p>{item.content}</p>
-            <div>
+                    <h3 className={sty.m40}>{item.title}</h3>
+                    <div className={sty.repo}>
+                        <div>
                 <span>
                     post time : {item.postTime}
                 </span>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <span>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <div>
+                            <span>
                     likes : {item.likes}
-                </span>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <span>
+                </span></div>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <div>
+                            <span>
                     dislikes : {item.dislikes}
                 </span>
-            </div>
-            <Divider></Divider>
-        </div>
+                            </div>
+                        </div>
+                        <Divider></Divider>
+                    </div>
                 </div>
             })
-        :''}
+            :''}
 
         {/* <h3 className={sty.m40}>past post</h3>
         <div className={sty.repo}>
