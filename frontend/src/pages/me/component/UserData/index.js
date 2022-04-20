@@ -122,7 +122,7 @@ export default () => {
       },
       withCredentials: true,
     }).then((r) => {
-      message.success('修改成功');
+      message.success('update successfully');
       getobj();
     });
   };
@@ -146,6 +146,7 @@ export default () => {
             style={{ width: 100 }}
             value={gender}
           >
+            {/* <Option value="unkown">unkown</Option> */}
             <Option value="male">male</Option>
             <Option value="female">female</Option>
           </Select>
@@ -163,7 +164,7 @@ export default () => {
           <Input
             onChange={(e) => passWordChane(e)}
             type="password"
-            placeholder="请输入密码"
+            placeholder="please type in password"
             style={{ width: 400 }}
             value={passwords}
           />
