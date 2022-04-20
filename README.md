@@ -79,4 +79,28 @@ Frontend updated reigister page, login page, article page and reply page, and fi
 
 ## Sprint 4
 
+### Description of the Application
+
+This is an online dating platform designed for students at the University of Florida. Only students who have an email address of the University of Florida can register to communicate on this forum. In this forum, registered users can post, view post details, reply to posts, or simply express their opinions by liking and stepping on posts. In posts and replies, users can insert a wide variety of images and emoticons, edit font styles, etc. Users can view and change their personal information in the personal center, as well as view their posting history. The more likes a user receives, the more popular the user becomes.
+
+### Demo Video
+
+
+### Cypress Test Video
+
+
+### Backend Unit Test Video
+
+
+### Link to API Documentation
+
+
+### Link to Project Board
+
+
+### Link to Sprint 4 Deliverables
+
+
+### Frontend and Backend Team Members
+
 Frontend implements searching feature, update reply page and personal page.
