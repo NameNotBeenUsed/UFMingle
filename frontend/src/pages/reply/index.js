@@ -1,13 +1,13 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Breadcrumb, Carousel, Badge, Avatar, Button, message, Card, List, Comment, Form } from 'antd';
-import { UserOutlined, ManOutlined, SmileOutlined, FrownOutlined} from '@ant-design/icons';
+import { UserOutlined, ManOutlined, SmileOutlined, FrownOutlined } from '@ant-design/icons';
 
 import sty from './index.module.scss';
 import { useLocation, useParams } from "react-router-dom";
 import Nav from '../../components/nav'
 //import ReactWEditor from 'wangeditor-for-react';
 import Axios from 'axios';
-import {extend} from "wangeditor-for-react";
+import { extend } from "wangeditor-for-react";
 import i18next from "i18next";
 import uf_news_1 from "../../img/uf_news_1.png";
 import uf_news_2 from "../../img/uf_news_2.png";
@@ -16,7 +16,7 @@ import uf_news_4 from "../../img/uf_news_4.png";
 
 function Reply() {
 
-  const ReactWEditorOfLang = extend({i18next})
+  const ReactWEditorOfLang = extend({ i18next })
   let initialImgFiles = []
   let finalImgFiles = []
 
@@ -30,7 +30,7 @@ function Reply() {
       for (let i = 0; i < arr.length; i++) {
         let src = arr[i].match(srcReg)[1]
         let index = src.lastIndexOf('\/')
-        let filename = src.substring(index+1)
+        let filename = src.substring(index + 1)
         imgUrls.push(filename)
       }
     }
@@ -38,7 +38,7 @@ function Reply() {
   }
 
   const deleteImgs = (imgUrls) => {
-    for(let img of imgUrls){
+    for (let img of imgUrls) {
       Axios.delete('http://localhost:8080/image/delete/' + img)
     }
   }
@@ -113,7 +113,7 @@ function Reply() {
       const acct = results[0];
       const perm = results[1];
       //console.log("results", acct, perm)
-      if(acct.status === 200) {
+      if (acct.status === 200) {
         window.location.href = `/reply/${articleId}`;
       }
     }).catch((e) => {
@@ -157,22 +157,40 @@ function Reply() {
               </Carousel>
             </div>
           </div>
-        
+
           <Card style={{ width: "100%" }}>
             <p dangerouslySetInnerHTML={{ __html: article.content }}></p>
           </Card>
-        {/* 点和踩 */}
-        <div className={sty.feel}>
-          <div className={sty.like} onClick={()=>{console.log(123)}}>
-            <SmileOutlined />
+          {/* 点和踩 */}
+          <div className={sty.feel}>
+            <div className={sty.like} onClick={() => {
+              Axios.patch(`http://localhost:8080/u/article/${articleId}`, { thumbsup: 1 }, {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+              }).then((r) => {
+                console(r);
+              });
+            }}>
+              <SmileOutlined />
+            </div>
+            &emsp;
+            <div className={sty.dislike} onClick={() => {
+              Axios.patch(`http://localhost:8080/u/article/${articleId}`, { thumbsup: 0 }, {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+              }).then((r) => {
+                console(r);
+              });
+            }}>
+              <FrownOutlined />
+            </div>
           </div>
-          &emsp;
-          <div className={sty.dislike} onClick={()=>{console.log(456)}}>
-            <FrownOutlined />
-          </div>
-        </div>
-       
-        
+
+
           <List
             className="comment-list"
             dataSource={comment}
@@ -217,7 +235,7 @@ function Reply() {
         </div>
         <div className={sty.replyBox}>
           <div className={sty.breadcrumbBox}>
-          
+
             <Breadcrumb>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
               <Breadcrumb.Item>block list</Breadcrumb.Item>
@@ -256,25 +274,25 @@ function Reply() {
               {/*  }}*/}
               {/*/>*/}
               <ReactWEditorOfLang
-                  config = {{
-                    lang: 'en',
-                    uploadImgServer: 'http://localhost:8080/image/upload',
-                    showLinkImg: false,
-                    withCredentials: true,
-                    uploadImgHeaders: {
-                      Accept: 'spplication/json'
-                    },
-                    uploadImgHooks: {
-                        before: function (xhr, editor, resultFiles) {
-                            console.log('resultFiles in before', resultFiles)
-                            for(let file of resultFiles){
-                                console.log(file.name)
-                                initialImgFiles.push(file.name)
-                            }
-                        }
+                config={{
+                  lang: 'en',
+                  uploadImgServer: 'http://localhost:8080/image/upload',
+                  showLinkImg: false,
+                  withCredentials: true,
+                  uploadImgHeaders: {
+                    Accept: 'spplication/json'
+                  },
+                  uploadImgHooks: {
+                    before: function (xhr, editor, resultFiles) {
+                      console.log('resultFiles in before', resultFiles)
+                      for (let file of resultFiles) {
+                        console.log(file.name)
+                        initialImgFiles.push(file.name)
+                      }
                     }
-                  }}
-                />
+                  }
+                }}
+              />
             </Form.Item>
             <Form.Item wrapperCol={{
               offset: 12,

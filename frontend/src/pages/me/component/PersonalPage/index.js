@@ -52,6 +52,19 @@ export default () => {
         <div className={sty.repo}>
           
             <p>{item.content}</p>
+            <div>
+                <span>
+                    post time : {item.postTime}
+                </span>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <span>
+                    likes : {item.likes}
+                </span>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <span>
+                    dislikes : {item.dislikes}
+                </span>
+            </div>
             <Divider></Divider>
         </div>
                 </div>
