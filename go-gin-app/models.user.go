@@ -297,6 +297,7 @@ func updateUserItem(username string, content map[string]string) (int64, error) {
 		value := "'" + v + "'"
 		tempUsername := "'" + username + "'"
 		update := fmt.Sprintf("UPDATE users SET %s=%s WHERE username=%s", k, value, tempUsername)
+		//fmt.Println("in updateUserItem", update)
 		res, err := DB.Exec(update)
 		if err != nil {
 			return 0, err

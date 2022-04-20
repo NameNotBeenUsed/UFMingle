@@ -162,3 +162,136 @@ func TestAFunc(t *testing.T) {
 	//}
 	//fmt.Println(affect)
 }
+
+//测试了三个函数：checkArticleStatus，changeArticleStatus，getLikesReceived
+func TestManipulateArticleStatus(t *testing.T) {
+	//先改变user_mj对文章的反应，再用check status看状态是否更新正确
+	//id=2 article 初始值都为0，先获取初始值，测试完毕后恢复原状
+	//用户表和文章表都要恢复原状
+	username := "user_mj"
+	articleId := 2
+	reaction, index, err := checkArticleStatus(username, articleId)
+	//第一个返回int 状态 未操作:0；赞过:1；踩过:2，出错:-1
+	//第二个返回int 下标 状态为0/-1时，返回-1
+	//初始用户没有任何操作
+	if reaction != 0 || index != -1 || err != nil {
+		t.Fail()
+	}
+
+	//点赞
+	affectUsers, affectArticles, err := changeArticleStatus(username, articleId, true)
+	if affectUsers != 1 || affectArticles != 1 || err != nil {
+		t.Fail()
+	}
+
+	//检验状态
+	reaction, index, err = checkArticleStatus(username, articleId)
+	if reaction != 1 || index == -1 || err != nil {
+		t.Fail()
+	}
+
+	//检验likes received，文章2的作者是user1，此时应该收到了两个赞
+	likes, err := getLikesReceived("user1")
+	if likes != 2 || err != nil {
+		t.Fail()
+	}
+
+	//点踩
+	affectUsers, affectArticles, err = changeArticleStatus(username, articleId, false)
+	if affectUsers != 1 || affectArticles != 1 || err != nil {
+		t.Fail()
+	}
+
+	//检验状态
+	reaction, index, err = checkArticleStatus(username, articleId)
+	if reaction != 2 || index == -1 || err != nil {
+		t.Fail()
+	}
+
+	//检验likes received，此时应该收到了一个赞
+	likes, err = getLikesReceived("user1")
+	if likes != 1 || err != nil {
+		t.Fail()
+	}
+
+	//用户表和文章表都要恢复原状
+	//用户表
+	stmt, err := DB.Prepare("UPDATE users SET like_list=?, dislike_list=? WHERE username=?")
+	if err != nil {
+		t.Fail()
+	}
+	res, err := stmt.Exec("", "", username)
+	if err != nil {
+		t.Fail()
+	}
+	affect, err := res.RowsAffected()
+	if affect != 1 || err != nil {
+		t.Fail()
+	}
+
+	//文章表
+	stmt, err = DB.Prepare("UPDATE articles SET likes=?, dislikes=? WHERE id=?")
+	if err != nil {
+		t.Fail()
+	}
+	res, err = stmt.Exec(0, 0, articleId)
+	if err != nil {
+		t.Fail()
+	}
+	affect, err = res.RowsAffected()
+	if affect != 1 || err != nil {
+		t.Fail()
+	}
+
+	//检验likes received，此时应该收到了一个赞
+	likes, err = getLikesReceived("user1")
+	if likes != 1 || err != nil {
+		t.Fail()
+	}
+}
+
+//test getUserByUsername, updateUserItem
+func TestManipulateUserInfo(t *testing.T) {
+	//user_rl
+	originalUserRl, err := getUserByUsername("user_rl")
+	//fmt.Println("originalUserRl", originalUserRl)
+	if err != nil {
+		t.Fail()
+	}
+
+	content := make(map[string]string)
+	//password, birthday and gender
+	content["password"] = "userRl"
+	content["birthday"] = "2022-04-19"
+	content["gender"] = "female"
+
+	affect, err := updateUserItem("user_rl", content)
+	if int(affect) != len(content) || err != nil {
+		t.Fail()
+	}
+
+	updatedUserRl, err := getUserByUsername("user_rl")
+	if err != nil {
+		t.Fail()
+	}
+	//fmt.Println("updatedUserRl", updatedUserRl)
+	//fmt.Println("ifEqual", updatedUserRl.Birthday == "2022-04-19T00:00:00Z")
+	if updatedUserRl.Password != content["password"] || updatedUserRl.Birthday != "2022-04-19T00:00:00Z" || updatedUserRl.Gender != content["gender"] {
+		t.Fail()
+	}
+
+	content["password"] = originalUserRl.Password
+	content["birthday"] = "2020-12-30"
+	content["gender"] = originalUserRl.Gender
+	//fmt.Println("还原content", content)
+	affect, err = updateUserItem("user_rl", content)
+	if int(affect) != len(content) || err != nil {
+		t.Fail()
+	}
+
+	checkUserRl, err := getUserByUsername("user_rl")
+	//fmt.Println("checkUserRl", checkUserRl)
+	if checkUserRl.Password != originalUserRl.Password || checkUserRl.Birthday != "2020-12-30T00:00:00Z" || checkUserRl.Gender != originalUserRl.Gender || err != nil {
+		t.Fail()
+	}
+}

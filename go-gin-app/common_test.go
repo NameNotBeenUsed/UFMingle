@@ -144,3 +144,24 @@ func TestContains(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestCheckIfStrContainsEle(t *testing.T) {
+	//corner case
+	emptyStr := ""
+	index, ifContains, err := checkIfStrContainsEle(emptyStr, 1)
+	if index != -1 || ifContains != false || err != nil {
+		t.Fail()
+	}
+
+	//regular case
+	testStr := "1,2,3,4,5,6"
+	index, ifContains, err = checkIfStrContainsEle(testStr, 4)
+	if index != 3 || ifContains != true || err != nil {
+		t.Fail()
+	}
+
+	index, ifContains, err = checkIfStrContainsEle(testStr, 9)
+	if index != -1 || ifContains != false || err != nil {
+		t.Fail()
+	}
+}
