@@ -160,6 +160,26 @@ func createCommentTable() error {
 	fmt.Println("Initiate table comments successfully")
 	return nil
 }
+
+func createSubscribeTable() error {
+	sqlUFTable := `
+		CREATE TABLE IF NOT EXISTS subscribe(
+			star TEXT NOT NULL,
+			follower TEXT NOT NULL,
+			CONSTRAINT p_key PRIMARY KEY (star, follower),
+		    foreign key (star) references users(username),
+		    foreign key (follower) references users(username),
+		    check(star != follower)
+			)  ;`
+
+	_, err := DB.Exec(sqlUFTable)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Initiate table subscribe successfully")
+	return nil
+}
+
 func checkErr(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -183,6 +203,11 @@ func createTables() {
 	createCommentErr := createCommentTable()
 	if createCommentErr != nil {
 		fmt.Println(createCommentErr.Error())
+	}
+
+	createSubscribeErr := createSubscribeTable()
+	if createSubscribeErr != nil {
+		fmt.Println(createSubscribeErr.Error())
 	}
 
 }

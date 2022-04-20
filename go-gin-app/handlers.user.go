@@ -61,7 +61,7 @@ func performLogin(c *gin.Context) {
 		jsonstr, _ := json.Marshal(u)
 		c.SetSameSite(sameSiteCookie)
 		// maxAge: seconds
-		c.SetCookie("token", string(jsonstr), 3600, "", "localhost", false, true)
+		c.SetCookie("token", string(jsonstr), 36000, "", "localhost", false, true)
 		c.Set("is_logged_in", true)
 
 		//loggedInInterface, _ := c.Get("is_logged_in")
@@ -161,7 +161,7 @@ func register(c *gin.Context) {
 		ufuser := mingleUser{newUser.Username, newUser.Password}
 		jsonstr, _ := json.Marshal(ufuser)
 		c.SetSameSite(sameSiteCookie)
-		c.SetCookie("token", string(jsonstr), 3600, "", "localhost", false, true)
+		c.SetCookie("token", string(jsonstr), 36000, "", "localhost", false, true)
 		c.Set("is_logged_in", true)
 
 		render(c, gin.H{
@@ -341,4 +341,17 @@ func likesReceivedByUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, likes)
+}
+
+func subscribeSomeone(c *gin.Context) {
+	star := c.Param("username")
+	var tempuser mingleUser
+	token, _ := c.Cookie("token")
+	if err := json.Unmarshal([]byte(token), &tempuser); err == nil {
+		res := performSubscribe(star, tempuser.Username)
+		c.JSON(http.StatusOK, res)
+	} else {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		fmt.Println("subscribe fail")
+	}
 }

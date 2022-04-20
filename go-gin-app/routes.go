@@ -64,6 +64,10 @@ func initializeRoutes() {
 		userRoutes.PATCH("/article/:articleId", ensureLoggedIn(), changeReaction)
 
 		userRoutes.GET("/likes", ensureLoggedIn(), likesReceivedByUser)
+		userRoutes.POST("/subscribe/:username", ensureLoggedIn(), subscribeSomeone)
+		/*userRoutes.GET("/getmystars", ensureLoggedIn(), subscribeSomeone)
+		userRoutes.GET("/getmyfollowers", ensureLoggedIn(), subscribeSomeone)*/
+
 	}
 
 	// Group article related routes together

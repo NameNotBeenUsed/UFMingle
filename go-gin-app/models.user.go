@@ -668,3 +668,14 @@ func getLikesReceived(username string) (int, error) {
 
 	return likesReceived, nil
 }
+
+func performSubscribe(star string, follower string) error {
+	query := "insert into subscribe (star, follower) values('" + star + "','" + follower + "');"
+	if _, err := DB.Exec(query); err != nil {
+		fmt.Println("?????????????????????????????")
+		fmt.Println(err)
+		return err
+	} else {
+		return nil
+	}
+}
