@@ -137,7 +137,7 @@ function Reply() {
               <div className={sty.divider}></div>
               <div className={sty.titleright}>
                 <p>UFmingle</p>
-                <p>13/13456</p>
+                {/*<p>13/13456</p>*/}
               </div>
             </div>
             <div className={sty.headRight}>
@@ -160,35 +160,39 @@ function Reply() {
 
           <Card style={{ width: "100%" }}>
             <p dangerouslySetInnerHTML={{ __html: article.content }}></p>
+            {/* 点和踩 */}
+            <div className={sty.feel}>
+              <div className={sty.like} onClick={() => {
+                Axios.patch(`http://localhost:8080/u/article/${articleId}`, { thumbsup: 1 }, {
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  withCredentials: true,
+                }).then((r) => {
+                  console(r);
+                });
+              }}>
+                <SmileOutlined style={{ fontSize: '50px', color: '#08c'}}/>
+                <p style={{ fontSize: '30px'}}>{article.likes}</p>
+              </div>
+              &emsp;
+              <div className={sty.dislike} onClick={() => {
+                Axios.patch(`http://localhost:8080/u/article/${articleId}`, { thumbsup: 0 }, {
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  withCredentials: true,
+                }).then((r) => {
+                  console(r);
+                });
+              }}>
+                <FrownOutlined style={{ fontSize: '50px', color: '#08c' }}/>
+                <p style={{ fontSize: '30px'}}>{article.dislikes}</p>
+              </div>
+            </div>
           </Card>
-          {/* 点和踩 */}
-          <div className={sty.feel}>
-            <div className={sty.like} onClick={() => {
-              Axios.patch(`http://localhost:8080/u/article/${articleId}`, { thumbsup: 1 }, {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-              }).then((r) => {
-                console(r);
-              });
-            }}>
-              <SmileOutlined />
-            </div>
-            &emsp;
-            <div className={sty.dislike} onClick={() => {
-              Axios.patch(`http://localhost:8080/u/article/${articleId}`, { thumbsup: 0 }, {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-              }).then((r) => {
-                console(r);
-              });
-            }}>
-              <FrownOutlined />
-            </div>
-          </div>
+
+
 
 
           <List
