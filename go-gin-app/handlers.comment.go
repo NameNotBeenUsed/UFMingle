@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -65,4 +66,14 @@ func createComment(c *gin.Context) {
 	} else {
 		c.AbortWithError(http.StatusUnauthorized, err)
 	}
+}
+
+func getCommentByUsername(c *gin.Context) {
+	username := c.Param("username")
+	commentList, err := getCommentsByUser(username)
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+		log.Fatal(err)
+	}
+	c.JSON(http.StatusOK, commentList)
 }

@@ -35,7 +35,7 @@ func createArticleTable() error {
 	sqlArticleTable := `
 			CREATE TABLE IF NOT EXISTS articles(
 				id 			INTEGER PRIMARY KEY AUTOINCREMENT,
-				author 		TEXT 		NOT NULL,
+				austhor 		TEXT 		NOT NULL,
 				title 		TEXT 		NOT NULL,
 				post_time 	timestamp 	default (CURRENT_TIMESTAMP),
 				content 	TEXT 		NOT NULL,

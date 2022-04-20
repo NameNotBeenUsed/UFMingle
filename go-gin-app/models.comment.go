@@ -46,6 +46,36 @@ func getAllComment(articleId string) ([]comment, error) {
 
 }
 
+func getCommentsByUser(username string) ([]comment, error) {
+	query := "SELECT comment_id, topic_id, comment_user, comment_content, comment_time, likes, dislikes from comment where comment_user='" + username + "';"
+	rows, err := DB.Query(query)
+	//fmt.Println("getAllArticles")
+	//fmt.Println(err)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	commentResult := make([]comment, 0)
+
+	for rows.Next() {
+		singleComment := comment{}
+		err = rows.Scan(&singleComment.CommentId, &singleComment.ArticleId, &singleComment.CommentAuthor, &singleComment.Content, &singleComment.CommentTime, &singleComment.Likes, &singleComment.Dislikes)
+		checkErr(err)
+		//fmt.Println(err)
+		commentResult = append(commentResult, singleComment)
+	}
+
+	err = rows.Err()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return commentResult, err
+}
+
 func createNewComment(commentData comment, tempuser mingleUser) (int64, error) {
 	res_user, er := isUserValid(tempuser)
 	res_comment, er := isCommentValid(commentData)
