@@ -163,11 +163,11 @@ function Reply() {
           </Card>
         {/* 点和踩 */}
         <div className={sty.feel}>
-          <div className={sty.like}>
+          <div className={sty.like} onClick={()=>{console.log(123)}}>
             <SmileOutlined />
           </div>
           &emsp;
-          <div className={sty.dislike}>
+          <div className={sty.dislike} onClick={()=>{console.log(456)}}>
             <FrownOutlined />
           </div>
         </div>
