@@ -1,13 +1,14 @@
 import React from 'react';
 import sty from './index.module.scss';
 
-import { Breadcrumb, Card, Avatar, Image, Tag, Divider } from 'antd';
+import { Breadcrumb, Card, Avatar, Image, Tag, Divider, Pagination } from 'antd';
 import Axios from 'axios';
 import Item from 'antd/lib/list/Item';
 
 
 export default () => {
-    const [dataList, setDataList] = React.useState([])
+    const [dataList, setDataList] = React.useState([]);
+    const [total, setTotal] = React.useState(0);
     const getobj = () => {
         Axios.get('http://localhost:8080/article/pastposts/user1', {
           headers: {
@@ -16,7 +17,8 @@ export default () => {
           withCredentials: true,
         }).then((r) => {
           console.log(r);
-          setDataList(r.data)
+          setDataList(r.data);
+          setTotal(r.data.length);
         });
       };
       React.useEffect(() => {
@@ -55,6 +57,7 @@ export default () => {
                 </div>
             })
         :''}
+
         {/* <h3 className={sty.m40}>past post</h3>
         <div className={sty.repo}>
             <p><span className={sty.blue}>hello</span>2020-29-20 10:10:10</p>
@@ -71,6 +74,8 @@ export default () => {
             <p>hello, world!</p>
             <Divider></Divider>
         </div> */}
+
+        <Pagination defaultCurrent={1} total={total} pageSize={1} />
     </>
 
 }
