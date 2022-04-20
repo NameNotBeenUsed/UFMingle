@@ -53,7 +53,7 @@ function Reply() {
               <Menu.Item key="2" icon={<ProfileOutlined />}>
                 Update User Data
               </Menu.Item>
-              {/* <Menu.Item key="3" icon={<PushpinOutlined />}>
+               <Menu.Item key="3" icon={<PushpinOutlined />}>
                 Myreply
               </Menu.Item>
               <Menu.Item key="4" icon={<LaptopOutlined />}>
@@ -61,7 +61,7 @@ function Reply() {
               </Menu.Item>
               <Menu.Item key="5" icon={<LayoutOutlined />}>
                 Followers
-              </Menu.Item> */}
+              </Menu.Item>
             </Menu>
           </div>
           <Card style={{ width: "68%" }}>
