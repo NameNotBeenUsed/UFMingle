@@ -290,7 +290,7 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	r.POST("/u/register", ensureNotLoggedIn(), register)
 
 	// Create a request to send to the above route
-	registrationPayload := getRegistrationPOSTPayload()
+	registrationPayload := getRegistrationPOSTPayloadUsedUsername()
 	req, _ := http.NewRequest("POST", "/u/register", strings.NewReader(registrationPayload))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(registrationPayload)))
@@ -326,6 +326,17 @@ func getRegistrationPOSTPayload() string {
 
 	testUser := `{
 		"username": "u1",
+		"password": "p1",
+		"gender": "unknown",
+		"gatorlink": "user1@ufl.edu",
+		"gatorPW": "1111"
+	}`
+	return testUser
+}
+
+func getRegistrationPOSTPayloadUsedUsername() string {
+	testUser := `{
+		"username": "user1",
 		"password": "p1",
 		"gender": "unknown",
 		"gatorlink": "user1@ufl.edu",
