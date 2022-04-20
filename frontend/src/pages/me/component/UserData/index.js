@@ -149,6 +149,7 @@ export default () => {
             {/* <Option value="unkown">unkown</Option> */}
             <Option value="male">male</Option>
             <Option value="female">female</Option>
+            <Option value="unknown">unknown</Option>
           </Select>
         </div>
       </div>
