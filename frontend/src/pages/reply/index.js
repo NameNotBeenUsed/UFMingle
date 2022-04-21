@@ -216,10 +216,28 @@ function Reply() {
                         <Avatar size={64} icon={<UserOutlined />} />
                       </Badge>
                       <div>
-                        <Button size='small' shape="round">
+                        <Button size='small' shape="round" onClick={() => {
+                          Axios.post(`http://localhost:8080/u/subscribe/${item.comment_author}`, { thumbsup: 0 }, {
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            withCredentials: true,
+                          }).then(async(r) => {
+                            if(r.status === 200){
+
+                              // message.info(data);
+                              // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
+                              await message.success(r.data); // 打印message后再跳转
+                              //await message.success('Subscribe Successfully'); // 打印message后再跳转
+                              //window.location.href = "/login";
+
+                            }
+                            console(r);
+                          });
+                        }}>
                           Subscribe
                         </Button>
-                        <Button size='small' shape="round">
+                        <Button size='small' shape="round" >
                           Message
                         </Button>
                       </div>
