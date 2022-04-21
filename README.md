@@ -81,9 +81,13 @@ Frontend updated reigister page, login page, article page and reply page, and fi
 
 ### Description of the Application
 
-This is an online dating platform designed for students at the University of Florida. Only students who have an email address of the University of Florida can register to communicate on this forum. In this forum, registered users can post, view post details, reply to posts, or simply express their opinions by liking and stepping on posts. In posts and replies, users can insert a wide variety of images and emoticons, edit font styles, etc. Users can view and change their personal information in the personal center, as well as view their posting history. The more likes a user receives, the more popular the user becomes.
+This is an online dating platform designed for students at the University of Florida. Only students who have an email address of the University of Florida can register to communicate on this forum. In this forum, registered users can post, view post details, reply to posts, or simply express their opinions by liking and stepping on posts. In posts and replies, users can insert a wide variety of images and emoticons, edit font styles, etc. Users can view and change their personal information in the personal center, as well as view their posting history and reply history. The more likes a user receives, the more popular the user becomes. User can also subscribe some one. In user's personal page, user can see who he subscribed and can see his followers.
 
 ### Demo Video
+
+
+https://user-images.githubusercontent.com/42493663/164365360-30bf21f4-774b-43c2-8a38-cb2c4b08033d.mp4
+
 
 
 ### Cypress Test Video  
