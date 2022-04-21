@@ -707,7 +707,7 @@ func getUserStar(username string) ([]subscribe_user, error) {
 }
 
 func getUserFollower(username string) ([]subscribe_user, error) {
-	rows, err := DB.Query("SELECT star FROM subscribe where star='" + username + "';")
+	rows, err := DB.Query("SELECT follower FROM subscribe where star='" + username + "';")
 	if err != nil {
 		return nil, err
 	}
