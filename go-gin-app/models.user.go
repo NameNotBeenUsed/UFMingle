@@ -24,6 +24,10 @@ type mingleUser struct {
 	Password string `form:"password" json:"password"`
 }
 
+type subscribe_user struct {
+	Username string `form:"username" json:"username"`
+}
+
 // For this demo, we're storing the user list in memory
 // We also have some users predefined.
 // In a real application, this list will most likely be fetched
@@ -678,4 +682,48 @@ func performSubscribe(star string, follower string) error {
 	} else {
 		return nil
 	}
+}
+
+func getUserStar(username string) ([]subscribe_user, error) {
+	rows, err := DB.Query("SELECT star FROM subscribe where follower='" + username + "';")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var userList []subscribe_user
+
+	for rows.Next() {
+		var u subscribe_user
+		if err := rows.Scan(&u.Username); err != nil {
+			return nil, err
+		}
+		userList = append(userList, u)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return userList, nil
+}
+
+func getUserFollower(username string) ([]subscribe_user, error) {
+	rows, err := DB.Query("SELECT star FROM subscribe where star='" + username + "';")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var userList []subscribe_user
+
+	for rows.Next() {
+		var u subscribe_user
+		if err := rows.Scan(&u.Username); err != nil {
+			return nil, err
+		}
+		userList = append(userList, u)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return userList, nil
 }

@@ -355,3 +355,49 @@ func subscribeSomeone(c *gin.Context) {
 		fmt.Println("subscribe fail")
 	}
 }
+
+func getMyStars(c *gin.Context) {
+	var tempUser mingleUser
+	token, err := c.Cookie("token")
+	if err != nil {
+		log.Println("at getUserInfo1", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	err = json.Unmarshal([]byte(token), &tempUser)
+	if err != nil {
+		log.Println("at getUserInfo2", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	userInfo, err := getUserStar(tempUser.Username)
+
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	c.JSON(http.StatusOK, userInfo)
+}
+
+func getMyFollowers(c *gin.Context) {
+	var tempUser mingleUser
+	token, err := c.Cookie("token")
+	if err != nil {
+		log.Println("at getUserInfo1", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	err = json.Unmarshal([]byte(token), &tempUser)
+	if err != nil {
+		log.Println("at getUserInfo2", err)
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	userInfo, err := getUserFollower(tempUser.Username)
+
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	c.JSON(http.StatusOK, userInfo)
+}

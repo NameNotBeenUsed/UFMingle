@@ -65,8 +65,8 @@ func initializeRoutes() {
 
 		userRoutes.GET("/likes", ensureLoggedIn(), likesReceivedByUser)
 		userRoutes.POST("/subscribe/:username", ensureLoggedIn(), subscribeSomeone)
-		/*userRoutes.GET("/getmystars", ensureLoggedIn(), subscribeSomeone)
-		userRoutes.GET("/getmyfollowers", ensureLoggedIn(), subscribeSomeone)*/
+		userRoutes.GET("/getmystars", ensureLoggedIn(), getMyStars)
+		userRoutes.GET("/getmyfollowers", ensureLoggedIn(), getMyFollowers)
 
 	}
 
