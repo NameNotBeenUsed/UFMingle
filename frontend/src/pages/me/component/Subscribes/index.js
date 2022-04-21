@@ -21,18 +21,19 @@ export default ()=>{
         getstars();
     }, []);
     const [page, setPage] = useState(1)
-    return <>
-    <div>my subscribes</div>
-    <List
-        className="comment-list"
-        dataSource={mystars}
-        pagination={{ onChange: page => { setPage(page) }, pageSize: 5, }} //list内部分页
-        renderItem={(item, index) => (
-            <li>
-                <p>{item.username}</p>
-                <div className={sty.contentCard}>
-                    <div className={sty.contentLeft}>
-                        {/*<div className={sty.avatarLeft}>
+    if (mystars != null){
+        return <>
+            <div>my subscribes</div>
+            <List
+                className="comment-list"
+                dataSource={mystars}
+                pagination={{ onChange: page => { setPage(page) }, pageSize: 5, }} //list内部分页
+                renderItem={(item, index) => (
+                    <li>
+                        <p>{item.username}</p>
+                        <div className={sty.contentCard}>
+                            <div className={sty.contentLeft}>
+                                {/*<div className={sty.avatarLeft}>
                             <h3>{item.comment_author}</h3>
                              <p>articles 0</p>
                              <p>flowers 0</p>
@@ -40,12 +41,12 @@ export default ()=>{
                       <p>mingle coin 0</p>
                       <p>last time log in 0</p>
                         </div>*/}
-                        <div className={sty.avatarRight}>
-                            <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
-                                <Avatar size={64} icon={<UserOutlined />} src={"http://localhost:8080/image/avatar/" + item.username} />
-                            </Badge>
-                            <div>
-                               {/* <Button size='small' shape="round" onClick={() => {
+                                <div className={sty.avatarRight}>
+                                    <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
+                                        <Avatar size={64} icon={<UserOutlined />} src={"http://localhost:8080/image/avatar/" + item.username} />
+                                    </Badge>
+                                    <div>
+                                        {/* <Button size='small' shape="round" onClick={() => {
                                     Axios.post(`http://localhost:8080/u/subscribe/${item.comment_author}`, { thumbsup: 0 }, {
                                         headers: {
                                             'Content-Type': 'application/json',
@@ -66,22 +67,27 @@ export default ()=>{
                                 }}>
                                     Subscribe
                                 </Button>*/}
-                                <Button size='small' shape="round" >
-                                    Message
-                                </Button>
+                                        <Button size='small' shape="round" >
+                                            Message
+                                        </Button>
+                                    </div>
+
+                                </div>
                             </div>
 
+                            <div className={sty.contentRight} >
+                                <p dangerouslySetInnerHTML={{ __html: item.username }}></p>
+                            </div>
+                            <span className={sty.contentPage}>{(page - 1) * 5 + (index + 1)}</span>
                         </div>
-                    </div>
 
-                    <div className={sty.contentRight} >
-                        <p dangerouslySetInnerHTML={{ __html: item.username }}></p>
-                    </div>
-                    <span className={sty.contentPage}>{(page - 1) * 5 + (index + 1)}</span>
-                </div>
+                    </li>
+                )}
+            />
+        </>
+    }
+    else{
+        return <div>my subscribes</div>
+    }
 
-            </li>
-        )}
-    />
-    </>
 }
