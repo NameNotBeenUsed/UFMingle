@@ -213,7 +213,7 @@ function Reply() {
                     </div>
                     <div className={sty.avatarRight}>
                       <Badge count={<ManOutlined style={{ color: '#fff' }} />}>
-                        <Avatar size={64} icon={<UserOutlined />} />
+                        <Avatar size={64} icon={<UserOutlined />} src={"http://localhost:8080/image/avatar/" + item.comment_author}/>
                       </Badge>
                       <div>
                         <Button size='small' shape="round" onClick={() => {
@@ -227,7 +227,7 @@ function Reply() {
 
                               // message.info(data);
                               // sessionStorage.setItem("lt_token", data) 避免注册成功后自动登录
-                              await message.success(r.data); // 打印message后再跳转
+                              await message.success("You subscribe!!!!!!!!!!!"); // 打印message后再跳转
                               //await message.success('Subscribe Successfully'); // 打印message后再跳转
                               //window.location.href = "/login";
 

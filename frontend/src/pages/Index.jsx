@@ -20,6 +20,8 @@ import yf from '../img/yf.png';
 import hot from '../img/hot.png';
 import banner from '../img/banner.png';
 import banner2 from '../img/banner2.jpg'
+import banner3 from '../img/banner2.PNG'
+
 import sty from './index.module.scss';
 
 import Nav from '../components/nav'
@@ -27,11 +29,8 @@ import axios from "axios"
 import { Link, Route } from "react-router-dom";
 import Article from "./article";
 import moment from 'moment';
-import uf_news_1 from "../img/uf_news_1.png";
-import uf_news_2 from "../img/uf_news_2.png";
-import uf_news_3 from "../img/uf_news_3.png";
-import uf_news_4 from "../img/uf_news_4.png";
 
+import uf_news_3 from "../img/uf_news_3.png";
 
 const { Option } = Select;
 function editSource(text) {
@@ -232,7 +231,7 @@ function Index() {
                 <h3 style={contentStyle}><img style={contentStyle} src={uf_news_3} alt="UF" srcSet="" /></h3>
               </div>
               <div>
-                <h3 style={contentStyle}><img style={contentStyle} src={uf_news_4} alt="UF" srcSet="" /></h3>
+                <h3 style={contentStyle}><img style={contentStyle} src={banner3} alt="UF" srcSet="" /></h3>
               </div>
             </Carousel>
             {/*<img className={sty.banner} src={banner} alt="" srcset="" />*/}
