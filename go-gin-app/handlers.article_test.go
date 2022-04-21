@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -52,7 +53,7 @@ func TestShowIndexPageAuthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Set the token cookie to simulate an authenticated user
-	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
+	http.SetCookie(w, &http.Cookie{Name: "token", Value: "%7B%22username%22%3A%22user1%22%2C%22password%22%3A%22pass1%22%7D"})
 
 	// Define the route similar to its definition in the routes file
 	r.GET("/", showIndexPage)
@@ -117,7 +118,7 @@ func TestArticleAuthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Set the token cookie to simulate an authenticated user
-	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
+	http.SetCookie(w, &http.Cookie{Name: "token", Value: "%7B%22username%22%3A%22user1%22%2C%22password%22%3A%22pass1%22%7D"})
 
 	// Define the route similar to its definition in the routes file
 	r.GET("/article/view/:article_id", getArticle)
@@ -215,7 +216,7 @@ func TestArticleCreationPageAuthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Set the token cookie to simulate an authenticated user
-	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
+	http.SetCookie(w, &http.Cookie{Name: "token", Value: "%7B%22username%22%3A%22user1%22%2C%22password%22%3A%22pass1%22%7D"})
 
 	// Define the route similar to its definition in the routes file
 	r.GET("/article/create", ensureLoggedIn(), showArticleCreationPage)
@@ -286,6 +287,7 @@ func TestArticleCreationAuthenticated(t *testing.T) {
 
 	// Test that the http status code is 200
 	if w.Code != http.StatusOK {
+		fmt.Println("print at 290", w.Code)
 		t.Fail()
 	}
 
@@ -294,9 +296,16 @@ func TestArticleCreationAuthenticated(t *testing.T) {
 	// parse and process HTML pages
 	p, err := ioutil.ReadAll(w.Body)
 	if err != nil || strings.Index(string(p), "<title>Submission Successful</title>") < 0 {
+		fmt.Println("print at 299", err)
+		fmt.Println(strings.Index(string(p), "<title>Submission Successful</title>"))
 		t.Fail()
 	}
 
+	affect, err := deleteArticleByTitle("Test Article Title")
+	if affect != 1 || err != nil {
+		fmt.Println("err at 306")
+		t.Fail()
+	}
 }
 
 // Test that a POST request to create an article returns

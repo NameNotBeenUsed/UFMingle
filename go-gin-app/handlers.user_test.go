@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -231,6 +232,7 @@ func TestRegisterAuthenticated(t *testing.T) {
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)
 
+	fmt.Println("TestRegisterAuthenticated 235", w.Code)
 	// Test that the http status code is 401
 	if w.Code != http.StatusUnauthorized {
 		t.Fail()
@@ -258,6 +260,7 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)
 
+	fmt.Println("TestRegisterUnauthenticated 263", w.Code)
 	// Test that the http status code is 200
 	if w.Code != http.StatusOK {
 		t.Fail()
@@ -272,6 +275,7 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	}
 
 	num, err := deleteUser("u1")
+	fmt.Println("TestRegisterUnauthenticated 278", num, err)
 	if num == 0 || err != nil {
 		t.Fail()
 	}
@@ -298,6 +302,7 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	// Create the service and process the above request.
 	r.ServeHTTP(w, req)
 
+	fmt.Println("TestRegisterUnauthenticatedUnavailableUsername 304", w.Code)
 	// Test that the http status code is 400
 	if w.Code != http.StatusBadRequest {
 		t.Fail()

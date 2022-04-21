@@ -149,6 +149,7 @@ func registerNewUser(newUser user) (int64, error) {
 	result, err := stmt.Exec(newUser.Username, newUser.Password, newUser.Gatorlink, newUser.Gender, newUser.Birthday)
 
 	if err != nil {
+		tx.Commit()
 		return 0, err
 	}
 
@@ -228,6 +229,7 @@ func deleteUser(username string) (int64, error) {
 	result, err := stmt.Exec(username)
 
 	if err != nil {
+		tx.Commit()
 		return 0, err
 	}
 

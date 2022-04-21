@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 )
 
 type comment struct {
@@ -77,36 +78,40 @@ func getCommentsByUser(username string) ([]comment, error) {
 }
 
 func createNewComment(commentData comment, tempuser mingleUser) (int64, error) {
-	res_user, er := isUserValid(tempuser)
-	res_comment, er := isCommentValid(commentData)
-	if res_user && res_comment {
-		tx, err := DB.Begin()
-		if err != nil {
-			return 0, err
-		}
-		tx.Exec("PRAGMA foreign_keys = ON")
-
-		stmt, err := tx.Prepare("INSERT INTO comment (topic_id, comment_user, comment_content, comment_time) VALUES (?, ?, ?, CURRENT_TIMESTAMP)")
-		if err != nil {
-			return 0, err
-		}
-
-		defer stmt.Close()
-
-		result, execErr := stmt.Exec(commentData.ArticleId, commentData.CommentAuthor, commentData.Content)
-		if execErr != nil {
-			return 0, execErr
-		}
-		num, errR := result.RowsAffected()
-		if errR != nil {
-			return 0, errR
-		}
-		tx.Commit()
-
-		return num, nil
-	} else {
-		return 0, er
+	//res_user, er := isUserValid(tempuser)
+	//res_comment, er := isCommentValid(commentData)
+	//if res_user && res_comment {
+	tx, err := DB.Begin()
+	if err != nil {
+		return 0, err
 	}
+	//tx.Exec("PRAGMA foreign_keys = ON")
+
+	stmt, err := tx.Prepare("INSERT INTO comment (topic_id, comment_user, comment_content, comment_time) VALUES (?, ?, ?, CURRENT_TIMESTAMP)")
+	if err != nil {
+		fmt.Println("here1")
+		return 0, err
+	}
+
+	defer stmt.Close()
+
+	result, execErr := stmt.Exec(commentData.ArticleId, commentData.CommentAuthor, commentData.Content)
+	if execErr != nil {
+		fmt.Println("here2")
+		tx.Commit()
+		return 0, execErr
+	}
+	num, errR := result.RowsAffected()
+	if errR != nil {
+		fmt.Println("here3")
+		return 0, errR
+	}
+	tx.Commit()
+	fmt.Println("here4")
+	return num, nil
+	/*} else {
+		return 0, er
+	}*/
 }
 
 // Check if the comment matches the foreign key constraint
@@ -156,6 +161,7 @@ func deleteCommentByCommentId(commentId int) (int64, error) {
 
 	result, err := stmt.Exec(commentId)
 	if err != nil {
+		tx.Commit()
 		return 0, err
 	}
 

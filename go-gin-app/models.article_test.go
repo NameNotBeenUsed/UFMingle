@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -57,7 +58,8 @@ func TestCreateNewArticle(t *testing.T) {
 	newArticle := article{Title: "New test title", Author: "user1", Content: "New test content"}
 	// add another article
 	num, err := createNewArticle(newArticle, existUser)
-	if err != nil {
+	if num == 0 || err != nil {
+		fmt.Println("TestCreateNewArticle 62 failure", num, err)
 		t.Fail()
 	}
 
@@ -69,12 +71,9 @@ func TestCreateNewArticle(t *testing.T) {
 
 	//newLength := len(allArticles)
 
-	if num == 0 {
-		t.Fail()
-	}
-
 	num, err = deleteArticleByTitle(newArticle.Title)
 	if num == 0 || err != nil {
+		fmt.Println("TestCreateNewArticle 76 Failure")
 		t.Fail()
 	}
 }

@@ -18,6 +18,10 @@ import (
 // @Router /image/avatar/:username [get]
 func getAvatar(c *gin.Context) {
 	username := c.Param("username")
+	if username == "" {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
 	if res, err := isUserExist(username); err == nil && res == true {
 		//fmt.Println("./Avatar/" + username + ".jpg")
 		_, errF := os.Stat("./Avatar/" + username + ".jpg")

@@ -184,6 +184,7 @@ func createNewArticle(newArticle article, user mingleUser) (int64, error) {
 
 	result, execErr := stmt.Exec(user.Username, newArticle.Title, newArticle.Content)
 	if execErr != nil {
+		tx.Commit()
 		return 0, execErr
 	}
 	num, err := result.RowsAffected()
@@ -210,6 +211,7 @@ func deleteArticleById(id int) (int64, error) {
 	result, err := stmt.Exec(id)
 
 	if err != nil {
+		tx.Commit()
 		return 0, err
 	}
 
@@ -237,6 +239,7 @@ func deleteArticleByTitle(title string) (int64, error) {
 
 	result, err := stmt.Exec(title)
 	if err != nil {
+		tx.Commit()
 		return 0, err
 	}
 

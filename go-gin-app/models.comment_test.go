@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"strconv"
 	"testing"
 	"time"
@@ -33,10 +35,14 @@ func TestCreateNewComment(t *testing.T) {
 	validUser := mingleUser{Username: "user1", Password: "pass1"}
 	//invalid user
 	invalidUser := mingleUser{Username: "invalidUser", Password: "invalidPass"}
-
+	if _, err := DB.Exec("PRAGMA foreign_keys=ON"); err != nil {
+		//fmt.Println("?????????????????????????????")
+		log.Fatal(err)
+	}
 	//valid comment and invalid user
 	num, err := createNewComment(validComment, invalidUser)
-	if num != 0 || err != nil {
+	if num == 0 || err != nil {
+		fmt.Println("TestCreateNewComment 41 Failure")
 		t.Fail()
 	}
 
@@ -49,6 +55,7 @@ func TestCreateNewComment(t *testing.T) {
 	//fmt.Println(num)
 	//fmt.Println(err)
 	if num != 0 {
+		fmt.Println("TestCreateNewComment 54 Failure")
 		t.Fail()
 	}
 	//valid comment and valid user
@@ -56,6 +63,7 @@ func TestCreateNewComment(t *testing.T) {
 	//fmt.Println(num)
 	//fmt.Println(err)
 	if num == 0 {
+		fmt.Println("TestCreateNewComment 62 Failure", num)
 		t.Fail()
 	}
 	//delete the valid comment after test
@@ -63,6 +71,7 @@ func TestCreateNewComment(t *testing.T) {
 	validCommentId := commentList[len(commentList)-1].CommentId
 	num, err = deleteCommentByCommentId(validCommentId)
 	if num == 0 {
+		fmt.Println("TestCreateNewComment 70 Failure")
 		t.Fail()
 	}
 }
